@@ -23,7 +23,8 @@ export const faqPage = defineType({
               name: 'title',
               title: 'Topic',
               type: 'string',
-              description: 'e.g. Tickets, Dress code, Getting there',
+              description:
+                'General topics, e.g. ESN card, Buddy programme, Joining ESN. Questions about one Event go in that Event’s FAQ.',
               validation: (r) => r.required(),
             }),
             defineField({
@@ -45,7 +46,7 @@ export const faqPage = defineType({
   preview: { prepare: () => ({ title: 'FAQ' }) },
 })
 
-/** /contacts: general contact + people + each section's contact (pulled from section docs). */
+/** /contacts: general contact + each section's contact (pulled from section docs). */
 export const contactsPage = defineType({
   name: 'contactsPage',
   title: 'Contacts',
@@ -61,13 +62,6 @@ export const contactsPage = defineType({
       validation: (r) => r.email(),
     }),
     defineField({ name: 'address', title: 'Postal / office address', type: 'text', rows: 3 }),
-    defineField({
-      name: 'people',
-      title: 'Contact people',
-      type: 'array',
-      description: 'Remember to update after each board handover.',
-      of: [defineArrayMember({ type: 'contactPerson' })],
-    }),
     defineField({
       name: 'showSectionContacts',
       title: 'Also list the 5 sections’ contacts',

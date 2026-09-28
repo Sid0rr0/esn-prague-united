@@ -32,7 +32,7 @@ export const homepage = defineType({
       to: [{ type: 'event' }],
       group: 'hero',
       description:
-        'Promoted in the top section and the big event card (e.g. the Czech Ball). Leave empty to keep the top section about ESN Prague; the card then shows the next upcoming event.',
+        'Takes over the top of the homepage (e.g. the Czech Ball during its ticket sales). Clear it to return the top section to ESN Prague United content.',
     }),
     defineField({
       name: 'about',

@@ -17,12 +17,6 @@ export const album = defineType({
     }),
     defineField({ name: 'date', type: 'date', validation: (r) => r.required() }),
     defineField({
-      name: 'sections',
-      title: 'Sections',
-      type: 'array',
-      of: [defineArrayMember({ type: 'reference', to: [{ type: 'section' }] })],
-    }),
-    defineField({
       name: 'cover',
       title: 'Cover photo',
       type: 'imageWithAlt',

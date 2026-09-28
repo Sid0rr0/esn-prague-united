@@ -33,19 +33,19 @@ export const EVENTS_QUERY = groq`*[_type == "event"] | order(startsAt desc){
   title, "slug": slug.current, startsAt, venue{name}, summary, heroImage${image}
 }`
 
+// Detail queries list their fields rather than spreading the document, so data the design
+// dropped (e.g. Event organisers) never reaches a page even if an old document still holds it.
 export const EVENT_QUERY = groq`*[_type == "event" && slug.current == $slug][0]{
-  ...,
-  heroImage${image},
-  organisers[]->{name, shortName, "slug": slug.current},
+  title, "slug": slug.current, startsAt, endsAt, venue, heroImage${image}, summary, description,
+  programme, dressCode, faq, ticketUrl, ticketInfo, seo,
   album->{title, "slug": slug.current, cover${image}}
 }`
 
 export const SECTIONS_QUERY = groq`*[_type == "section"] | order(order asc){..., "slug": slug.current}`
 
 export const SECTION_QUERY = groq`*[_type == "section" && slug.current == $slug][0]{
-  ...,
-  "events": *[_type == "event" && references(^._id)] | order(startsAt desc)[0...6]{title, "slug": slug.current, startsAt},
-  "albums": *[_type == "album" && references(^._id)] | order(date desc){title, "slug": slug.current, cover${image}}
+  name, shortName, "slug": slug.current, university, logo, coverImage${image}, tagline, about,
+  buddyProgramUrl, email, office, mapUrl, socials
 }`
 
 export const ALBUMS_QUERY = groq`*[_type == "album"] | order(date desc){title, "slug": slug.current, date, cover${image}}`
@@ -58,8 +58,7 @@ export const ALBUM_QUERY = groq`*[_type == "album" && slug.current == $slug][0]{
 export const FAQ_QUERY = groq`*[_id == "faqPage"][0]`
 
 export const CONTACTS_QUERY = groq`*[_id == "contactsPage"][0]{
-  ...,
-  people[]{..., photo${image}, section->{shortName}},
+  title, intro, generalEmail, address, socials, seo,
   "sections": select(showSectionContacts => *[_type == "section"] | order(order asc){name, email, office, socials})
 }`
 

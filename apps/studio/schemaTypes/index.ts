@@ -7,7 +7,6 @@ import {
   seo,
   programmeItem,
   faqEntry,
-  contactPerson,
 } from './objects/common'
 import { section } from './documents/section'
 import { event } from './documents/event'
@@ -33,7 +32,6 @@ export const schemaTypes = [
   seo,
   programmeItem,
   faqEntry,
-  contactPerson,
   linkItem,
   // collections
   section,

@@ -146,35 +146,3 @@ export const faqEntry = defineType({
   ],
   preview: { select: { title: 'question' } },
 })
-
-/** A person on the contacts page. */
-export const contactPerson = defineType({
-  name: 'contactPerson',
-  title: 'Person',
-  type: 'object',
-  fields: [
-    defineField({ name: 'name', type: 'string', validation: (r) => r.required() }),
-    defineField({
-      name: 'role',
-      title: 'Role',
-      type: 'string',
-      description: 'e.g. Main organiser, PR, Partnerships',
-    }),
-    defineField({ name: 'email', type: 'string', validation: (r) => r.email() }),
-    defineField({
-      name: 'phone',
-      type: 'string',
-      description: 'Optional. Only if the person agreed to publish it.',
-    }),
-    defineField({ name: 'photo', type: 'imageWithAlt' }),
-    defineField({
-      name: 'section',
-      title: 'ESN section',
-      type: 'reference',
-      to: [{ type: 'section' }],
-    }),
-  ],
-  preview: {
-    select: { title: 'name', subtitle: 'role', media: 'photo' },
-  },
-})

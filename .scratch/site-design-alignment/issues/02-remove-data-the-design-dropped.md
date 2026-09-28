@@ -21,10 +21,15 @@ A one-off script unsets the removed fields in the existing dataset so no orphane
 
 **Blocked by:** None (can start immediately).
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The Studio no longer shows organisers on Event, Sections on Album, or people on Contacts. The contact-person type no longer exists.
-- [ ] No query references organisers, Album sections, contact people, or a Section's events/albums.
-- [ ] The Featured event and FAQ topic help text match the glossary in CONTEXT.md.
-- [ ] A migration script unsets the removed fields. Running it twice is harmless, and it reports how many documents it changed.
-- [ ] The Studio and web app type-checks pass.
+- [x] The Studio no longer shows organisers on Event, Sections on Album, or people on Contacts. The contact-person type no longer exists.
+- [x] No query references organisers, Album sections, contact people, or a Section's events/albums.
+- [x] The Featured event and FAQ topic help text match the glossary in CONTEXT.md.
+- [x] A migration script unsets the removed fields. Running it twice is harmless, and it reports how many documents it changed.
+- [x] The Studio and web app type-checks pass.
+
+## Comments
+
+- The Event, Section and Contacts queries now list their fields instead of spreading the document (`...`), so leftover organisers, people or Album sections can't reach a page even before the migration runs. `apps/web/test/dropped-data.test.ts` covers this through the seam.
+- Migration: `pnpm --filter esn-prague-studio exec sanity exec migrations/remove-dropped-fields.ts --with-user-token`. It only patches documents that still hold a dropped field (drafts included, via the `raw` perspective) and prints how many it changed. Not run against the live dataset yet.

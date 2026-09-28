@@ -56,13 +56,6 @@ export const event = defineType({
       validation: (r) => r.max(240),
     }),
     defineField({
-      name: 'organisers',
-      title: 'Organised by',
-      type: 'array',
-      group: 'basics',
-      of: [defineArrayMember({ type: 'reference', to: [{ type: 'section' }] })],
-    }),
-    defineField({
       name: 'description',
       title: 'About the event',
       type: 'richText',
