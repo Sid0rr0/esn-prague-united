@@ -38,14 +38,20 @@ describe('site shell', () => {
     expect(html).not.toMatch(/ESN Prague(?! United)/)
   })
 
-  it('renders the footer when Site settings has no social links', async () => {
+  it('shows no social links in the footer, even when Site settings still holds some', async () => {
     const html = await renderPage(Home, {
       now: NOW,
-      documents: [homepage(), siteSettings({ socials: undefined })],
+      documents: [
+        homepage(),
+        siteSettings({
+          socials: { instagram: 'https://instagram.com/esnprague', facebook: 'https://fb.example' },
+        }),
+      ],
     })
+    const footer = html.match(/<footer[\s\S]*?<\/footer>/)?.[0] ?? ''
 
-    expect(html).toContain('<footer')
-    expect(html).not.toContain('aria-label="Instagram"')
+    expect(footer).not.toBe('')
+    expect(footer).not.toContain('<a')
   })
 })
 

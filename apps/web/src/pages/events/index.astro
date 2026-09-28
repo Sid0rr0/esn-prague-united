@@ -1,14 +1,13 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import EventCard from '../../components/EventCard.astro'
-import InstagramPrompt from '../../components/InstagramPrompt.astro'
 import PageHeader from '../../components/PageHeader.astro'
 import SectionHeading from '../../components/SectionHeading.astro'
 import { fetchContent } from '../../lib/content'
-import { EVENTS_LIST_QUERY } from '../../lib/queries'
-import type { EventsList } from '../../lib/types'
+import { UPCOMING_EVENTS_QUERY } from '../../lib/queries'
+import type { EventCardData } from '../../lib/types'
 
-const { upcoming, instagram } = await fetchContent<EventsList>(EVENTS_LIST_QUERY)
+const upcoming = await fetchContent<EventCardData[]>(UPCOMING_EVENTS_QUERY)
 ---
 
 <Layout title="Events">
@@ -29,7 +28,7 @@ const { upcoming, instagram } = await fetchContent<EventsList>(EVENTS_LIST_QUERY
         ))}
       </ul>
     ) : (
-      <InstagramPrompt instagram={instagram} class="bg-surface" />
+      <p class="text-base leading-normal">New events coming soon.</p>
     )}
   </section>
 </Layout>

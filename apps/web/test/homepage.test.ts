@@ -152,11 +152,11 @@ describe('homepage upcoming events', () => {
     expect(html).not.toContain('New events coming soon')
   })
 
-  it('says New events coming soon with the Instagram link when nothing is upcoming or featured', async () => {
+  it('says New events coming soon, with no Instagram link, when nothing is upcoming or featured', async () => {
     const block = upcomingOf(await featuring(null))
 
     expect(block).toContain('New events coming soon')
-    expect(block).toContain('href="https://instagram.com/esnprague"')
+    expect(block).not.toMatch(/instagram/i)
   })
 
   it('has no Full calendar link', async () => {

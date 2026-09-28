@@ -18,6 +18,8 @@ export const siteSettings = (overrides: Record<string, unknown> = {}): Doc => ({
     { _key: 'n2', label: localised('Sections'), href: '/sections' },
     { _key: 'n3', label: localised('Gallery'), href: '/gallery' },
   ],
+  // Dropped from Site settings (ESN Prague United has no socials of its own), but an old
+  // document may still hold them, so every page is rendered as if it did.
   socials: { instagram: 'https://instagram.com/esnprague' },
   ...overrides,
 })

@@ -5,7 +5,7 @@ Content schema and editorial model for the ESN Prague website (Astro + Sanity + 
 ## Language
 
 **ESN Prague United**:
-The umbrella organisation formed by the 5 Sections. Site-wide content (About, Contacts, FAQ, socials) speaks for ESN Prague United, not for any one Section.
+The umbrella organisation formed by the 5 Sections. Site-wide content (About, Contacts, FAQ) speaks for ESN Prague United, not for any one Section. ESN Prague United has no social accounts of its own; only the Sections do.
 _Avoid_: ESN Prague (on its own), ESN Praha
 
 **Section**:

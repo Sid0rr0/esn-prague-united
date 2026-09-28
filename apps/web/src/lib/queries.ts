@@ -10,7 +10,7 @@ const visibleUntilFilter = (field: string) =>
 
 // The top banner shows only while it's enabled and before its "Hide after" date.
 export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]{
-  logo, navigation[]{_key, label, href}, socials, footerText, seo,
+  logo, navigation[]{_key, label, href}, footerText, seo,
   "announcement": select(
     announcement.enabled == true && ${visibleUntilFilter('announcement.visibleUntil')} => announcement{text, url}
   )
@@ -54,16 +54,12 @@ export const HOMEPAGE_QUERY = groq`{
   },
   "upcoming": *[
     _type == "event" && !(${HAS_ENDED}) && _id != *[_id == "homepage"][0].featuredEvent._ref
-  ] | order(startsAt asc)[0...${HOMEPAGE_LIST_MAX}]{_id, title, "slug": slug.current, startsAt},
-  "instagram": *[_id == "siteSettings"][0].socials.instagram
+  ] | order(startsAt asc)[0...${HOMEPAGE_LIST_MAX}]{_id, title, "slug": slug.current, startsAt}
 }`
 
 // The Featured event is listed like any other here; cards show no price or Ticket note.
-export const EVENTS_LIST_QUERY = groq`{
-  "upcoming": *[_type == "event" && !(${HAS_ENDED})] | order(startsAt asc){
-    _id, title, "slug": slug.current, startsAt, "venueName": venue.name, heroImage${image}
-  },
-  "instagram": *[_id == "siteSettings"][0].socials.instagram
+export const UPCOMING_EVENTS_QUERY = groq`*[_type == "event" && !(${HAS_ENDED})] | order(startsAt asc){
+  _id, title, "slug": slug.current, startsAt, "venueName": venue.name, heroImage${image}
 }`
 
 // Detail queries list their fields rather than spreading the document, so data the design

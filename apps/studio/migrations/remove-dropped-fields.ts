@@ -1,6 +1,6 @@
 /**
  * One-off: unset fields the design dropped (Event organisers, Album sections,
- * Contacts people), so no orphaned data stays behind.
+ * Contacts people, Site settings socials), so no orphaned data stays behind.
  *
  *   pnpm --filter esn-prague-studio exec sanity exec migrations/remove-dropped-fields.ts --with-user-token
  *
@@ -12,6 +12,8 @@ const DROPPED_FIELDS: Record<string, string[]> = {
   event: ['organisers'],
   album: ['sections'],
   contactsPage: ['people'],
+  // ESN Prague United has no socials of its own; only the Sections do.
+  siteSettings: ['socials'],
 }
 
 const client = getCliClient({ apiVersion: '2025-01-01', perspective: 'raw' })
@@ -21,7 +23,8 @@ async function run() {
     `*[
       (_type == "event" && defined(organisers)) ||
       (_type == "album" && defined(sections)) ||
-      (_type == "contactsPage" && defined(people))
+      (_type == "contactsPage" && defined(people)) ||
+      (_type == "siteSettings" && defined(socials))
     ]{_id, _type}`,
   )
 

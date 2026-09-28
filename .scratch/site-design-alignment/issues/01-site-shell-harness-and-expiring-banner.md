@@ -1,6 +1,6 @@
 # 01: Site shell, test harness and expiring top banner
 
-**What to build:** Right now the web app is the blank Astro starter. Wire it to Sanity so every page renders inside the site shell: a header with the logo and main menu from Site settings, and a footer with the ESN Prague United name and socials. The header has no EN/CZ switch. The top banner from Site settings gets an optional "Hide after" date, using the same pattern and label as the Links page's visibility date. Visitors see the banner only while it's enabled and before that date.
+**What to build:** Right now the web app is the blank Astro starter. Wire it to Sanity so every page renders inside the site shell: a header with the logo and main menu from Site settings, and a footer with the ESN Prague United name. (Site settings socials were later dropped: ESN Prague United has no social accounts of its own.) The header has no EN/CZ switch. The top banner from Site settings gets an optional "Hide after" date, using the same pattern and label as the Links page's visibility date. Visitors see the banner only while it's enabled and before that date.
 
 This ticket also sets up the one test seam the spec defines, which every later ticket builds on:
 

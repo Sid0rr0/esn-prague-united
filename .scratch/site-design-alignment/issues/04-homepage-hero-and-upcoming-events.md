@@ -18,7 +18,7 @@
 
 - Upcoming Events excluding the Featured event, soonest first, at most 4. Rows show date and title only.
 - When the list is empty and a Featured event is set, the block is hidden.
-- When it's empty and nothing is featured, it shows "New events coming soon" with the Instagram link.
+- When it's empty and nothing is featured, it shows "New events coming soon", with no link (ESN Prague United has no Instagram of its own).
 - There's no "Full calendar" link.
 - The old next-event fallback is removed from the homepage query.
 
@@ -35,6 +35,6 @@
 - [x] Seam test: with no Featured event, the hero shows the Homepage's own ESN Prague United content.
 - [x] Seam test: the upcoming list never contains the Featured event and is capped at 4.
 - [x] Seam test: the upcoming list is hidden when it's empty and a Featured event is set.
-- [x] Seam test: "New events coming soon" plus the Instagram link shows when the list is empty and nothing is featured.
+- [x] Seam test: "New events coming soon" shows, with no Instagram link, when the list is empty and nothing is featured.
 - [x] Seam test: no "Full calendar" link is rendered.
 - [x] The About block with its numbers (max 4) and the Quick links (max 4) render from the Homepage.

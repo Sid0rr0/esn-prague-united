@@ -4,7 +4,7 @@
 
 - Past events are listed newest first, with the same cards as Upcoming events.
 - An Event is past once its end time has passed, or its start time when it has no end time.
-- With no Past events, the "Past" heading is hidden. With no Events at all, only the Upcoming heading and the Instagram line remain.
+- With no Past events, the "Past" heading is hidden. With no Events at all, only the Upcoming heading and "New events coming soon." remain.
 
 **Blocked by:** 11.
 

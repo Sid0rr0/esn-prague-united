@@ -4,20 +4,17 @@ import type { Socials } from '../lib/types'
 interface Props {
   /** GROQ returns null for social links that were never filled in. */
   socials?: Socials | null
-  /** compact: 44px squares with short labels (footer); tiles: full names in a 3-column grid. */
-  variant?: 'compact' | 'tiles'
 }
 
-const NETWORKS: { key: keyof Socials; name: string; short: string }[] = [
-  { key: 'instagram', name: 'Instagram', short: 'IG' },
-  { key: 'facebook', name: 'Facebook', short: 'FB' },
-  { key: 'tiktok', name: 'TikTok', short: 'TK' },
-  { key: 'whatsapp', name: 'WhatsApp', short: 'WA' },
-  { key: 'linkedin', name: 'LinkedIn', short: 'IN' },
-  { key: 'website', name: 'Website', short: 'WWW' },
+const NETWORKS: { key: keyof Socials; name: string }[] = [
+  { key: 'instagram', name: 'Instagram' },
+  { key: 'facebook', name: 'Facebook' },
+  { key: 'tiktok', name: 'TikTok' },
+  { key: 'whatsapp', name: 'WhatsApp' },
+  { key: 'linkedin', name: 'LinkedIn' },
+  { key: 'website', name: 'Website' },
 ]
 
-const { variant = 'tiles' } = Astro.props
 const socials = Astro.props.socials ?? {}
 const links = NETWORKS.filter(({ key }) => socials[key]).map((network) => ({
   ...network,
@@ -26,19 +23,15 @@ const links = NETWORKS.filter(({ key }) => socials[key]).map((network) => ({
 ---
 
 {links.length > 0 && (
-  <ul class={variant === 'compact' ? 'flex flex-wrap gap-0.5' : 'grid grid-cols-3 gap-0.5'}>
-    {links.map(({ name, short, url }) => (
+  <ul class="grid grid-cols-3 gap-0.5">
+    {links.map(({ name, url }) => (
       <li>
         <a
           href={url}
           rel="noopener"
-          aria-label={variant === 'compact' ? name : undefined}
-          class:list={[
-            'flex items-center justify-center bg-white/12 font-black text-white hover:bg-white/25',
-            variant === 'compact' ? 'size-11 text-[11px]' : 'h-12 text-sm',
-          ]}
+          class="flex h-12 items-center justify-center bg-white/12 text-sm font-black text-white hover:bg-white/25"
         >
-          {variant === 'compact' ? short : name}
+          {name}
         </a>
       </li>
     ))}

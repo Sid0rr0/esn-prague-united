@@ -82,13 +82,14 @@ describe('Events list page', () => {
     expect(cards[1]).toContain('Czech Ball')
   })
 
-  it('keeps the Upcoming heading and points to Instagram when nothing is upcoming', async () => {
+  it('keeps the Upcoming heading and says New events coming soon when nothing is upcoming', async () => {
     const past = event('welcome', { startsAt: '2026-09-20T18:00:00Z' })
 
     const block = upcomingOf(await render(past))
 
     expect(block).toMatch(/<h2[^>]*>\s*Upcoming\s*<\/h2>/)
-    expect(block).toContain('href="https://instagram.com/esnprague"')
+    expect(block).toContain('New events coming soon')
+    expect(block).not.toMatch(/instagram/i)
     expect(cardsOf(block)).toHaveLength(0)
   })
 })

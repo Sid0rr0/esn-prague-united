@@ -27,7 +27,7 @@ Change the content model, the queries and the rendered pages so they match the s
 - **Ended Events:** once an Event has ended, its page points to its Album instead of selling tickets, and hides all ticket UI if there's no Album.
 - **Homepage events block:** always an upcoming-events list that never repeats the Featured event.
   - When the list is empty during the ball phase (a Featured event is set), the block is hidden.
-  - When it's empty otherwise, it shows a "New events coming soon" state with the Instagram link.
+  - When it's empty otherwise, it shows a "New events coming soon" state, with no link (ESN Prague United has no Instagram of its own).
 - **Top banner:** gets a "Hide after" date.
 - **Translation:** text fields are translated per field, as in ADR 0002. English is the only language shown for now, and the language switch stays hidden.
 - **Unused data:** organisers, Album sections, contact people and the Section page's event/album lists are removed.
@@ -47,7 +47,7 @@ Change the content model, the queries and the rendered pages so they match the s
 9. As an exchange student visiting a past Event that has no Album yet, I want no ticket UI at all, so that the page doesn't pretend tickets are still sold.
 10. As an exchange student on the homepage, I want to see the upcoming Events other than the Featured event, so that the hero and the list don't repeat each other.
 11. As an exchange student on the homepage while only the Featured event is upcoming, I want the events list hidden, so that I don't see an empty block under the hero.
-12. As an exchange student on the homepage when nothing is upcoming, I want a "New events coming soon" message with a link to Instagram, so that I know where announcements appear.
+12. As an exchange student on the homepage when nothing is upcoming, I want a "New events coming soon" message, so that I know the empty list isn't a broken page.
 13. As an exchange student, I don't want a "Full calendar" link that leads nowhere, so that I don't hit a missing page.
 14. As an exchange student, I want the top banner to disappear once its promotion is over, so that I'm not sent to a closed ticket sale.
 15. As an editor, I want to set a "Hide after" date on the top banner, so that I don't have to remember to switch it off.
@@ -70,7 +70,7 @@ Change the content model, the queries and the rendered pages so they match the s
 32. As an editor, I want the FAQ help text to suggest general topics, so that I don't put Event-specific questions on the FAQ page.
 33. As an exchange student, I want the Section page to show the Section's about text, office info, buddy sign-up and socials, so that I know how to reach my Section.
 34. As an exchange student, I want transport directions, dress code and office details shown as readable text, so that they work for any Event or Section, not just the ball.
-35. As an exchange student, I want the site to call the organisation "ESN Prague United" consistently, so that the name matches the logo and social accounts.
+35. As an exchange student, I want the site to call the organisation "ESN Prague United" consistently, so that the name matches the logo.
 
 ## Implementation Decisions
 
@@ -106,7 +106,7 @@ Change the content model, the queries and the rendered pages so they match the s
   - **Site settings query:** the banner's visibility is decided with the same `now()` comparison as Links page items.
 - **Homepage events block states:**
   - Hidden when the list is empty and a Featured event is set.
-  - "New events coming soon" with the Instagram link when it's empty and no Featured event is set.
+  - "New events coming soon" when it's empty and no Featured event is set.
   - A list otherwise.
   - Rows show date and title only, with no Section.
   - No "Full calendar" link until the Events list page exists.

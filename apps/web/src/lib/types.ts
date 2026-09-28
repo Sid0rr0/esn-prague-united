@@ -24,7 +24,6 @@ export interface Seo {
 export interface Settings {
   logo?: SanityImage
   navigation?: { _key: string; label: string; href: string }[]
-  socials?: Socials | null
   footerText?: string
   seo?: Seo
   /** Only set while the banner is enabled and before its "Hide after" date. */
@@ -66,16 +65,10 @@ export interface EventSummary {
   startsAt: string
 }
 
-/** An Event as a card on the Events list page shows it. */
+/** An Upcoming event as a card on the Events list page shows it. */
 export interface EventCardData extends EventSummary {
   venueName?: string
   heroImage?: SanityImage
-}
-
-export interface EventsList {
-  /** Every Event that hasn't ended, the Featured event included, soonest first. */
-  upcoming: EventCardData[]
-  instagram?: string | null
 }
 
 export interface FeaturedEvent extends TicketFields {
@@ -194,7 +187,6 @@ export interface Homepage {
   } | null
   /** Upcoming Events other than the Featured event, soonest first, at most 4. */
   upcoming: EventSummary[]
-  instagram?: string | null
 }
 
 export interface SectionSummary {

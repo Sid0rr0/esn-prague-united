@@ -55,7 +55,6 @@ export const siteSettings = defineType({
       ],
       validation: (r) => r.max(6),
     }),
-    defineField({ name: 'socials', type: 'socials' }),
     localisedText({ name: 'footerText', title: 'Footer text' }),
     defineField({ name: 'seo', title: 'Default sharing preview', type: 'seo' }),
   ],

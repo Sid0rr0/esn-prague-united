@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro'
 import AlbumCard from '../components/AlbumCard.astro'
 import HeroTicket from '../components/HeroTicket.astro'
-import InstagramPrompt from '../components/InstagramPrompt.astro'
 import Picture from '../components/Picture.astro'
 import RichText from '../components/RichText.astro'
 import SectionHeading from '../components/SectionHeading.astro'
@@ -15,7 +14,7 @@ import { SITE_NAME } from '../lib/site'
 import { ticketDisplay } from '../lib/tickets'
 import type { Homepage } from '../lib/types'
 
-const { page, upcoming, instagram } = await fetchContent<Homepage>(HOMEPAGE_QUERY)
+const { page, upcoming } = await fetchContent<Homepage>(HOMEPAGE_QUERY)
 const hero = page?.hero
 const featured = page?.featuredEvent
 const about = page?.about
@@ -92,7 +91,7 @@ const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon
       <SectionHeading colour="var(--color-esn-cyan)">
         {upcomingState === 'soon' ? 'New events coming soon' : 'Upcoming events'}
       </SectionHeading>
-      {upcomingState === 'list' ? (
+      {upcomingState === 'list' && (
         <ul class="grid gap-0.5 lg:grid-cols-2">
           {upcoming.map((item) => (
             <li>
@@ -111,8 +110,6 @@ const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon
             </li>
           ))}
         </ul>
-      ) : (
-        <InstagramPrompt instagram={instagram} class="bg-white" />
       )}
     </section>
   )}

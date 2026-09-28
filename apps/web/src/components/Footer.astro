@@ -1,13 +1,10 @@
 ---
-import SocialLinks from './SocialLinks.astro'
 import { SITE_NAME } from '../lib/site'
-import type { Socials } from '../lib/types'
 
 interface Props {
-  socials?: Socials | null
   text?: string
 }
-const { socials, text } = Astro.props
+const { text } = Astro.props
 ---
 
 <footer class="flex flex-col gap-3.5 bg-ink px-5 py-7 text-white lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-8">
@@ -15,5 +12,4 @@ const { socials, text } = Astro.props
     <span class="font-heading text-lg font-bold">{SITE_NAME}</span>
     {text && <p class="text-sm text-on-blue-muted">{text}</p>}
   </div>
-  <SocialLinks socials={socials} variant="compact" />
 </footer>
