@@ -28,6 +28,10 @@ _Avoid_: Ticket status
 The Event an editor picks to promote on the homepage. Only a picked Event takes over the homepage hero; when none is picked, the hero stays about ESN Prague United. The homepage's upcoming-events list never repeats the Featured event; if that leaves it empty, the list is hidden.
 _Avoid_: Highlighted event, main event
 
+**Upcoming event** vs **Past event**:
+An Event is upcoming until it has ended, and past from then on. An Event has ended once its end time has passed, or its start time when it has no end time. Outside the homepage hero, the Featured event is an Upcoming event like any other.
+_Avoid_: Finished event, old event, archived event
+
 **Album**:
 A set of photos shown on `/gallery`, optionally linked from one Event (not every Event has one yet, and an Album doesn't need an Event). Albums don't belong to Sections.
 _Avoid_: Gallery (that's the page; Album is the content type)

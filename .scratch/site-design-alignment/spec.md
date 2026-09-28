@@ -146,7 +146,6 @@ Change the content model, the queries and the rendered pages so they match the s
 
 ## Out of Scope
 
-- The Events list page (`/events`) and its design.
 - Czech content, Czech routes and a visible language switch. Only the schema shape and English fallback are in scope.
 - A ticket status field (explicitly rejected).
 - Structured transport, dress code or office data.
