@@ -11,9 +11,9 @@ It has no site header or footer, just a small site link at the bottom.
 
 **Blocked by:** 03.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Seam test: highlighted links render as large buttons above the plain rows, and both keep the editor's order.
-- [ ] Seam test: a link past its "Hide after" date isn't rendered.
-- [ ] Seam test: a link before its "Hide after" date is rendered.
-- [ ] Seam test: the page renders without the shared header/footer shell.
+- [x] Seam test: highlighted links render as large buttons above the plain rows, and both keep the editor's order.
+- [x] Seam test: a link past its "Hide after" date isn't rendered.
+- [x] Seam test: a link before its "Hide after" date is rendered.
+- [x] Seam test: the page renders without the shared header/footer shell.
