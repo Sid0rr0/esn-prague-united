@@ -7,7 +7,7 @@
 - The remaining links as plain rows, in editor order.
 - Links past their "Hide after" date disappear.
 
-It has no site header or footer, just a small site link at the bottom.
+It keeps the shared site header and footer shell (decided during implementation, replacing the design's standalone page with a small site link at the bottom).
 
 **Blocked by:** 03.
 
@@ -16,4 +16,4 @@ It has no site header or footer, just a small site link at the bottom.
 - [x] Seam test: highlighted links render as large buttons above the plain rows, and both keep the editor's order.
 - [x] Seam test: a link past its "Hide after" date isn't rendered.
 - [x] Seam test: a link before its "Hide after" date is rendered.
-- [x] Seam test: the page renders without the shared header/footer shell.
+- [x] Seam test: the page renders inside the shared header/footer shell.

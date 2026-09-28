@@ -12,11 +12,9 @@ import type { Seo, Settings } from '../lib/types'
 interface Props {
   title?: string
   seo?: Seo
-  /** A standalone page (e.g. /links) without the banner, header and footer. */
-  bare?: boolean
 }
 
-const { title, seo, bare = false } = Astro.props
+const { title, seo } = Astro.props
 const settings = (await fetchContent<Settings | null>(SETTINGS_QUERY)) ?? {}
 const pageTitle = seo?.title ?? title
 // A page titled with the site name (e.g. /links) doesn't repeat it after the dot.
@@ -46,11 +44,11 @@ const shareImage = imageUrl(seo?.image ?? settings.seo?.image, { width: 1200, he
     {shareImage && <meta property="og:image" content={shareImage} />}
   </head>
   <body class="flex min-h-screen flex-col bg-white">
-    {!bare && settings.announcement && <Banner {...settings.announcement} />}
-    {!bare && <Header logo={settings.logo} navigation={settings.navigation ?? []} />}
+    {settings.announcement && <Banner {...settings.announcement} />}
+    <Header logo={settings.logo} navigation={settings.navigation ?? []} />
     <main class="flex-1">
       <slot />
     </main>
-    {!bare && <Footer socials={settings.socials} text={settings.footerText} />}
+    <Footer socials={settings.socials} text={settings.footerText} />
   </body>
 </html>

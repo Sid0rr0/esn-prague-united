@@ -74,13 +74,12 @@ describe('Links page', () => {
     expect(plainOf(html)[0]).toContain('Get an ESN card')
   })
 
-  it('renders without the site header, menu or footer, with a small link back to the site', async () => {
+  it('renders inside the shared site header, menu and footer', async () => {
     const html = await renderLinks([linkItem('card', 'Get an ESN card')])
 
-    expect(html).not.toContain('<footer')
-    expect(html).not.toContain('aria-label="Main"')
+    expect(html).toContain('aria-label="Main"')
     // /events is in the siteSettings() fixture's header menu.
-    expect(html).not.toContain('href="/events"')
-    expect(html).toMatch(/<a[^>]*href="\/"/)
+    expect(html).toContain('href="/events"')
+    expect(html).toContain('<footer')
   })
 })

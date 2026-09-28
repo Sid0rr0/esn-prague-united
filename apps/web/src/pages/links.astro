@@ -15,9 +15,9 @@ const highlighted = links.filter((link) => link.highlight)
 const plain = links.filter((link) => !link.highlight)
 ---
 
-<!-- The link-in-bio page: no site header or footer, just a small link back to the site. -->
-<Layout title={title} seo={page.seo} bare>
-  <div class="mx-auto flex min-h-screen w-full max-w-120 flex-col">
+<!-- The link-in-bio page, inside the shared site header and footer. -->
+<Layout title={title} seo={page.seo}>
+  <div class="mx-auto flex w-full max-w-120 flex-col">
     <header class="flex flex-col items-center gap-3 bg-blue-50 px-5 pt-10 pb-8 text-center">
       <img src={avatarSrc} alt="" class="block size-24 object-contain" />
       <h1 class="font-heading text-[32px] leading-none font-bold">{title}</h1>
@@ -51,11 +51,5 @@ const plain = links.filter((link) => !link.highlight)
         </ul>
       )}
     </div>
-
-    <p class="px-5 pb-8 text-center text-sm">
-      <a href="/" class="font-bold text-muted hover:text-esn-magenta">
-        {SITE_NAME} website
-      </a>
-    </p>
   </div>
 </Layout>
