@@ -91,7 +91,11 @@ export const ALBUM_QUERY = groq`*[_type == "album" && slug.current == $slug][0]{
   "event": *[_type == "event" && album._ref == ^._id && defined(slug.current)][0]{"slug": slug.current}
 }`
 
-export const FAQ_QUERY = groq`*[_id == "faqPage"][0]`
+// A topic without questions has nothing to open, so it gets no chip and no heading.
+export const FAQ_QUERY = groq`*[_id == "faqPage"][0]{
+  title, intro, seo,
+  "topics": groups[count(items) > 0]{_key, title, items[]{_key, question, answer}}
+}`
 
 export const CONTACTS_QUERY = groq`*[_id == "contactsPage"][0]{
   title, intro, generalEmail, address, socials, seo,

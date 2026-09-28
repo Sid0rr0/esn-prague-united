@@ -87,6 +87,19 @@ export interface FaqEntry {
   answer?: RichText
 }
 
+export interface FaqTopic {
+  _key: string
+  title: string
+  items: FaqEntry[]
+}
+
+export interface FaqPage {
+  title?: string
+  intro?: string
+  seo?: Seo
+  topics?: FaqTopic[] | null
+}
+
 export interface Venue {
   name?: string
   address?: string

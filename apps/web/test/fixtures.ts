@@ -55,6 +55,46 @@ export const richText = (...paragraphs: string[]) =>
     })),
   )
 
+/** A question in an FAQ topic or an Event FAQ, answered in one paragraph. */
+export const faqEntry = (key: string, question: string, answer: string) => ({
+  _key: key,
+  _type: 'faqEntry',
+  question: localised(question),
+  answer: richText(answer),
+})
+
+/** The FAQ Singleton with three general topics, in order. */
+export const faqPage = (overrides: Record<string, unknown> = {}): Doc => ({
+  _id: 'faqPage',
+  _type: 'faqPage',
+  title: localised('Frequently asked questions'),
+  intro: localised('Everything about ESN Prague United in one place.'),
+  groups: [
+    {
+      _key: 'card',
+      _type: 'faqGroup',
+      title: localised('ESN card'),
+      items: [
+        faqEntry('q1', 'Where do I get an ESN card?', 'At any Section office.'),
+        faqEntry('q2', 'How much is it?', '300 CZK.'),
+      ],
+    },
+    {
+      _key: 'buddy',
+      _type: 'faqGroup',
+      title: localised('Buddy programme'),
+      items: [faqEntry('q3', 'How do I get a buddy?', 'Sign up on your Section page.')],
+    },
+    {
+      _key: 'join',
+      _type: 'faqGroup',
+      title: localised('Joining ESN'),
+      items: [faqEntry('q4', 'Can I volunteer?', 'Yes, write to your Section.')],
+    },
+  ],
+  ...overrides,
+})
+
 export const section = (
   slug: string,
   order: number,

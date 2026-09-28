@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro'
+import FaqAccordion from '../components/FaqAccordion.astro'
+import PageHeader from '../components/PageHeader.astro'
+import SectionHeading from '../components/SectionHeading.astro'
+import { fetchContent } from '../lib/content'
+import { FAQ_QUERY } from '../lib/queries'
+import type { FaqPage } from '../lib/types'
+
+const page = (await fetchContent<FaqPage | null>(FAQ_QUERY)) ?? {}
+const title = page.title ?? 'Frequently asked questions'
+const topics = (page.topics ?? []).map((topic) => ({ ...topic, id: `topic-${topic._key}` }))
+---
+
+<Layout title={title} seo={page.seo}>
+  <PageHeader title={title} colour="orange">
+    {page.intro && (
+      <p class="max-w-150 text-base leading-normal whitespace-pre-line lg:text-lg">{page.intro}</p>
+    )}
+  </PageHeader>
+
+  {topics.length > 0 && (
+    <nav
+      aria-label="Topics"
+      class="sticky top-0 z-10 flex gap-2 overflow-x-auto border-b border-line bg-white px-5 py-3 lg:px-14"
+    >
+      {topics.map((topic) => (
+        <a
+          data-topic-chip
+          href={`#${topic.id}`}
+          class="shrink-0 bg-blue-50 px-3.5 py-2 text-sm font-black whitespace-nowrap text-esn-blue hover:bg-esn-blue hover:text-white"
+        >
+          {topic.title}
+        </a>
+      ))}
+    </nav>
+  )}
+
+  <div class="flex flex-col gap-10 px-5 py-8 lg:gap-14 lg:px-14 lg:py-14">
+    {topics.map((topic) => (
+      <section data-faq-topic id={topic.id} class="flex max-w-200 flex-col gap-4">
+        <SectionHeading colour="var(--color-esn-orange)">{topic.title}</SectionHeading>
+        <FaqAccordion entries={topic.items} />
+      </section>
+    ))}
+
+    <aside class="flex max-w-200 flex-col items-start gap-3 bg-surface p-5 lg:p-7">
+      <h2 class="font-heading text-[26px] leading-none font-bold lg:text-[32px]">Still stuck?</h2>
+      <p class="text-base leading-normal">Didn’t find your answer? Write to us and we’ll help.</p>
+      <a
+        href="/contacts"
+        class="bg-esn-magenta px-6 py-3 text-base font-black text-white hover:brightness-92"
+      >
+        Contact us
+      </a>
+    </aside>
+  </div>
+</Layout>

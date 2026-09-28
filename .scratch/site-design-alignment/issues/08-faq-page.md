@@ -11,9 +11,9 @@ Event-specific questions live in the Event FAQ on the Event page, not here.
 
 **Blocked by:** 03.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Seam test: the FAQ page renders every topic, in order, with its questions.
-- [ ] The topic chips reflect the topics and move to the chosen topic. The chip row stays in view while scrolling.
-- [ ] Accordions open and close with mouse and keyboard, and expose their expanded state to assistive technology.
-- [ ] A "Contact us" link goes to the Contacts page.
+- [x] Seam test: the FAQ page renders every topic, in order, with its questions.
+- [x] The topic chips reflect the topics and move to the chosen topic. The chip row stays in view while scrolling.
+- [x] Accordions open and close with mouse and keyboard, and expose their expanded state to assistive technology.
+- [x] A "Contact us" link goes to the Contacts page.
