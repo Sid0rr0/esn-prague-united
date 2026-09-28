@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import Picture from '../../components/Picture.astro'
+import PageHeader from '../../components/PageHeader.astro'
 import PhotoViewer from '../../components/PhotoViewer.astro'
 import { fetchContent } from '../../lib/content'
 import { formatDayMonthYear, formatPhotoCount } from '../../lib/format'
@@ -23,12 +24,14 @@ const photos = album.photos ?? []
 ---
 
 <Layout title={album.title}>
-  <header data-album-header class="flex flex-col gap-3 bg-orange-50 px-5 py-7 lg:gap-4 lg:p-14">
-    <span class="block h-1.5 w-10 bg-esn-orange lg:h-2 lg:w-12" aria-hidden="true"></span>
-    <time datetime={album.date} class="font-heading text-lg font-light lg:text-[22px]">
+  <PageHeader data-album-header title={album.title} colour="orange">
+    <time
+      slot="kicker"
+      datetime={album.date}
+      class="font-heading text-lg font-light lg:text-[22px]"
+    >
       {formatDayMonthYear(album.date)}
     </time>
-    <h1 class="font-heading text-[44px] leading-none font-bold lg:text-[64px]">{album.title}</h1>
     <p class="text-base text-muted lg:text-lg">
       {formatPhotoCount(album.photoCount)}
       {album.photographer && <> · Photos by {album.photographer}</>}
@@ -54,7 +57,7 @@ const photos = album.photos ?? []
         )}
       </div>
     )}
-  </header>
+  </PageHeader>
 
   {photos.length > 0 && (
     <>

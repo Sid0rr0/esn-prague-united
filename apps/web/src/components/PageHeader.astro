@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+/** Each colour's band tint and bar, spelled out so Tailwind sees the class names. */
+const COLOURS = {
+  green: { band: 'bg-green-50', bar: 'bg-esn-green' },
+  orange: { band: 'bg-orange-50', bar: 'bg-esn-orange' },
+}
+
+interface Props extends HTMLAttributes<'header'> {
+  title: string
+  colour: keyof typeof COLOURS
+}
+
+const { title, colour, ...attributes } = Astro.props
+const { band, bar } = COLOURS[colour]
+---
+
+<!-- A page's opening colour band: bar, optional kicker above the title, h1, then the slot. -->
+<header {...attributes} class:list={['flex flex-col gap-3 px-5 py-7 lg:gap-4 lg:p-14', band]}>
+  <span class:list={['block h-1.5 w-10 lg:h-2 lg:w-12', bar]} aria-hidden="true"></span>
+  <slot name="kicker" />
+  <h1 class="font-heading text-[44px] leading-none font-bold lg:text-[64px]">{title}</h1>
+  <slot />
+</header>

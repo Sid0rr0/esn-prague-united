@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import PageHeader from '../../components/PageHeader.astro'
 import SectionTile from '../../components/SectionTile.astro'
 import { fetchContent } from '../../lib/content'
 import { SECTIONS_QUERY } from '../../lib/queries'
@@ -9,13 +10,11 @@ const sections = await fetchContent<SectionSummary[]>(SECTIONS_QUERY)
 ---
 
 <Layout title="Sections">
-  <section class="flex flex-col gap-3 bg-green-50 px-5 py-7 lg:gap-4 lg:p-14">
-    <span class="block h-1.5 w-10 bg-esn-green lg:h-2 lg:w-12" aria-hidden="true"></span>
-    <h1 class="font-heading text-[44px] leading-none font-bold lg:text-[64px]">Sections</h1>
+  <PageHeader title="Sections" colour="green">
     <p class="max-w-150 text-base leading-normal lg:text-lg">
       Each university has its own ESN section. Join the one where you study.
     </p>
-  </section>
+  </PageHeader>
 
   <ul class="grid gap-0.5 pt-0.5 pb-5 lg:grid-cols-3 lg:px-14 lg:pt-14 lg:pb-14">
     {sections.map((section) => (
