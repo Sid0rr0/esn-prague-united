@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
-import { CalendarIcon } from '@sanity/icons'
+import { CalendarIcon } from '@sanity/icons/Calendar'
 import { localisedRichText, localisedString, localisedText } from '../objects/locale'
 
 export const event = defineType({

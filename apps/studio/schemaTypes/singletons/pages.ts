@@ -1,5 +1,7 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
-import { HelpCircleIcon, EnvelopeIcon, LinkIcon } from '@sanity/icons'
+import { HelpCircleIcon } from '@sanity/icons/HelpCircle'
+import { EnvelopeIcon } from '@sanity/icons/Envelope'
+import { LinkIcon } from '@sanity/icons/Link'
 import { localisedString, localisedText } from '../objects/locale'
 
 /** /faq: questions grouped by topic, drag & drop to reorder. */

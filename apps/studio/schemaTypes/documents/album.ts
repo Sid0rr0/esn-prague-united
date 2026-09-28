@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
-import { ImagesIcon } from '@sanity/icons'
+import { ImagesIcon } from '@sanity/icons/Images'
 import { localisedString } from '../objects/locale'
 
 export const album = defineType({

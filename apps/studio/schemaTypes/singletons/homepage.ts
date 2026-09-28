@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
-import { HomeIcon } from '@sanity/icons'
+import { HomeIcon } from '@sanity/icons/Home'
 import { localisedRichText, localisedString, localisedText } from '../objects/locale'
 
 export const homepage = defineType({
