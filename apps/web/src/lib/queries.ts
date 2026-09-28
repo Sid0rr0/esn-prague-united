@@ -57,9 +57,16 @@ export const HOMEPAGE_QUERY = groq`{
   ] | order(startsAt asc)[0...${HOMEPAGE_LIST_MAX}]{_id, title, "slug": slug.current, startsAt}
 }`
 
-// The Featured event is listed like any other here; cards show no price or Ticket note.
-export const UPCOMING_EVENTS_QUERY = groq`*[_type == "event" && !(${HAS_ENDED})] | order(startsAt asc){
+/** An Event as the Events list page's cards show it: no price or Ticket note. */
+const EVENT_CARD = `{
   _id, title, "slug": slug.current, startsAt, "venueName": venue.name, heroImage${image}
+}`
+
+// The Featured event is listed like any other here. Past events keep their Albums reachable,
+// newest first by the same end time that makes them past.
+export const EVENTS_LIST_QUERY = groq`{
+  "upcoming": *[_type == "event" && !(${HAS_ENDED})] | order(startsAt asc)${EVENT_CARD},
+  "past": *[_type == "event" && ${HAS_ENDED}] | order(coalesce(endsAt, startsAt) desc)${EVENT_CARD}
 }`
 
 // Detail queries list their fields rather than spreading the document, so data the design

@@ -65,10 +65,16 @@ export interface EventSummary {
   startsAt: string
 }
 
-/** An Upcoming event as a card on the Events list page shows it. */
+/** An Event as a card on the Events list page shows it. */
 export interface EventCardData extends EventSummary {
   venueName?: string
   heroImage?: SanityImage
+}
+
+/** The Events list page: Upcoming soonest first, Past newest first. */
+export interface EventsList {
+  upcoming: EventCardData[]
+  past: EventCardData[]
 }
 
 export interface FeaturedEvent extends TicketFields {

@@ -1,13 +1,13 @@
 ---
 import Layout from '../../layouts/Layout.astro'
-import EventCard from '../../components/EventCard.astro'
+import EventGrid from '../../components/EventGrid.astro'
 import PageHeader from '../../components/PageHeader.astro'
 import SectionHeading from '../../components/SectionHeading.astro'
 import { fetchContent } from '../../lib/content'
-import { UPCOMING_EVENTS_QUERY } from '../../lib/queries'
-import type { EventCardData } from '../../lib/types'
+import { EVENTS_LIST_QUERY } from '../../lib/queries'
+import type { EventsList } from '../../lib/types'
 
-const upcoming = await fetchContent<EventCardData[]>(UPCOMING_EVENTS_QUERY)
+const { upcoming, past } = await fetchContent<EventsList>(EVENTS_LIST_QUERY)
 ---
 
 <Layout title="Events">
@@ -20,15 +20,16 @@ const upcoming = await fetchContent<EventCardData[]>(UPCOMING_EVENTS_QUERY)
   <section data-upcoming class="flex flex-col gap-3.5 px-5 py-7 lg:gap-8 lg:p-14">
     <SectionHeading colour="var(--color-esn-cyan)">Upcoming</SectionHeading>
     {upcoming.length > 0 ? (
-      <ul class="grid gap-0.5 md:grid-cols-2 lg:grid-cols-4">
-        {upcoming.map((event) => (
-          <li>
-            <EventCard event={event} />
-          </li>
-        ))}
-      </ul>
+      <EventGrid events={upcoming} />
     ) : (
       <p class="text-base leading-normal">New events coming soon.</p>
     )}
   </section>
+
+  {past.length > 0 && (
+    <section data-past class="flex flex-col gap-3.5 px-5 pb-7 lg:gap-8 lg:px-14 lg:pb-14">
+      <SectionHeading colour="var(--color-esn-cyan)">Past</SectionHeading>
+      <EventGrid events={past} />
+    </section>
+  )}
 </Layout>
