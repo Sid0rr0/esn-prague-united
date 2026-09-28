@@ -1,0 +1,19 @@
+---
+interface Props {
+  text?: string
+  url?: string
+}
+const { text, url } = Astro.props
+---
+
+{text && (
+  <div class="bg-esn-orange px-3 py-2.5 text-center text-[13px] font-bold md:text-[15px]">
+    {url ? (
+      <a href={url} class="underline hover:text-esn-blue">
+        {text}
+      </a>
+    ) : (
+      text
+    )}
+  </div>
+)}

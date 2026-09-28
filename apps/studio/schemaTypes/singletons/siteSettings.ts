@@ -10,7 +10,7 @@ export const siteSettings = defineType({
     defineField({
       name: 'siteName',
       type: 'string',
-      initialValue: 'ESN Prague',
+      initialValue: 'ESN Prague United',
       validation: (r) => r.required(),
     }),
     defineField({ name: 'logo', type: 'image' }),
@@ -24,6 +24,13 @@ export const siteSettings = defineType({
         defineField({ name: 'enabled', type: 'boolean', initialValue: false }),
         defineField({ name: 'text', type: 'string', validation: (r) => r.max(90) }),
         defineField({ name: 'url', type: 'url' }),
+        defineField({
+          name: 'visibleUntil',
+          title: 'Hide after',
+          type: 'datetime',
+          description:
+            'Optional. The banner disappears automatically after this date (on the next rebuild).',
+        }),
       ],
     }),
     defineField({

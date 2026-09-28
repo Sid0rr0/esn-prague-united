@@ -1,0 +1,68 @@
+---
+import { imageUrl } from '../lib/image'
+import { DEFAULT_LOGO, SITE_NAME } from '../lib/site'
+import type { SanityImage } from '../lib/types'
+
+interface Props {
+  logo?: SanityImage
+  navigation: { _key: string; label: string; href: string }[]
+}
+
+const LOGO_HEIGHT = 104
+const { logo, navigation } = Astro.props
+const logoSrc = imageUrl(logo, { height: LOGO_HEIGHT }) ?? DEFAULT_LOGO
+const path = Astro.url.pathname
+const isActive = (href: string) =>
+  href.startsWith('/') && href !== '/' && (path === href || path.startsWith(`${href}/`))
+---
+
+<header class="relative flex items-center justify-between bg-white px-4 py-2.5 lg:px-14 lg:py-3.5">
+  <a href="/" aria-label={`${SITE_NAME} home`}>
+    <img src={logoSrc} alt={SITE_NAME} class="block h-10 w-auto lg:h-13" />
+  </a>
+  {navigation.length > 0 && (
+    <>
+      <button
+        type="button"
+        class="flex size-11 flex-col items-center justify-center gap-1 bg-esn-blue lg:hidden"
+        aria-controls="site-menu"
+        aria-expanded="false"
+        data-menu-toggle
+      >
+        <span class="sr-only">Menu</span>
+        <span class="h-0.5 w-4.5 bg-white" />
+        <span class="h-0.5 w-4.5 bg-white" />
+        <span class="h-0.5 w-4.5 bg-white" />
+      </button>
+      <nav
+        id="site-menu"
+        aria-label="Main"
+        class="absolute inset-x-0 top-full z-20 hidden bg-white shadow-[0_2px_0_var(--color-line)] data-[open]:block lg:static lg:block lg:shadow-none"
+      >
+        <ul class="flex flex-col gap-0.5 p-4 font-heading text-[17px] font-bold lg:flex-row lg:gap-8 lg:p-0">
+          {navigation.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                class="block py-2 hover:text-esn-magenta aria-[current=page]:text-esn-blue aria-[current=page]:shadow-[inset_0_-3px_0_var(--color-esn-cyan)] lg:py-1"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </>
+  )}
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]')
+  const menu = document.getElementById('site-menu')
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true'
+    toggle.setAttribute('aria-expanded', String(!isOpen))
+    menu?.toggleAttribute('data-open', !isOpen)
+  })
+</script>

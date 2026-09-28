@@ -13,13 +13,19 @@ Vitest runs in the web app.
 
 **Blocked by:** None (can start immediately).
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The web app fetches content from Sanity and renders a homepage inside the shared header/footer shell.
-- [ ] The header shows the logo and the Site settings main menu. No language switch is rendered.
-- [ ] All site copy and metadata name the organisation "ESN Prague United".
-- [ ] Site settings has a "Hide after" date on the top banner in the Studio.
-- [ ] A seam test shows the banner when it's enabled and before its "Hide after" date.
-- [ ] A seam test hides the banner after its "Hide after" date.
-- [ ] A seam test hides the banner when it's disabled.
-- [ ] Vitest runs from the workspace, the seam helper is reusable by later tickets, and the web app's type-check passes.
+- [x] The web app fetches content from Sanity and renders a homepage inside the shared header/footer shell.
+- [x] The header shows the logo and the Site settings main menu. No language switch is rendered.
+- [x] All site copy and metadata name the organisation "ESN Prague United".
+- [x] Site settings has a "Hide after" date on the top banner in the Studio.
+- [x] A seam test shows the banner when it's enabled and before its "Hide after" date.
+- [x] A seam test hides the banner after its "Hide after" date.
+- [x] A seam test hides the banner when it's disabled.
+- [x] Vitest runs from the workspace, the seam helper is reusable by later tickets, and the web app's type-check passes.
+
+## Comments
+
+- Seam: `apps/web/test/seam.ts` (`renderPage(Page, { documents, now, params })`) plus the fixture builders in `apps/web/test/fixtures.ts`. `test/setup.ts` swaps `fetchContent` for groq-js over the in-memory documents. Run with `pnpm test`.
+- The banner rule lives in `SETTINGS_QUERY` and compares with `dateTime(...)`, not a plain string comparison.
+- Not verified against the live dataset: building needs `PUBLIC_SANITY_PROJECT_ID` (and optionally `PUBLIC_SANITY_DATASET`) in `apps/web/.env`.

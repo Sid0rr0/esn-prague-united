@@ -1,10 +1,18 @@
-// Usage (with @sanity/astro): import {sanityClient} from 'sanity:client'
-//   const home = await sanityClient.fetch(HOMEPAGE_QUERY)
+// Usage: import { fetchContent } from './sanity'
+//   const home = await fetchContent(HOMEPAGE_QUERY)
 import groq from 'groq'
 
 const image = `{..., asset->{_id, url, metadata{lqip, dimensions}}}`
 
-export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]`
+// The top banner shows only while it's enabled and before its "Hide after" date.
+export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]{
+  logo, navigation[]{_key, label, href}, socials, footerText, seo,
+  "announcement": select(
+    announcement.enabled == true &&
+      (!defined(announcement.visibleUntil) || dateTime(announcement.visibleUntil) > dateTime(now()))
+      => announcement{text, url}
+  )
+}`
 
 const eventCard = `{title, "slug": slug.current, startsAt, venue, summary, ticketUrl, heroImage${image}}`
 

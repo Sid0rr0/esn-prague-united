@@ -1,0 +1,60 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Kelson Sans';
+  src: url('/fonts/KelsonSans-Light.otf') format('opentype');
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Kelson Sans';
+  src: url('/fonts/KelsonSans-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Kelson Sans';
+  src: url('/fonts/KelsonSans-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@theme {
+  --color-esn-cyan: #00aeef;
+  --color-esn-magenta: #ec008c;
+  --color-esn-green: #7ac143;
+  --color-esn-orange: #f47b20;
+  --color-esn-blue: #2e3192;
+  --color-ink: #1a1c3d;
+  --color-muted: #565b78;
+  --color-line: #dde0ea;
+  --color-surface: #f5f6fa;
+  --color-cyan-50: #e3f6fd;
+  --color-magenta-50: #fde6f3;
+  --color-green-50: #ebf6e1;
+  --color-orange-50: #fdebdd;
+  --color-blue-50: #e4e5f4;
+  --color-on-blue-muted: #c9cbf0;
+  --color-on-blue-label: #9fe3fa;
+  --color-viewer: #0e0f24;
+  --font-heading: 'Kelson Sans', sans-serif;
+  --font-body: 'Lato', sans-serif;
+  --breakpoint-sm: 390px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1280px;
+}
+
+@layer base {
+  html {
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    scroll-padding-top: 72px;
+  }
+  a {
+    transition: color 0.15s;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-esn-magenta);
+    outline-offset: 2px;
+  }
+}
