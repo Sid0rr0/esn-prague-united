@@ -138,3 +138,16 @@ export const album = (slug: string, overrides: Record<string, unknown> = {}): Do
   date: '2026-09-12',
   ...overrides,
 })
+
+/** The Contacts Singleton with the general email, address and socials, listing Section contacts. */
+export const contactsPage = (overrides: Record<string, unknown> = {}): Doc => ({
+  _id: 'contactsPage',
+  _type: 'contactsPage',
+  title: localised('Get in touch'),
+  intro: localised('Write to ESN Prague United or to your Section.'),
+  generalEmail: 'hello@esnprague.cz',
+  address: 'Vodičkova 36\n110 00 Praha 1',
+  showSectionContacts: true,
+  socials: { instagram: 'https://instagram.com/esnprague' },
+  ...overrides,
+})

@@ -10,10 +10,10 @@ There are no contact people.
 
 **Blocked by:** 06 (Section brand colours).
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Seam test: the Contacts page renders the general email as a mail link, plus the address.
-- [ ] Seam test: Section contacts render in website order with their brand colours when the toggle is on.
-- [ ] Seam test: Section contacts are absent when the toggle is off.
-- [ ] Seam test: social links render only for the networks that have a URL.
-- [ ] No contact people are rendered.
+- [x] Seam test: the Contacts page renders the general email as a mail link, plus the address.
+- [x] Seam test: Section contacts render in website order with their brand colours when the toggle is on.
+- [x] Seam test: Section contacts are absent when the toggle is off.
+- [x] Seam test: social links render only for the networks that have a URL.
+- [x] No contact people are rendered.

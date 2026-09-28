@@ -97,9 +97,12 @@ export const FAQ_QUERY = groq`*[_id == "faqPage"][0]{
   "topics": groups[count(items) > 0]{_key, title, items[]{_key, question, answer}}
 }`
 
+// The Section contacts toggle starts on, so a document that never touched it lists them too.
 export const CONTACTS_QUERY = groq`*[_id == "contactsPage"][0]{
   title, intro, generalEmail, address, socials, seo,
-  "sections": select(showSectionContacts => *[_type == "section"] | order(order asc){name, email, office, socials})
+  "sections": select(
+    showSectionContacts != false => *[_type == "section"] | order(order asc){name, "slug": slug.current, email}
+  )
 }`
 
 // Links whose "Hide after" date passed are filtered at build time.

@@ -100,6 +100,24 @@ export interface FaqPage {
   topics?: FaqTopic[] | null
 }
 
+/** A Section's name and email as the Contacts page lists them. */
+export interface SectionContact {
+  name: string
+  slug: string
+  email?: string
+}
+
+export interface ContactsPage {
+  title?: string
+  intro?: string
+  generalEmail?: string
+  address?: string
+  socials?: Socials | null
+  seo?: Seo
+  /** The Sections in website order; null when "Also list the 5 sections' contacts" is off. */
+  sections?: SectionContact[] | null
+}
+
 export interface Venue {
   name?: string
   address?: string
