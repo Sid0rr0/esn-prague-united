@@ -111,11 +111,11 @@ Change the content model, the queries and the rendered pages so they match the s
   - Rows show date and title only, with no Section.
   - No "Full calendar" link until the Events list page exists.
 - **Section colours:** a fixed mapping in code from Section slug to brand colour and tint. There is no schema field (consistent with ADR 0001).
-  - CU: cyan
-  - CTU: magenta
-  - VŠE: green
-  - CZU: orange
-  - UCT: dark blue
+  - CU: magenta
+  - CTU: dark blue
+  - VŠE: orange
+  - CZU: green
+  - UCT: cyan
 - **Rich text instead of structured blocks:** Event transport, Event dress code and Section office stay as text and render as prose. The design's line tags, dress cards and office rows are dropped.
 - **Naming:** all site copy and metadata use "ESN Prague United". This follows the CONTEXT.md glossary.
 - **Content migration:** existing documents may have values in the removed fields (organisers, album sections, people). Unset those fields in the dataset once the schema change ships, so no orphaned data stays behind.
