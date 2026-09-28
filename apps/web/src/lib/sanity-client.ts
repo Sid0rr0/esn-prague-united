@@ -22,7 +22,10 @@ function getClient(): SanityClient {
   return client
 }
 
-/** Runs a GROQ query (see queries.ts) against the Sanity dataset. */
-export function fetchContent<T>(query: string, params: Record<string, unknown> = {}): Promise<T> {
+/**
+ * Runs a GROQ query (see queries.ts) against the Sanity dataset and returns the raw result,
+ * translated fields still holding every language. Pages read through fetchContent in content.ts.
+ */
+export function fetchRaw<T>(query: string, params: Record<string, unknown> = {}): Promise<T> {
   return getClient().fetch<T>(query, params)
 }

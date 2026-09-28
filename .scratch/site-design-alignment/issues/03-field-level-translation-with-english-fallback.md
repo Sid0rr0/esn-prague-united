@@ -8,10 +8,10 @@ This is a wide change across all schemas. It lands before the page tickets so th
 
 **Blocked by:** 01 (test seam), 02 (same schemas, fewer fields to translate).
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Every translatable text field in the Studio offers English and Czech values. Slugs, URLs, dates, numbers and images are not translated.
-- [ ] Queries and pages resolve a localised field to English. A Czech request falls back to English per field when the Czech value is empty.
-- [ ] A seam test shows a page rendering the English value, and the Czech fallback resolving to English when Czech is empty.
-- [ ] A migration script moves existing text values into the English value. Running it twice is harmless.
-- [ ] The Studio and web app type-checks pass.
+- [x] Every translatable text field in the Studio offers English and Czech values. Slugs, URLs, dates, numbers and images are not translated.
+- [x] Queries and pages resolve a localised field to English. A Czech request falls back to English per field when the Czech value is empty.
+- [x] A seam test shows a page rendering the English value, and the Czech fallback resolving to English when Czech is empty.
+- [x] A migration script moves existing text values into the English value. Running it twice is harmless.
+- [x] The Studio and web app type-checks pass.

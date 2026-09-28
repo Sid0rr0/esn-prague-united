@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { ImagesIcon } from '@sanity/icons'
+import { localisedString } from '../objects/locale'
 
 export const album = defineType({
   name: 'album',
@@ -7,12 +8,12 @@ export const album = defineType({
   type: 'document',
   icon: ImagesIcon,
   fields: [
-    defineField({ name: 'title', type: 'string', validation: (r) => r.required() }),
+    localisedString({ name: 'title', required: true }),
     defineField({
       name: 'slug',
       title: 'Web address',
       type: 'slug',
-      options: { source: 'title' },
+      options: { source: 'title.en' },
       validation: (r) => r.required(),
     }),
     defineField({ name: 'date', type: 'date', validation: (r) => r.required() }),
@@ -45,5 +46,5 @@ export const album = defineType({
   orderings: [
     { title: 'Date, newest first', name: 'dateDesc', by: [{ field: 'date', direction: 'desc' }] },
   ],
-  preview: { select: { title: 'title', subtitle: 'date', media: 'cover' } },
+  preview: { select: { title: 'title.en', subtitle: 'date', media: 'cover' } },
 })

@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { UsersIcon } from '@sanity/icons'
+import { localisedRichText, localisedString, localisedText } from '../objects/locale'
 
 /**
  * One ESN section in Prague. There are exactly 5; the Studio structure
@@ -16,13 +17,12 @@ export const section = defineType({
     { name: 'contact', title: 'Contact & links' },
   ],
   fields: [
-    defineField({
+    localisedString({
       name: 'name',
       title: 'Full name',
-      type: 'string',
       description: 'e.g. ESN CTU in Prague',
       group: 'main',
-      validation: (r) => r.required(),
+      required: true,
     }),
     defineField({
       name: 'shortName',
@@ -40,10 +40,9 @@ export const section = defineType({
       group: 'main',
       validation: (r) => r.required(),
     }),
-    defineField({
+    localisedString({
       name: 'university',
       title: 'University',
-      type: 'string',
       description: 'e.g. Czech Technical University in Prague',
       group: 'main',
     }),
@@ -54,14 +53,8 @@ export const section = defineType({
       type: 'imageWithAlt',
       group: 'main',
     }),
-    defineField({
-      name: 'tagline',
-      title: 'One-line description',
-      type: 'string',
-      group: 'main',
-      validation: (r) => r.max(120),
-    }),
-    defineField({ name: 'about', title: 'About the section', type: 'richText', group: 'main' }),
+    localisedString({ name: 'tagline', title: 'One-line description', group: 'main', max: 120 }),
+    localisedRichText({ name: 'about', title: 'About the section', group: 'main' }),
     defineField({
       name: 'buddyProgramUrl',
       title: 'Buddy programme sign-up',
@@ -69,13 +62,7 @@ export const section = defineType({
       group: 'contact',
     }),
     defineField({ name: 'email', type: 'string', group: 'contact', validation: (r) => r.email() }),
-    defineField({
-      name: 'office',
-      title: 'Office / office hours',
-      type: 'text',
-      rows: 3,
-      group: 'contact',
-    }),
+    localisedText({ name: 'office', title: 'Office / office hours', group: 'contact' }),
     defineField({
       name: 'mapUrl',
       title: 'Office on map (Google/Mapy.cz link)',
@@ -94,5 +81,5 @@ export const section = defineType({
   orderings: [
     { title: 'Website order', name: 'order', by: [{ field: 'order', direction: 'asc' }] },
   ],
-  preview: { select: { title: 'name', subtitle: 'university', media: 'logo' } },
+  preview: { select: { title: 'name.en', subtitle: 'university.en', media: 'logo' } },
 })

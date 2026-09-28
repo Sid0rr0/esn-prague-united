@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { HomeIcon } from '@sanity/icons'
+import { localisedRichText, localisedString, localisedText } from '../objects/locale'
 
 export const homepage = defineType({
   name: 'homepage',
@@ -18,8 +19,8 @@ export const homepage = defineType({
       type: 'object',
       group: 'hero',
       fields: [
-        defineField({ name: 'heading', type: 'string', validation: (r) => r.required().max(70) }),
-        defineField({ name: 'subheading', type: 'text', rows: 2, validation: (r) => r.max(200) }),
+        localisedString({ name: 'heading', required: true, max: 70 }),
+        localisedText({ name: 'subheading', max: 200 }),
         defineField({ name: 'image', type: 'imageWithAlt' }),
         defineField({ name: 'primaryButton', title: 'Main button', type: 'cta' }),
         defineField({ name: 'secondaryButton', title: 'Second button', type: 'cta' }),
@@ -40,8 +41,8 @@ export const homepage = defineType({
       type: 'object',
       group: 'content',
       fields: [
-        defineField({ name: 'heading', type: 'string', initialValue: 'What is ESN Prague?' }),
-        defineField({ name: 'text', type: 'richText' }),
+        localisedString({ name: 'heading', initialValue: 'What is ESN Prague?' }),
+        localisedRichText({ name: 'text' }),
         defineField({
           name: 'stats',
           title: 'Numbers',
@@ -52,9 +53,9 @@ export const homepage = defineType({
               type: 'object',
               fields: [
                 defineField({ name: 'value', type: 'string', validation: (r) => r.required() }),
-                defineField({ name: 'label', type: 'string', validation: (r) => r.required() }),
+                localisedString({ name: 'label', required: true }),
               ],
-              preview: { select: { title: 'value', subtitle: 'label' } },
+              preview: { select: { title: 'value', subtitle: 'label.en' } },
             }),
           ],
           validation: (r) => r.max(4),

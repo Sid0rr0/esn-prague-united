@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "sanity dev",
     "deploy": "sanity deploy",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --test 'migrations/*.test.ts'"
   },
   "dependencies": {
     "@sanity/icons": "^5.2.2",

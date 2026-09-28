@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { HelpCircleIcon, EnvelopeIcon, LinkIcon } from '@sanity/icons'
+import { localisedString, localisedText } from '../objects/locale'
 
 /** /faq: questions grouped by topic, drag & drop to reorder. */
 export const faqPage = defineType({
@@ -8,8 +9,8 @@ export const faqPage = defineType({
   type: 'document',
   icon: HelpCircleIcon,
   fields: [
-    defineField({ name: 'title', type: 'string', initialValue: 'Frequently asked questions' }),
-    defineField({ name: 'intro', type: 'text', rows: 2 }),
+    localisedString({ name: 'title', initialValue: 'Frequently asked questions' }),
+    localisedText({ name: 'intro' }),
     defineField({
       name: 'groups',
       title: 'Topics',
@@ -19,13 +20,12 @@ export const faqPage = defineType({
           type: 'object',
           name: 'faqGroup',
           fields: [
-            defineField({
+            localisedString({
               name: 'title',
               title: 'Topic',
-              type: 'string',
               description:
                 'General topics, e.g. ESN card, Buddy programme, Joining ESN. Questions about one Event go in that Event’s FAQ.',
-              validation: (r) => r.required(),
+              required: true,
             }),
             defineField({
               name: 'items',
@@ -35,7 +35,7 @@ export const faqPage = defineType({
             }),
           ],
           preview: {
-            select: { title: 'title', items: 'items' },
+            select: { title: 'title.en', items: 'items' },
             prepare: ({ title, items }) => ({ title, subtitle: `${items?.length ?? 0} questions` }),
           },
         }),
@@ -53,8 +53,8 @@ export const contactsPage = defineType({
   type: 'document',
   icon: EnvelopeIcon,
   fields: [
-    defineField({ name: 'title', type: 'string', initialValue: 'Contact us' }),
-    defineField({ name: 'intro', type: 'text', rows: 2 }),
+    localisedString({ name: 'title', initialValue: 'Contact us' }),
+    localisedText({ name: 'intro' }),
     defineField({
       name: 'generalEmail',
       title: 'General email',
@@ -81,8 +81,8 @@ export const linksPage = defineType({
   type: 'document',
   icon: LinkIcon,
   fields: [
-    defineField({ name: 'title', type: 'string', initialValue: 'ESN Prague' }),
-    defineField({ name: 'intro', type: 'string', validation: (r) => r.max(120) }),
+    localisedString({ name: 'title', initialValue: 'ESN Prague' }),
+    localisedString({ name: 'intro', max: 120 }),
     defineField({ name: 'avatar', title: 'Logo / picture', type: 'image' }),
     defineField({
       name: 'links',

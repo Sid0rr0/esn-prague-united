@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { CogIcon } from '@sanity/icons'
+import { localisedString, localisedText } from '../objects/locale'
 
 export const siteSettings = defineType({
   name: 'siteSettings',
@@ -22,7 +23,7 @@ export const siteSettings = defineType({
         'Optional strip at the top of every page, e.g. "Tickets for the Czech Ball are live!"',
       fields: [
         defineField({ name: 'enabled', type: 'boolean', initialValue: false }),
-        defineField({ name: 'text', type: 'string', validation: (r) => r.max(90) }),
+        localisedString({ name: 'text', max: 90 }),
         defineField({ name: 'url', type: 'url' }),
         defineField({
           name: 'visibleUntil',
@@ -42,7 +43,7 @@ export const siteSettings = defineType({
         defineArrayMember({
           type: 'object',
           fields: [
-            defineField({ name: 'label', type: 'string', validation: (r) => r.required() }),
+            localisedString({ name: 'label', required: true }),
             defineField({
               name: 'href',
               title: 'Path or URL',
@@ -55,7 +56,7 @@ export const siteSettings = defineType({
       validation: (r) => r.max(6),
     }),
     defineField({ name: 'socials', type: 'socials' }),
-    defineField({ name: 'footerText', title: 'Footer text', type: 'text', rows: 2 }),
+    localisedText({ name: 'footerText', title: 'Footer text' }),
     defineField({ name: 'seo', title: 'Default sharing preview', type: 'seo' }),
   ],
   preview: { prepare: () => ({ title: 'Site settings' }) },

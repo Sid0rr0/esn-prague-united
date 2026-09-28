@@ -1,7 +1,8 @@
 import { vi } from 'vitest'
 
-// Every page reads Sanity through fetchContent; tests answer it from the in-memory dataset.
-vi.mock('../src/lib/sanity', async () => {
+// Every page reads Sanity through fetchRaw; tests answer it from the in-memory dataset, so
+// translated fields still go through the real language resolution in content.ts.
+vi.mock('../src/lib/sanity-client', async () => {
   const { queryInMemory } = await import('./seam')
-  return { fetchContent: queryInMemory }
+  return { fetchRaw: queryInMemory }
 })

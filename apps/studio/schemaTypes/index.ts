@@ -8,6 +8,7 @@ import {
   programmeItem,
   faqEntry,
 } from './objects/common'
+import { localeRichText, localeString, localeText } from './objects/locale'
 import { section } from './documents/section'
 import { event } from './documents/event'
 import { album } from './documents/album'
@@ -25,6 +26,9 @@ export const SINGLETONS = [
 
 export const schemaTypes = [
   // objects
+  localeString,
+  localeText,
+  localeRichText,
   imageWithAlt,
   richText,
   cta,

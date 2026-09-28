@@ -1,4 +1,4 @@
-/** Shapes returned by the GROQ queries in queries.ts. */
+/** Shapes returned by the GROQ queries in queries.ts, after i18n.ts resolved translated fields. */
 
 export interface SanityImage {
   asset?: { _ref: string }

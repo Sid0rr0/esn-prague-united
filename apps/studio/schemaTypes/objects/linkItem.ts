@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { LinkIcon } from '@sanity/icons'
+import { localisedString } from './locale'
 
 /**
  * Preset icons: editors pick from a list instead of uploading SVGs.
@@ -30,12 +31,7 @@ export const linkItem = defineType({
   type: 'object',
   icon: LinkIcon,
   fields: [
-    defineField({
-      name: 'label',
-      title: 'Display text',
-      type: 'string',
-      validation: (r) => r.required().max(60),
-    }),
+    localisedString({ name: 'label', title: 'Display text', required: true, max: 60 }),
     defineField({
       name: 'url',
       title: 'Link',
@@ -66,7 +62,7 @@ export const linkItem = defineType({
     }),
   ],
   preview: {
-    select: { title: 'label', subtitle: 'url', highlight: 'highlight' },
+    select: { title: 'label.en', subtitle: 'url', highlight: 'highlight' },
     prepare: ({ title, subtitle, highlight }) => ({
       title: highlight ? `★ ${title}` : title,
       subtitle,

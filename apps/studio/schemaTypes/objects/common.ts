@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
+import { localisedString, localisedText, localisedRichText } from './locale'
 
 /** Image with required alt text and hotspot/crop. Used everywhere. */
 export const imageWithAlt = defineType({
@@ -7,13 +8,14 @@ export const imageWithAlt = defineType({
   type: 'image',
   options: { hotspot: true },
   fields: [
-    defineField({
+    localisedString({
       name: 'alt',
       title: 'Short description (for screen readers)',
-      type: 'string',
-      validation: (r) => r.required().warning('Please describe the photo in a few words.'),
+      description: 'Please describe the photo in a few words.',
+      required: true,
+      warnOnly: true,
     }),
-    defineField({ name: 'caption', title: 'Caption', type: 'string' }),
+    localisedString({ name: 'caption', title: 'Caption' }),
   ],
 })
 
@@ -64,12 +66,7 @@ export const cta = defineType({
   title: 'Button',
   type: 'object',
   fields: [
-    defineField({
-      name: 'label',
-      title: 'Button text',
-      type: 'string',
-      validation: (r) => r.required().max(30),
-    }),
+    localisedString({ name: 'label', title: 'Button text', required: true, max: 30 }),
     defineField({ name: 'url', title: 'Link', type: 'url', validation: (r) => r.required() }),
   ],
 })
@@ -97,8 +94,8 @@ export const seo = defineType({
   type: 'object',
   options: { collapsible: true, collapsed: true },
   fields: [
-    defineField({ name: 'title', type: 'string', validation: (r) => r.max(60) }),
-    defineField({ name: 'description', type: 'text', rows: 2, validation: (r) => r.max(160) }),
+    localisedString({ name: 'title', max: 60 }),
+    localisedText({ name: 'description', max: 160 }),
     defineField({
       name: 'image',
       title: 'Preview image',
@@ -121,16 +118,11 @@ export const programmeItem = defineType({
       description: 'e.g. 18:00',
       validation: (r) => r.required().regex(/^\d{1,2}:\d{2}$/, { name: 'HH:MM' }),
     }),
-    defineField({
-      name: 'title',
-      title: 'What happens',
-      type: 'string',
-      validation: (r) => r.required(),
-    }),
-    defineField({ name: 'description', title: 'Details', type: 'text', rows: 2 }),
+    localisedString({ name: 'title', title: 'What happens', required: true }),
+    localisedText({ name: 'description', title: 'Details' }),
   ],
   preview: {
-    select: { time: 'time', title: 'title' },
+    select: { time: 'time', title: 'title.en' },
     prepare: ({ time, title }) => ({ title: `${time}  ${title}` }),
   },
 })
@@ -141,8 +133,8 @@ export const faqEntry = defineType({
   title: 'Question',
   type: 'object',
   fields: [
-    defineField({ name: 'question', type: 'string', validation: (r) => r.required() }),
-    defineField({ name: 'answer', type: 'richText', validation: (r) => r.required() }),
+    localisedString({ name: 'question', required: true }),
+    localisedRichText({ name: 'answer', required: true }),
   ],
-  preview: { select: { title: 'question' } },
+  preview: { select: { title: 'question.en' } },
 })

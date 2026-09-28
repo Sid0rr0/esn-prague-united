@@ -1,4 +1,4 @@
-// Usage: import { fetchContent } from './sanity'
+// Usage: import { fetchContent } from './content'
 //   const home = await fetchContent(HOMEPAGE_QUERY)
 import groq from 'groq'
 

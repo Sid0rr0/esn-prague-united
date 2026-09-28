@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import Home from '../src/pages/index.astro'
 import { renderPage } from './seam'
-import { homepage, siteSettings } from './fixtures'
+import { homepage, localised, siteSettings } from './fixtures'
 
 const NOW = '2026-10-01T10:00:00Z'
 
@@ -13,7 +13,7 @@ const withBanner = (announcement: Record<string, unknown>) =>
       siteSettings({
         announcement: {
           enabled: true,
-          text: 'Czech Ball tickets are on sale',
+          text: localised('Czech Ball tickets are on sale'),
           url: 'https://tickets.example/ball',
           ...announcement,
         },
