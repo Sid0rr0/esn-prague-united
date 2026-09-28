@@ -1,0 +1,3 @@
+# Fixed set of exactly 5 ESN sections
+
+ESN Prague has exactly 5 local sections (one per partner university), and that number is not expected to change. `schemaTypes/documents/section.ts` caps the `order` field at 1–5, and `sanity.config.ts` hides `section` from the "+ Create" menu and the Studio's default list view, showing it instead as a fixed, admin-managed list. We chose this over letting editors freely create sections to prevent accidental duplicates or one-off entries polluting a small, well-known set — the cost is that adding a genuinely new section (a rare, admin-level event) requires editing the schema/structure config rather than clicking "+ Create" in the Studio.
