@@ -8,10 +8,10 @@
 
 **Blocked by:** 11.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Seam test: Past events are listed below Upcoming events, newest first.
-- [ ] Seam test: an Event whose end time has passed is past, even if its start time is recent.
-- [ ] Seam test: an Event with no end time is past once its start time has passed.
-- [ ] Seam test: an Event that has started but not ended is still upcoming.
-- [ ] Seam test: with no Past events, the "Past" heading isn't rendered.
+- [x] Seam test: Past events are listed below Upcoming events, newest first.
+- [x] Seam test: an Event whose end time has passed is past, even if its start time is recent.
+- [x] Seam test: an Event with no end time is past once its start time has passed.
+- [x] Seam test: an Event that has started but not ended is still upcoming.
+- [x] Seam test: with no Past events, the "Past" heading isn't rendered.
