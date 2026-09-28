@@ -83,7 +83,7 @@ export const linksPage = defineType({
   type: 'document',
   icon: LinkIcon,
   fields: [
-    localisedString({ name: 'title', initialValue: 'ESN Prague' }),
+    localisedString({ name: 'title', initialValue: 'ESN Prague United' }),
     localisedString({ name: 'intro', max: 120 }),
     defineField({ name: 'avatar', title: 'Logo / picture', type: 'image' }),
     defineField({
