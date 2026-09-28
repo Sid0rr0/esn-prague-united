@@ -45,7 +45,7 @@ export const singletons = (): Singleton[] => [
       { _key: 'faq', label: en('FAQ'), href: '/faq' },
       { _key: 'contacts', label: en('Contacts'), href: '/contacts' },
     ],
-    footerText: enText('ESN Prague United. Five sections, one city.'),
+    footerText: enText('Five sections, one city.'),
   },
   {
     _id: 'homepage',
