@@ -2,7 +2,8 @@
 import type { Socials } from '../lib/types'
 
 interface Props {
-  socials?: Socials
+  /** GROQ returns null for social links that were never filled in. */
+  socials?: Socials | null
   /** compact: 44px squares with short labels (footer); tiles: full names in a 3-column grid. */
   variant?: 'compact' | 'tiles'
 }
@@ -16,7 +17,8 @@ const NETWORKS: { key: keyof Socials; name: string; short: string }[] = [
   { key: 'website', name: 'Website', short: 'WWW' },
 ]
 
-const { socials = {}, variant = 'tiles' } = Astro.props
+const { variant = 'tiles' } = Astro.props
+const socials = Astro.props.socials ?? {}
 const links = NETWORKS.filter(({ key }) => socials[key]).map((network) => ({
   ...network,
   url: socials[network.key] as string,

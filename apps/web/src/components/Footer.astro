@@ -4,7 +4,7 @@ import { SITE_NAME } from '../lib/site'
 import type { Socials } from '../lib/types'
 
 interface Props {
-  socials?: Socials
+  socials?: Socials | null
   text?: string
 }
 const { socials, text } = Astro.props

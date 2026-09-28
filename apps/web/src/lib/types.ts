@@ -23,7 +23,7 @@ export interface Seo {
 export interface Settings {
   logo?: SanityImage
   navigation?: { _key: string; label: string; href: string }[]
-  socials?: Socials
+  socials?: Socials | null
   footerText?: string
   seo?: Seo
   /** Only set while the banner is enabled and before its "Hide after" date. */

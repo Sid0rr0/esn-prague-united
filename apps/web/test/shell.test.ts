@@ -37,6 +37,16 @@ describe('site shell', () => {
     expect(html).toContain('<footer')
     expect(html).not.toMatch(/ESN Prague(?! United)/)
   })
+
+  it('renders the footer when Site settings has no social links', async () => {
+    const html = await renderPage(Home, {
+      now: NOW,
+      documents: [homepage(), siteSettings({ socials: undefined })],
+    })
+
+    expect(html).toContain('<footer')
+    expect(html).not.toContain('aria-label="Instagram"')
+  })
 })
 
 describe('top banner', () => {
