@@ -12,10 +12,10 @@ Past events are ticket 12.
 
 **Blocked by:** None (can start immediately).
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Seam test: `/events` renders inside the shared header/footer shell.
-- [ ] Seam test: Upcoming events are listed soonest first, each card linking to its Event page with image, title, date and venue.
-- [ ] Seam test: cards show no price or Ticket note, even when the Event has Price tiers or a Ticket note.
-- [ ] Seam test: the Featured event appears in the Upcoming group as a normal card.
-- [ ] Seam test: with no Upcoming events, the "Upcoming" heading and the Instagram line are shown.
+- [x] Seam test: `/events` renders inside the shared header/footer shell.
+- [x] Seam test: Upcoming events are listed soonest first, each card linking to its Event page with image, title, date and venue.
+- [x] Seam test: cards show no price or Ticket note, even when the Event has Price tiers or a Ticket note.
+- [x] Seam test: the Featured event appears in the Upcoming group as a normal card.
+- [x] Seam test: with no Upcoming events, the "Upcoming" heading and the Instagram line are shown.
