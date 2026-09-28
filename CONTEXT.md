@@ -12,6 +12,10 @@ _Avoid_: Chapter, branch, club
 A single ESN Prague event with a date, venue, optional programme, and ticket info (e.g. the Czech Ball). Organised by one or more Sections. Ticket availability is inferred from whether a ticket link is set — there's no separate status field.
 _Avoid_: Party, activity
 
+**Featured event**:
+The Event an editor picks to promote on the homepage. Only a picked Event takes over the homepage hero; when none is picked, the featured-event card falls back to the next upcoming Event, but the hero stays about ESN Prague.
+_Avoid_: Highlighted event, main event
+
 **Album**:
 A set of photos from an event or a section, shown on `/gallery`. An event owns an optional reference to its album (not every event has one yet); an album doesn't need an event (section-only photo dumps are valid). When an album belongs to an event, the album's sections are that event's organisers — an album never lists sections its event wasn't organised by.
 _Avoid_: Gallery (that's the page; Album is the content type)

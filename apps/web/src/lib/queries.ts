@@ -6,15 +6,17 @@ const image = `{..., asset->{_id, url, metadata{lqip, dimensions}}}`
 
 export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]`
 
+const eventCard = `{title, "slug": slug.current, startsAt, venue, summary, ticketUrl, heroImage${image}}`
+
+// featuredEvent is only what an editor picked, so the hero can take it over; the event card
+// falls back to nextEvent when nothing is picked.
 export const HOMEPAGE_QUERY = groq`{
   "page": *[_id == "homepage"][0]{
     ...,
     hero{..., image${image}},
-    "featuredEvent": coalesce(
-      featuredEvent->,
-      *[_type == "event" && startsAt > now()] | order(startsAt asc)[0]
-    ){title, "slug": slug.current, startsAt, venue, summary, ticketUrl, heroImage${image}}
+    "featuredEvent": featuredEvent->${eventCard}
   },
+  "nextEvent": *[_type == "event" && startsAt > now()] | order(startsAt asc)[0]${eventCard},
   "sections": *[_type == "section"] | order(order asc){name, shortName, "slug": slug.current, tagline, logo},
   "albums": *[_type == "album"] | order(date desc)[0...4]{title, "slug": slug.current, date, cover${image}}
 }`
