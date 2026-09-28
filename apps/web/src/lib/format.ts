@@ -16,12 +16,18 @@ export const formatShortDate = (iso: string): string => {
   return `${datePart(date, { day: 'numeric' })} ${datePart(date, { month: 'short' })}`
 }
 
-/** "Thursday 26 November · 18:00", the line above a Featured event's title. */
-export const formatKicker = (iso: string): string => {
+/** "Thursday 26 November" in Prague time. */
+export const formatLongDate = (iso: string): string => {
   const date = new Date(iso)
-  const day = `${datePart(date, { weekday: 'long' })} ${datePart(date, { day: 'numeric' })} ${datePart(date, { month: 'long' })}`
-  return `${day} · ${formatTime(iso)}`
+  return `${datePart(date, { weekday: 'long' })} ${datePart(date, { day: 'numeric' })} ${datePart(date, { month: 'long' })}`
 }
+
+/** "18:00–02:00", or "18:00" when there's no end time. */
+export const formatTimeRange = (startIso: string, endIso?: string): string =>
+  endIso ? `${formatTime(startIso)}–${formatTime(endIso)}` : formatTime(startIso)
+
+/** "Thursday 26 November · 18:00", the line above a Featured event's title. */
+export const formatKicker = (iso: string): string => `${formatLongDate(iso)} · ${formatTime(iso)}`
 
 /** "590 CZK" */
 export const formatPrice = (amount: number): string => `${amount} CZK`

@@ -22,6 +22,9 @@ const HOMEPAGE_LIST_MAX = 4
 /** An Event has ended once its end time has passed, or its start time if it has no end time. */
 const HAS_ENDED = `dateTime(coalesce(endsAt, startsAt)) < dateTime(now())`
 
+/** What ticketDisplay in tickets.ts needs to decide what shows where tickets would be. */
+const TICKET_FIELDS = `ticketUrl, ticketNote, priceTiers[]{_key, label, amount}, "hasEnded": ${HAS_ENDED}`
+
 // featuredEvent is only what an editor picked, so the hero can take it over. The upcoming
 // list never repeats it, and there is no next-event fallback when nothing is picked.
 export const HOMEPAGE_QUERY = groq`{
@@ -29,8 +32,7 @@ export const HOMEPAGE_QUERY = groq`{
     hero, about{heading, text, "stats": stats[0...${HOMEPAGE_LIST_MAX}]}, seo,
     "quickLinks": highlightedLinks[${visibleUntilFilter('visibleUntil')}][0...${HOMEPAGE_LIST_MAX}]{_key, label, url},
     "featuredEvent": featuredEvent->{
-      title, "slug": slug.current, startsAt, summary, heroImage,
-      ticketUrl, ticketNote, priceTiers[]{_key, label, amount}
+      title, "slug": slug.current, startsAt, summary, heroImage, ${TICKET_FIELDS}
     }
   },
   "upcoming": *[
@@ -47,9 +49,12 @@ export const EVENTS_QUERY = groq`*[_type == "event"] | order(startsAt desc){
 // dropped (e.g. Event organisers) never reaches a page even if an old document still holds it.
 export const EVENT_QUERY = groq`*[_type == "event" && slug.current == $slug][0]{
   title, "slug": slug.current, startsAt, endsAt, venue, heroImage${image}, summary, description,
-  programme, dressCode, faq, ticketUrl, ticketInfo, seo,
-  album->{title, "slug": slug.current, cover${image}}
+  programme[]{_key, time, title, description}, dressCode, faq[]{_key, question, answer},
+  ticketInfo, seo, ${TICKET_FIELDS},
+  album->{title, "slug": slug.current}
 }`
+
+export const EVENT_SLUGS_QUERY = groq`*[_type == "event" && defined(slug.current)].slug.current`
 
 export const SECTIONS_QUERY = groq`*[_type == "section"] | order(order asc){..., "slug": slug.current}`
 

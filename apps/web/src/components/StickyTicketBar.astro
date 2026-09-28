@@ -1,0 +1,38 @@
+---
+import { formatPrice } from '../lib/format'
+import type { TicketDisplay } from '../lib/tickets'
+
+interface Props {
+  tickets: TicketDisplay
+}
+const { tickets } = Astro.props
+---
+
+{tickets.kind === 'buy' && (
+  <div
+    data-sticky-bar
+    class="fixed inset-x-0 bottom-0 z-20 flex border-t border-line bg-white p-3 font-black lg:hidden"
+  >
+    <a
+      href={tickets.url}
+      class="flex h-13 flex-1 items-center justify-center bg-esn-magenta px-6 text-[17px] text-white hover:brightness-92"
+    >
+      Buy ticket
+    </a>
+    {tickets.headline && (
+      <span class="flex h-13 items-center bg-blue-50 px-4.5 text-base text-esn-blue">
+        {formatPrice(tickets.headline.amount)}
+      </span>
+    )}
+  </div>
+)}
+{tickets.kind === 'note' && (
+  <div
+    data-sticky-bar
+    class="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-white p-3 lg:hidden"
+  >
+    <p data-ticket-note class="text-center text-[15px] font-black">
+      {tickets.note}
+    </p>
+  </div>
+)}

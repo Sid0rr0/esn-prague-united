@@ -1,0 +1,173 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Picture from '../../components/Picture.astro'
+import RichText from '../../components/RichText.astro'
+import SectionHeading from '../../components/SectionHeading.astro'
+import StickyTicketBar from '../../components/StickyTicketBar.astro'
+import TicketSidebar from '../../components/TicketSidebar.astro'
+import { fetchContent } from '../../lib/content'
+import { formatLongDate, formatTimeRange } from '../../lib/format'
+import { EVENT_QUERY, EVENT_SLUGS_QUERY } from '../../lib/queries'
+import { ticketDisplay } from '../../lib/tickets'
+import type { EventDetail } from '../../lib/types'
+
+export async function getStaticPaths() {
+  const slugs = await fetchContent<string[]>(EVENT_SLUGS_QUERY)
+  return slugs.map((slug) => ({ params: { slug } }))
+}
+
+const event = await fetchContent<EventDetail | null>(EVENT_QUERY, { slug: Astro.params.slug })
+if (!event) return new Response(null, { status: 404 })
+
+const tickets = ticketDisplay(event)
+const tiers = event.priceTiers ?? []
+const programme = event.programme ?? []
+const faq = event.faq ?? []
+const venue = event.venue
+// Once ended, the sidebar's place holds only the Album link, or nothing without an Album.
+const endedAlbum = event.hasEnded ? event.album : null
+const hasTicketBlock =
+  !event.hasEnded && (tickets.kind !== 'none' || tiers.length > 0 || Boolean(event.ticketInfo))
+---
+
+<Layout title={event.title} seo={event.seo}>
+  <section class="grid bg-esn-blue text-white lg:grid-cols-2">
+    <Picture
+      image={event.heroImage}
+      width={640}
+      height={480}
+      eager
+      class="aspect-4/3 w-full lg:order-last lg:aspect-auto lg:h-full lg:min-h-105"
+      fallbackClass="bg-esn-blue-shade"
+    />
+    <div class="flex flex-col justify-center gap-3.5 px-5 pt-7 pb-8 lg:gap-5 lg:px-14 lg:py-16">
+      <h1 class="font-heading text-[52px] leading-[.9] font-bold lg:text-[88px]">{event.title}</h1>
+      <dl class="flex flex-col gap-1 text-base lg:text-lg">
+        <div class="flex gap-2">
+          <dt class="sr-only">Date</dt>
+          <dd class="font-black">
+            <time datetime={event.startsAt}>{formatLongDate(event.startsAt)}</time>
+          </dd>
+        </div>
+        <div class="flex gap-2">
+          <dt class="sr-only">Time</dt>
+          <dd>{formatTimeRange(event.startsAt, event.endsAt)}</dd>
+        </div>
+        {venue?.name && (
+          <div class="flex gap-2">
+            <dt class="sr-only">Venue</dt>
+            <dd>{venue.name}</dd>
+          </div>
+        )}
+      </dl>
+      {event.summary && (
+        <p class="max-w-110 text-base leading-normal text-on-blue-muted lg:text-lg">
+          {event.summary}
+        </p>
+      )}
+    </div>
+  </section>
+
+  <div
+    class:list={[
+      'grid gap-8 px-5 py-7 lg:grid-cols-[1fr_360px] lg:gap-14 lg:p-14',
+      tickets.kind !== 'none' && 'pb-28 lg:pb-14',
+    ]}
+  >
+    <div class="flex flex-col gap-10 lg:gap-14">
+      <RichText
+        value={event.description}
+        class="max-w-170 text-base leading-relaxed lg:text-[19px]"
+      />
+
+      {programme.length > 0 && (
+        <section class="flex flex-col gap-4">
+          <SectionHeading colour="var(--color-esn-cyan)">Programme</SectionHeading>
+          <ol class="flex flex-col divide-y divide-line">
+            {programme.map((item) => (
+              <li class="grid grid-cols-[64px_1fr] gap-x-4 py-3 lg:grid-cols-[80px_1fr]">
+                <span class="font-heading text-lg font-bold text-esn-blue">{item.time}</span>
+                <span class="font-black">{item.title}</span>
+                {item.description && (
+                  <p class="col-start-2 text-[15px] leading-normal text-muted">
+                    {item.description}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      {event.dressCode && (
+        <section class="flex flex-col gap-4">
+          <SectionHeading colour="var(--color-esn-magenta)">Dress code</SectionHeading>
+          <RichText value={event.dressCode} class="max-w-170 text-base leading-relaxed" />
+        </section>
+      )}
+
+      {venue && (
+        <section class="flex flex-col gap-4">
+          <SectionHeading colour="var(--color-esn-green)">Getting there</SectionHeading>
+          <address class="flex flex-col not-italic">
+            {venue.name && <span class="font-black">{venue.name}</span>}
+            {venue.address && <span>{venue.address}</span>}
+          </address>
+          {venue.transport && (
+            <p class="max-w-170 text-base leading-relaxed whitespace-pre-line">{venue.transport}</p>
+          )}
+          {venue.mapUrl && (
+            <a
+              href={venue.mapUrl}
+              rel="noopener"
+              class="flex h-12 items-center justify-center border-2 border-esn-blue px-5 font-black text-esn-blue hover:bg-blue-50 lg:self-start"
+            >
+              Open in Maps
+            </a>
+          )}
+        </section>
+      )}
+
+      {faq.length > 0 && (
+        <section id="questions" class="flex flex-col gap-4">
+          <SectionHeading colour="var(--color-esn-orange)">Questions</SectionHeading>
+          <div class="flex flex-col gap-0.5">
+            {faq.map((entry) => (
+              <details class="group bg-surface">
+                <summary class="flex cursor-pointer items-center justify-between gap-4 px-4 py-3.5 font-black lg:px-5">
+                  {entry.question}
+                  <span class="text-esn-blue group-open:rotate-45" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
+                <RichText
+                  value={entry.answer}
+                  class="px-4 pb-4 text-base leading-relaxed lg:px-5"
+                />
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+
+    {endedAlbum && (
+      <aside aria-label="Photos" class="flex flex-col gap-3 bg-surface p-5 lg:self-start lg:p-7">
+        <p class="text-base">This event has ended.</p>
+        <a
+          href={`/gallery/${endedAlbum.slug}`}
+          class="flex h-14 items-center justify-center bg-esn-blue px-6 font-black text-white hover:brightness-92"
+        >
+          See the photos
+        </a>
+      </aside>
+    )}
+    {hasTicketBlock && (
+      <div class="lg:self-start">
+        <TicketSidebar tickets={tickets} tiers={tiers} info={event.ticketInfo} />
+      </div>
+    )}
+  </div>
+
+  <StickyTicketBar tickets={tickets} />
+</Layout>

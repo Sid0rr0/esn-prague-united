@@ -2,7 +2,9 @@ import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { evaluate, parse } from 'groq-js'
 
 type Doc = { _id: string; _type: string; [key: string]: unknown }
-type Page = Parameters<AstroContainer['renderToString']>[0]
+type Component = Parameters<AstroContainer['renderToString']>[0]
+// Pages with getStaticPaths (e.g. events/[slug]) type their props as never; they render the same.
+type Page = Component | ((props: never) => unknown)
 
 interface Content {
   documents: Doc[]
@@ -34,5 +36,5 @@ interface RenderOptions {
 export async function renderPage(page: Page, options: RenderOptions): Promise<string> {
   content = { documents: options.documents, now: new Date(options.now) }
   const container = await AstroContainer.create()
-  return container.renderToString(page, { params: options.params })
+  return container.renderToString(page as Component, { params: options.params })
 }

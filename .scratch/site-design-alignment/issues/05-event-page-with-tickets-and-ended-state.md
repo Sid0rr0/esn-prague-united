@@ -25,14 +25,14 @@ There's no "Organised by" block.
 
 **Blocked by:** 04 (Price tiers, Ticket note and the shared ticket display rules).
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The Event page renders at its slug with the hero facts, programme, dress code, getting there and the Event FAQ at `#questions`.
-- [ ] Seam test: the sidebar lists all Price tiers in order, and the sticky bar shows the first tier's price.
-- [ ] Seam test: with no ticket link, the Ticket note replaces the Buy button in both places. Nothing shows when there's no note.
-- [ ] Seam test: with a ticket link and no tiers, Buy ticket shows with no price.
-- [ ] Seam test: an Event past its end time shows an Album link and no ticket UI.
-- [ ] Seam test: an Event with no end time but past its start time shows an Album link and no ticket UI.
-- [ ] Seam test: an ended Event without an Album shows no ticket UI and no Album link.
-- [ ] Seam test: the homepage hero shows no Buy button or Ticket note for an ended Featured event.
-- [ ] No organisers are rendered.
+- [x] The Event page renders at its slug with the hero facts, programme, dress code, getting there and the Event FAQ at `#questions`.
+- [x] Seam test: the sidebar lists all Price tiers in order, and the sticky bar shows the first tier's price.
+- [x] Seam test: with no ticket link, the Ticket note replaces the Buy button in both places. Nothing shows when there's no note.
+- [x] Seam test: with a ticket link and no tiers, Buy ticket shows with no price.
+- [x] Seam test: an Event past its end time shows an Album link and no ticket UI.
+- [x] Seam test: an Event with no end time but past its start time shows an Album link and no ticket UI.
+- [x] Seam test: an ended Event without an Album shows no ticket UI and no Album link.
+- [x] Seam test: the homepage hero shows no Buy button or Ticket note for an ended Featured event.
+- [x] No organisers are rendered.

@@ -55,6 +55,8 @@ export interface TicketFields {
   ticketUrl?: string
   ticketNote?: string
   priceTiers?: PriceTier[] | null
+  /** Its end time has passed, or its start time if it has no end time. */
+  hasEnded: boolean
 }
 
 export interface EventSummary {
@@ -70,6 +72,43 @@ export interface FeaturedEvent extends TicketFields {
   startsAt: string
   summary?: string
   heroImage?: SanityImage
+}
+
+export interface ProgrammeItem {
+  _key: string
+  time: string
+  title: string
+  description?: string
+}
+
+export interface FaqEntry {
+  _key: string
+  question: string
+  answer?: RichText
+}
+
+export interface Venue {
+  name?: string
+  address?: string
+  mapUrl?: string
+  transport?: string
+}
+
+export interface EventDetail extends TicketFields {
+  title: string
+  slug: string
+  startsAt: string
+  endsAt?: string
+  venue?: Venue | null
+  heroImage?: SanityImage
+  summary?: string
+  description?: RichText
+  programme?: ProgrammeItem[] | null
+  dressCode?: RichText
+  faq?: FaqEntry[] | null
+  ticketInfo?: RichText
+  seo?: Seo
+  album?: { title: string; slug: string } | null
 }
 
 export interface Stat {

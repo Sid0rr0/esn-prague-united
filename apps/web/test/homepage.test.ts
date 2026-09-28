@@ -77,6 +77,23 @@ describe('homepage hero', () => {
     expect(hero).not.toContain('data-ticket-note')
   })
 
+  it('shows no Buy ticket, price or Ticket note once the Featured event has ended', async () => {
+    const ball = event('ball', {
+      title: localised('Czech Ball'),
+      startsAt: '2026-09-30T18:00:00Z',
+      ticketUrl: 'https://tickets.example/ball',
+      ticketNote: localised('Sold out'),
+      priceTiers: tiers,
+    })
+
+    const hero = heroOf(await featuring(ball))
+
+    expect(hero).toContain('Czech Ball')
+    expect(hero).not.toContain('Buy ticket')
+    expect(hero).not.toContain('Sold out')
+    expect(hero).not.toContain('CZK')
+  })
+
   it('shows the Homepage’s own ESN Prague United content when nothing is featured', async () => {
     const hero = heroOf(await featuring(null))
 
