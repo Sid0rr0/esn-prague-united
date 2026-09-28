@@ -58,8 +58,12 @@ export const HOMEPAGE_QUERY = groq`{
   "instagram": *[_id == "siteSettings"][0].socials.instagram
 }`
 
-export const EVENTS_QUERY = groq`*[_type == "event"] | order(startsAt desc){
-  title, "slug": slug.current, startsAt, venue{name}, summary, heroImage${image}
+// The Featured event is listed like any other here; cards show no price or Ticket note.
+export const EVENTS_LIST_QUERY = groq`{
+  "upcoming": *[_type == "event" && !(${HAS_ENDED})] | order(startsAt asc){
+    _id, title, "slug": slug.current, startsAt, "venueName": venue.name, heroImage${image}
+  },
+  "instagram": *[_id == "siteSettings"][0].socials.instagram
 }`
 
 // Detail queries list their fields rather than spreading the document, so data the design

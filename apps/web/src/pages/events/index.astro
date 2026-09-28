@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import EventCard from '../../components/EventCard.astro'
+import InstagramPrompt from '../../components/InstagramPrompt.astro'
+import PageHeader from '../../components/PageHeader.astro'
+import SectionHeading from '../../components/SectionHeading.astro'
+import { fetchContent } from '../../lib/content'
+import { EVENTS_LIST_QUERY } from '../../lib/queries'
+import type { EventsList } from '../../lib/types'
+
+const { upcoming, instagram } = await fetchContent<EventsList>(EVENTS_LIST_QUERY)
+---
+
+<Layout title="Events">
+  <PageHeader title="Events" colour="cyan">
+    <p class="max-w-150 text-base leading-normal lg:text-lg">
+      Balls, trips and parties run by ESN Prague United.
+    </p>
+  </PageHeader>
+
+  <section data-upcoming class="flex flex-col gap-3.5 px-5 py-7 lg:gap-8 lg:p-14">
+    <SectionHeading colour="var(--color-esn-cyan)">Upcoming</SectionHeading>
+    {upcoming.length > 0 ? (
+      <ul class="grid gap-0.5 md:grid-cols-2 lg:grid-cols-4">
+        {upcoming.map((event) => (
+          <li>
+            <EventCard event={event} />
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <InstagramPrompt instagram={instagram} class="bg-surface" />
+    )}
+  </section>
+</Layout>

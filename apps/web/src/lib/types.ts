@@ -66,6 +66,18 @@ export interface EventSummary {
   startsAt: string
 }
 
+/** An Event as a card on the Events list page shows it. */
+export interface EventCardData extends EventSummary {
+  venueName?: string
+  heroImage?: SanityImage
+}
+
+export interface EventsList {
+  /** Every Event that hasn't ended, the Featured event included, soonest first. */
+  upcoming: EventCardData[]
+  instagram?: string | null
+}
+
 export interface FeaturedEvent extends TicketFields {
   title: string
   slug: string

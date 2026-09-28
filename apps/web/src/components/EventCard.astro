@@ -1,0 +1,25 @@
+---
+import Picture from './Picture.astro'
+import { formatLongDate } from '../lib/format'
+import type { EventCardData } from '../lib/types'
+
+interface Props {
+  event: EventCardData
+}
+
+const { event } = Astro.props
+---
+
+<a data-event-card href={`/events/${event.slug}`} class="group flex h-full flex-col bg-surface">
+  <Picture image={event.heroImage} width={400} height={300} class="aspect-4/3 w-full" />
+  <div class="flex flex-col gap-1 px-4 py-3.5 lg:px-5 lg:py-4">
+    <time
+      datetime={event.startsAt}
+      class="font-heading text-base font-bold text-esn-blue lg:text-lg"
+    >
+      {formatLongDate(event.startsAt)}
+    </time>
+    <span class="text-base font-black group-hover:text-esn-blue lg:text-[17px]">{event.title}</span>
+    {event.venueName && <span class="text-[15px] text-muted">{event.venueName}</span>}
+  </div>
+</a>
