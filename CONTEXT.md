@@ -4,21 +4,37 @@ Content schema and editorial model for the ESN Prague website (Astro + Sanity + 
 
 ## Language
 
+**ESN Prague United**:
+The umbrella organisation formed by the 5 Sections. Site-wide content (About, Contacts, FAQ, socials) speaks for ESN Prague United, not for any one Section.
+_Avoid_: ESN Prague (on its own), ESN Praha
+
 **Section**:
-One of the exactly 5 ESN local chapters in Prague, each based at a different university (e.g. "ESN CTU in Prague"). Sections are created once by an admin; editors cannot add or delete them from the Studio UI.
+One of the exactly 5 ESN local chapters in Prague, each based at a different university (e.g. "ESN CTU in Prague"). Sections are created once by an admin; editors cannot add or delete them from the Studio UI. Each Section has a fixed brand colour that editors can't change.
 _Avoid_: Chapter, branch, club
 
 **Event**:
-A single ESN Prague event with a date, venue, optional programme, and ticket info (e.g. the Czech Ball). Organised by one or more Sections. Ticket availability is inferred from whether a ticket link is set — there's no separate status field.
+A single ESN Prague United event with a date, venue, optional programme, and ticket info (e.g. the Czech Ball). Events belong to ESN Prague United as a whole, not to individual Sections. Ticket availability is inferred from whether a ticket link is set — there's no separate status field; without a link, the Event shows its Ticket note instead (e.g. "Sold out", "Free entry"). Once an Event has ended it no longer offers tickets and points to its Album instead, if it has one.
 _Avoid_: Party, activity
 
+**Price tier**:
+One named ticket price for an Event, in CZK (e.g. "With ESN card" 590, "Without ESN card" 690). The first tier is the Event's headline price. An Event with no tiers shows no price.
+_Avoid_: Ticket type, fare
+
+**Ticket note**:
+A one-line message shown in place of the Buy button when an Event has no ticket link (e.g. "Sold out. Watch Instagram for returned tickets"). Longer ticket details go in the Event's ticket info.
+_Avoid_: Ticket status
+
 **Featured event**:
-The Event an editor picks to promote on the homepage. Only a picked Event takes over the homepage hero; when none is picked, the featured-event card falls back to the next upcoming Event, but the hero stays about ESN Prague.
+The Event an editor picks to promote on the homepage. Only a picked Event takes over the homepage hero; when none is picked, the hero stays about ESN Prague United. The homepage's upcoming-events list never repeats the Featured event; if that leaves it empty, the list is hidden.
 _Avoid_: Highlighted event, main event
 
 **Album**:
-A set of photos from an event or a section, shown on `/gallery`. An event owns an optional reference to its album (not every event has one yet); an album doesn't need an event (section-only photo dumps are valid). When an album belongs to an event, the album's sections are that event's organisers — an album never lists sections its event wasn't organised by.
+A set of photos shown on `/gallery`, optionally linked from one Event (not every Event has one yet, and an Album doesn't need an Event). Albums don't belong to Sections.
 _Avoid_: Gallery (that's the page; Album is the content type)
+
+**FAQ** vs **Event FAQ**:
+The FAQ is the site-wide list of general questions about ESN Prague United (ESN card, buddy programme, joining). An Event FAQ holds questions about one Event (e.g. the Czech Ball) and lives on that Event's page. Event-specific questions never go in the FAQ.
+_Avoid_: Ball FAQ (as a separate page)
 
 **Singleton**:
 A document type with exactly one instance, opened directly from the Studio sidebar with no list view and no delete action (Homepage, FAQ, Contacts, Links page, Site settings).
