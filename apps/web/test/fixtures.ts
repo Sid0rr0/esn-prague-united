@@ -74,3 +74,27 @@ export const section = (
 /** The five Sections in website order, as seeded. */
 export const allSections = () =>
   ['cu', 'ctu', 'vse', 'czu', 'uct'].map((slug, i) => section(slug, i + 1))
+
+/** A photo in an Album, with its image asset document so the page can build its URLs. */
+export const photo = (id: string) => ({
+  photo: {
+    _key: id,
+    _type: 'imageWithAlt',
+    asset: { _type: 'reference', _ref: `image-${id}-1200x800-jpg` },
+    alt: localised(`Photo ${id}`),
+  },
+  asset: {
+    _id: `image-${id}-1200x800-jpg`,
+    _type: 'sanity.imageAsset',
+    url: `https://cdn.sanity.io/images/p/d/${id}-1200x800.jpg`,
+  },
+})
+
+export const album = (slug: string, overrides: Record<string, unknown> = {}): Doc => ({
+  _id: `album-${slug}`,
+  _type: 'album',
+  title: localised(`Album ${slug}`),
+  slug: { current: slug },
+  date: '2026-09-12',
+  ...overrides,
+})

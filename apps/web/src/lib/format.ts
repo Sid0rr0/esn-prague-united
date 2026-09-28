@@ -22,6 +22,14 @@ export const formatLongDate = (iso: string): string => {
   return `${datePart(date, { weekday: 'long' })} ${datePart(date, { day: 'numeric' })} ${datePart(date, { month: 'long' })}`
 }
 
+/** "20 September 2026", for a date without a time (e.g. an Album's). */
+export const formatDayMonthYear = (isoDate: string): string =>
+  new Intl.DateTimeFormat(LOCALE, { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(isoDate))
+
+/** "1 photo", "24 photos" */
+export const formatPhotoCount = (count: number): string =>
+  `${count} ${count === 1 ? 'photo' : 'photos'}`
+
 /** "18:00–02:00", or "18:00" when there's no end time. */
 export const formatTimeRange = (startIso: string, endIso?: string): string =>
   endIso ? `${formatTime(startIso)}–${formatTime(endIso)}` : formatTime(startIso)

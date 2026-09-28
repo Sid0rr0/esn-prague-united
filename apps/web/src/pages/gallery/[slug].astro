@@ -1,0 +1,77 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Picture from '../../components/Picture.astro'
+import PhotoViewer from '../../components/PhotoViewer.astro'
+import { fetchContent } from '../../lib/content'
+import { formatDayMonthYear, formatPhotoCount } from '../../lib/format'
+import { imageUrl } from '../../lib/image'
+import { ALBUM_QUERY, ALBUM_SLUGS_QUERY } from '../../lib/queries'
+import type { AlbumDetail } from '../../lib/types'
+
+/** Width of a photo as the viewer shows it full-screen. */
+const VIEWER_WIDTH = 1600
+
+export async function getStaticPaths() {
+  const slugs = await fetchContent<string[]>(ALBUM_SLUGS_QUERY)
+  return slugs.map((slug) => ({ params: { slug } }))
+}
+
+const album = await fetchContent<AlbumDetail | null>(ALBUM_QUERY, { slug: Astro.params.slug })
+if (!album) return new Response(null, { status: 404 })
+
+const photos = album.photos ?? []
+---
+
+<Layout title={album.title}>
+  <header data-album-header class="flex flex-col gap-3 bg-orange-50 px-5 py-7 lg:gap-4 lg:p-14">
+    <span class="block h-1.5 w-10 bg-esn-orange lg:h-2 lg:w-12" aria-hidden="true"></span>
+    <time datetime={album.date} class="font-heading text-lg font-light lg:text-[22px]">
+      {formatDayMonthYear(album.date)}
+    </time>
+    <h1 class="font-heading text-[44px] leading-none font-bold lg:text-[64px]">{album.title}</h1>
+    <p class="text-base text-muted lg:text-lg">
+      {formatPhotoCount(album.photoCount)}
+      {album.photographer && <> · Photos by {album.photographer}</>}
+    </p>
+    {(album.fullAlbumUrl || album.event) && (
+      <div class="flex flex-col gap-0.5 font-black lg:flex-row lg:self-start">
+        {album.fullAlbumUrl && (
+          <a
+            href={album.fullAlbumUrl}
+            rel="noopener"
+            class="flex h-12 items-center justify-center bg-esn-blue px-5 text-white hover:brightness-92"
+          >
+            Full album ↗
+          </a>
+        )}
+        {album.event && (
+          <a
+            href={`/events/${album.event.slug}`}
+            class="flex h-12 items-center justify-center border-2 border-esn-blue px-5 text-esn-blue hover:bg-blue-50"
+          >
+            Event page
+          </a>
+        )}
+      </div>
+    )}
+  </header>
+
+  {photos.length > 0 && (
+    <>
+      <ul class="grid grid-cols-2 gap-0.5 pt-0.5 pb-5 md:grid-cols-3 lg:grid-cols-4 lg:px-14 lg:pt-14 lg:pb-14">
+        {photos.map((photo, index) => (
+          <li>
+            <a
+              data-photo={index}
+              href={imageUrl(photo, { width: VIEWER_WIDTH })}
+              class="block hover:brightness-92"
+            >
+              <Picture image={photo} width={400} height={400} class="aspect-square w-full" />
+            </a>
+          </li>
+        ))}
+      </ul>
+      <PhotoViewer total={photos.length} />
+    </>
+  )}
+</Layout>

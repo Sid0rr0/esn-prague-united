@@ -21,7 +21,15 @@ export const SECTIONS_QUERY = groq`*[_type == "section"] | order(order asc){
   name, "slug": slug.current, university, logo, tagline
 }`
 
-/** The homepage's upcoming list, About numbers and Quick links each show at most this many. */
+/** An Album without photos has no photos field, so its count is null without coalesce. */
+const PHOTO_COUNT = `"photoCount": coalesce(count(photos), 0)`
+
+/** An Album as the Gallery and the homepage's Latest albums show it. */
+const ALBUM_CARD = `{
+  _id, title, "slug": slug.current, date, cover${image}, ${PHOTO_COUNT}
+}`
+
+/** The homepage's upcoming list, About numbers, Quick links and Latest albums each show at most this many. */
 const HOMEPAGE_LIST_MAX = 4
 
 /** An Event has ended once its end time has passed, or its start time if it has no end time. */
@@ -36,6 +44,9 @@ export const HOMEPAGE_QUERY = groq`{
   "page": *[_id == "homepage"][0]{
     hero, about{heading, text, "stats": stats[0...${HOMEPAGE_LIST_MAX}]}, seo,
     "sections": select(showSections != false => ${SECTIONS_QUERY}),
+    "latestAlbums": select(
+      showGallery != false => *[_type == "album"] | order(date desc)[0...${HOMEPAGE_LIST_MAX}]${ALBUM_CARD}
+    ),
     "quickLinks": highlightedLinks[${visibleUntilFilter('visibleUntil')}][0...${HOMEPAGE_LIST_MAX}]{_key, label, url},
     "featuredEvent": featuredEvent->{
       title, "slug": slug.current, startsAt, summary, heroImage, ${TICKET_FIELDS}
@@ -69,11 +80,15 @@ export const SECTION_QUERY = groq`*[_type == "section" && slug.current == $slug]
   buddyProgramUrl, email, office, mapUrl, socials
 }`
 
-export const ALBUMS_QUERY = groq`*[_type == "album"] | order(date desc){title, "slug": slug.current, date, cover${image}}`
+export const ALBUM_SLUGS_QUERY = groq`*[_type == "album" && defined(slug.current)].slug.current`
+
+// Albums don't belong to Sections: neither query reads an old Album's sections field.
+export const ALBUMS_QUERY = groq`*[_type == "album"] | order(date desc)${ALBUM_CARD}`
 
 export const ALBUM_QUERY = groq`*[_type == "album" && slug.current == $slug][0]{
-  ..., cover${image}, photos[]${image},
-  "event": *[_type == "event" && album._ref == ^._id][0]{title, "slug": slug.current}
+  title, "slug": slug.current, date, photographer, fullAlbumUrl,
+  photos[]${image}, ${PHOTO_COUNT},
+  "event": *[_type == "event" && album._ref == ^._id && defined(slug.current)][0]{"slug": slug.current}
 }`
 
 export const FAQ_QUERY = groq`*[_id == "faqPage"][0]`

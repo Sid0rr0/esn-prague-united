@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import AlbumCard from '../components/AlbumCard.astro'
 import HeroTicket from '../components/HeroTicket.astro'
 import Picture from '../components/Picture.astro'
 import RichText from '../components/RichText.astro'
@@ -19,6 +20,7 @@ const featured = page?.featuredEvent
 const about = page?.about
 const quickLinks = page?.quickLinks ?? []
 const sections = page?.sections ?? []
+const latestAlbums = page?.latestAlbums ?? []
 
 // Empty while an Event is featured → hidden; empty otherwise → "New events coming soon".
 const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon'
@@ -152,6 +154,27 @@ const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon
         {sections.map((section) => (
           <li>
             <SectionTile section={section} variant="band" />
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {latestAlbums.length > 0 && (
+    <section
+      data-latest-albums
+      class="grid gap-3.5 bg-orange-50 px-5 py-7 lg:grid-cols-[280px_1fr] lg:gap-12 lg:p-14"
+    >
+      <div class="flex flex-col gap-2.5">
+        <SectionHeading colour="var(--color-esn-orange)">Latest albums</SectionHeading>
+        <a href="/gallery" class="font-black text-esn-blue hover:text-esn-magenta">
+          All albums <span aria-hidden="true">→</span>
+        </a>
+      </div>
+      <ul class="grid grid-cols-2 gap-0.5 lg:grid-cols-4">
+        {latestAlbums.map((album) => (
+          <li>
+            <AlbumCard album={album} />
           </li>
         ))}
       </ul>

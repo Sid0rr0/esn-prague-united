@@ -1,0 +1,112 @@
+---
+interface Props {
+  total: number
+}
+
+const { total } = Astro.props
+---
+
+<!-- Full-screen viewer for the photo grid's [data-photo] links: counter, previous/next
+     (wrapping), close, arrow keys, Esc and swipe. Without JS the links open the photo. -->
+<dialog
+  data-viewer
+  aria-label="Photo viewer"
+  class="m-0 h-dvh max-h-none w-dvw max-w-none bg-viewer text-white backdrop:bg-viewer"
+>
+  <div class="flex h-full flex-col">
+    <div class="flex items-center justify-between px-4 py-2 lg:px-8">
+      <p data-viewer-counter aria-live="polite" class="font-heading text-lg font-bold">
+        1 / {total}
+      </p>
+      <button
+        type="button"
+        data-viewer-close
+        aria-label="Close"
+        class="flex size-11 items-center justify-center text-2xl hover:text-esn-cyan"
+      >
+        ✕
+      </button>
+    </div>
+    <div data-viewer-stage class="flex min-h-0 flex-1 touch-pan-y items-center justify-center">
+      <img data-viewer-image alt="" class="block max-h-full max-w-full object-contain" />
+    </div>
+    <div class="flex items-center justify-between px-4 py-3 lg:px-8">
+      <button
+        type="button"
+        data-viewer-prev
+        aria-label="Previous photo"
+        class="flex size-12 items-center justify-center border-2 border-white text-xl hover:bg-white/12"
+      >
+        ←
+      </button>
+      <button
+        type="button"
+        data-viewer-next
+        aria-label="Next photo"
+        class="flex size-12 items-center justify-center border-2 border-white text-xl hover:bg-white/12"
+      >
+        →
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<style is:global>
+  /* The page behind the full-screen viewer doesn't scroll. */
+  html:has(dialog[data-viewer][open]) {
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  /** How far a finger must travel sideways to count as a swipe, in pixels. */
+  const SWIPE_MIN_DISTANCE = 50
+
+  const viewer = document.querySelector<HTMLDialogElement>('[data-viewer]')
+  const tiles = [...document.querySelectorAll<HTMLAnchorElement>('a[data-photo]')]
+
+  if (viewer && tiles.length > 0) {
+    const image = viewer.querySelector<HTMLImageElement>('[data-viewer-image]')!
+    const counter = viewer.querySelector<HTMLElement>('[data-viewer-counter]')!
+    const stage = viewer.querySelector<HTMLElement>('[data-viewer-stage]')!
+    let current = 0
+
+    const show = (index: number) => {
+      current = (index + tiles.length) % tiles.length
+      const tile = tiles[current]
+      image.src = tile.href
+      image.alt = tile.querySelector('img')?.alt ?? ''
+      counter.textContent = `${current + 1} / ${tiles.length}`
+    }
+
+    tiles.forEach((tile, index) =>
+      tile.addEventListener('click', (event) => {
+        event.preventDefault()
+        show(index)
+        viewer.showModal()
+      }),
+    )
+    viewer.querySelector('[data-viewer-close]')!.addEventListener('click', () => viewer.close())
+    viewer.querySelector('[data-viewer-prev]')!.addEventListener('click', () => show(current - 1))
+    viewer.querySelector('[data-viewer-next]')!.addEventListener('click', () => show(current + 1))
+    viewer.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') show(current - 1)
+      if (event.key === 'ArrowRight') show(current + 1)
+    })
+
+    let touchStart: { x: number; y: number } | null = null
+    stage.addEventListener('touchstart', (event) => {
+      const touch = event.touches[0]
+      touchStart = { x: touch.clientX, y: touch.clientY }
+    })
+    stage.addEventListener('touchend', (event) => {
+      if (!touchStart) return
+      const touch = event.changedTouches[0]
+      const dx = touch.clientX - touchStart.x
+      const dy = touch.clientY - touchStart.y
+      touchStart = null
+      if (Math.abs(dx) < SWIPE_MIN_DISTANCE || Math.abs(dx) < Math.abs(dy)) return
+      show(dx < 0 ? current + 1 : current - 1)
+    })
+  }
+</script>

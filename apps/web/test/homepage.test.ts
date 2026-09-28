@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import Home from '../src/pages/index.astro'
 import { renderPage } from './seam'
-import { allSections, event, homepage, localised, richText, siteSettings } from './fixtures'
+import { album, allSections, event, homepage, localised, richText, siteSettings } from './fixtures'
 
 const NOW = '2026-10-01T10:00:00Z'
 const FUTURE = '2026-11-26T17:00:00Z'
@@ -248,5 +248,56 @@ describe('homepage Sections block', () => {
 
     expect(html).not.toContain('data-sections')
     expect(html).not.toContain('ESN CU Prague')
+  })
+})
+
+describe('homepage Latest albums block', () => {
+  const albumsOf = (html: string) =>
+    html.match(/<section[^>]*data-latest-albums[\s\S]*?<\/section>/)?.[0] ?? ''
+
+  const albums = ['2026-09-01', '2026-09-20', '2026-08-15', '2026-09-10', '2026-07-30'].map(
+    (date, i) => album(`album-${i}`, { title: localised(`Album from ${date}`), date }),
+  )
+
+  it('shows the 4 latest Albums, newest first, when Show latest photo albums is on', async () => {
+    const html = await renderPage(Home, {
+      now: NOW,
+      documents: [siteSettings(), homepage({ showGallery: true }), ...albums],
+    })
+    const block = albumsOf(html)
+
+    expect(block).toMatch(
+      /Album from 2026-09-20[\s\S]*Album from 2026-09-10[\s\S]*Album from 2026-09-01[\s\S]*Album from 2026-08-15/,
+    )
+    expect(block).not.toContain('Album from 2026-07-30')
+    expect(block).toContain('href="/gallery"')
+  })
+
+  it('is shown when the Homepage has never set Show latest photo albums', async () => {
+    const html = await renderPage(Home, {
+      now: NOW,
+      documents: [siteSettings(), homepage(), ...albums],
+    })
+
+    expect(albumsOf(html)).toContain('Album from 2026-09-20')
+  })
+
+  it('shows no Albums when Show latest photo albums is off', async () => {
+    const html = await renderPage(Home, {
+      now: NOW,
+      documents: [siteSettings(), homepage({ showGallery: false }), ...albums],
+    })
+
+    expect(html).not.toContain('data-latest-albums')
+    expect(html).not.toContain('Album from')
+  })
+
+  it('is hidden when there are no Albums yet', async () => {
+    const html = await renderPage(Home, {
+      now: NOW,
+      documents: [siteSettings(), homepage({ showGallery: true })],
+    })
+
+    expect(html).not.toContain('data-latest-albums')
   })
 })

@@ -131,6 +131,8 @@ export interface Homepage {
     featuredEvent?: FeaturedEvent | null
     /** Null when the Homepage turns the Sections block off. */
     sections?: SectionSummary[] | null
+    /** Newest first, at most 4; null when the Homepage turns Latest albums off. */
+    latestAlbums?: AlbumSummary[] | null
     seo?: Seo
   } | null
   /** Upcoming Events other than the Featured event, soonest first, at most 4. */
@@ -160,4 +162,26 @@ export interface SectionDetail {
   office?: string
   mapUrl?: string
   socials?: Socials | null
+}
+
+export interface AlbumSummary {
+  _id: string
+  title: string
+  slug: string
+  /** "2026-09-20", the day the photos were taken. */
+  date: string
+  cover?: SanityImage
+  photoCount: number
+}
+
+export interface AlbumDetail {
+  title: string
+  slug: string
+  date: string
+  photographer?: string
+  fullAlbumUrl?: string
+  photos?: (SanityImage & { _key: string })[] | null
+  photoCount: number
+  /** The Event that links to this Album, if any. */
+  event?: { slug: string } | null
 }
