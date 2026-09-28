@@ -26,15 +26,15 @@
 
 **Blocked by:** 03.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The Studio's Event has Price tiers (label + whole CZK, positive) and a Ticket note limited to about 60 characters.
-- [ ] Seam test: a Featured event with a ticket link and tiers shows Buy ticket plus the first tier's price.
-- [ ] Seam test: a Featured event with a ticket link but no tiers shows Buy ticket with no price pill.
-- [ ] Seam test: a Featured event without a ticket link shows its Ticket note, or nothing when there's no note.
-- [ ] Seam test: with no Featured event, the hero shows the Homepage's own ESN Prague United content.
-- [ ] Seam test: the upcoming list never contains the Featured event and is capped at 4.
-- [ ] Seam test: the upcoming list is hidden when it's empty and a Featured event is set.
-- [ ] Seam test: "New events coming soon" plus the Instagram link shows when the list is empty and nothing is featured.
-- [ ] Seam test: no "Full calendar" link is rendered.
-- [ ] The About block with its numbers (max 4) and the Quick links (max 4) render from the Homepage.
+- [x] The Studio's Event has Price tiers (label + whole CZK, positive) and a Ticket note limited to about 60 characters.
+- [x] Seam test: a Featured event with a ticket link and tiers shows Buy ticket plus the first tier's price.
+- [x] Seam test: a Featured event with a ticket link but no tiers shows Buy ticket with no price pill.
+- [x] Seam test: a Featured event without a ticket link shows its Ticket note, or nothing when there's no note.
+- [x] Seam test: with no Featured event, the hero shows the Homepage's own ESN Prague United content.
+- [x] Seam test: the upcoming list never contains the Featured event and is capped at 4.
+- [x] Seam test: the upcoming list is hidden when it's empty and a Featured event is set.
+- [x] Seam test: "New events coming soon" plus the Instagram link shows when the list is empty and nothing is featured.
+- [x] Seam test: no "Full calendar" link is rendered.
+- [x] The About block with its numbers (max 4) and the Quick links (max 4) render from the Homepage.

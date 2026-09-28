@@ -1,0 +1,13 @@
+---
+import { richTextToHtml } from '../lib/rich-text'
+import type { RichText } from '../lib/types'
+
+interface Props {
+  value?: RichText
+  class?: string
+}
+const { value, class: className } = Astro.props
+const html = richTextToHtml(value)
+---
+
+{html && <div class:list={['prose-esn', className]} set:html={html} />}

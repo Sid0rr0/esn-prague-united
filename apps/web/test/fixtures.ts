@@ -25,6 +25,32 @@ export const siteSettings = (overrides: Record<string, unknown> = {}): Doc => ({
 export const homepage = (overrides: Record<string, unknown> = {}): Doc => ({
   _id: 'homepage',
   _type: 'homepage',
-  hero: { heading: localised('Your exchange in Prague starts here') },
+  hero: {
+    heading: localised('Your exchange in Prague starts here'),
+    subheading: localised('Trips, parties and a local buddy.'),
+    primaryButton: { label: localised('Find your section'), url: 'https://example.com/sections' },
+    secondaryButton: { label: localised('Get an ESN card'), url: 'https://esncard.org' },
+  },
   ...overrides,
 })
+
+export const event = (id: string, overrides: Record<string, unknown> = {}): Doc => ({
+  _id: id,
+  _type: 'event',
+  title: localised(`Event ${id}`),
+  slug: { current: id },
+  startsAt: '2026-11-26T17:00:00Z',
+  ...overrides,
+})
+
+/** Rich text as the Studio stores it: one block per paragraph, translated as a whole. */
+export const richText = (...paragraphs: string[]) =>
+  localised(
+    paragraphs.map((text, i) => ({
+      _type: 'block',
+      _key: `b${i}`,
+      style: 'normal',
+      markDefs: [],
+      children: [{ _type: 'span', _key: `s${i}`, text, marks: [] }],
+    })),
+  )

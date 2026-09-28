@@ -1,4 +1,5 @@
 /** Shapes returned by the GROQ queries in queries.ts, after i18n.ts resolved translated fields. */
+import type { toHTML } from '@portabletext/to-html'
 
 export interface SanityImage {
   asset?: { _ref: string }
@@ -30,6 +31,68 @@ export interface Settings {
   announcement?: { text?: string; url?: string } | null
 }
 
+/** Portable Text blocks (and inline images) as stored by the Studio's rich text field. */
+export type RichText = Extract<Parameters<typeof toHTML>[0], unknown[]>
+
+export interface Cta {
+  label?: string
+  url?: string
+}
+
+export interface LinkItem {
+  _key: string
+  label: string
+  url: string
+}
+
+export interface PriceTier {
+  _key: string
+  label: string
+  amount: number
+}
+
+export interface TicketFields {
+  ticketUrl?: string
+  ticketNote?: string
+  priceTiers?: PriceTier[] | null
+}
+
+export interface EventSummary {
+  _id: string
+  title: string
+  slug: string
+  startsAt: string
+}
+
+export interface FeaturedEvent extends TicketFields {
+  title: string
+  slug: string
+  startsAt: string
+  summary?: string
+  heroImage?: SanityImage
+}
+
+export interface Stat {
+  _key: string
+  value: string
+  label: string
+}
+
 export interface Homepage {
-  page: { hero?: { heading?: string; subheading?: string }; seo?: Seo } | null
+  page: {
+    hero?: {
+      heading?: string
+      subheading?: string
+      image?: SanityImage
+      primaryButton?: Cta
+      secondaryButton?: Cta
+    }
+    about?: { heading?: string; text?: RichText; stats?: Stat[] | null } | null
+    quickLinks?: LinkItem[] | null
+    featuredEvent?: FeaturedEvent | null
+    seo?: Seo
+  } | null
+  /** Upcoming Events other than the Featured event, soonest first, at most 4. */
+  upcoming: EventSummary[]
+  instagram?: string | null
 }

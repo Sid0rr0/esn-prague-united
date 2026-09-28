@@ -2,6 +2,9 @@ import { defineArrayMember, defineField, defineType } from 'sanity'
 import { CalendarIcon } from '@sanity/icons/Calendar'
 import { localisedRichText, localisedString, localisedText } from '../objects/locale'
 
+/** Keeps the Ticket note to one line in the homepage hero. */
+const TICKET_NOTE_MAX_LENGTH = 60
+
 export const event = defineType({
   name: 'event',
   title: 'Event',
@@ -59,7 +62,53 @@ export const event = defineType({
       group: 'details',
       of: [defineArrayMember({ type: 'faqEntry' })],
     }),
-    defineField({ name: 'ticketUrl', title: 'Ticket link', type: 'url', group: 'tickets' }),
+    defineField({
+      name: 'ticketUrl',
+      title: 'Ticket link',
+      type: 'url',
+      group: 'tickets',
+      description: 'Shows the Buy ticket button. Leave empty when tickets are not on sale.',
+    }),
+    defineField({
+      name: 'priceTiers',
+      title: 'Price tiers',
+      type: 'array',
+      group: 'tickets',
+      description:
+        'The first tier is the headline price next to the Buy ticket button. Leave empty for a free Event.',
+      of: [
+        defineArrayMember({
+          name: 'priceTier',
+          type: 'object',
+          fields: [
+            localisedString({
+              name: 'label',
+              title: 'Label',
+              description: 'e.g. With ESN card',
+              required: true,
+            }),
+            defineField({
+              name: 'amount',
+              title: 'Price (CZK)',
+              type: 'number',
+              validation: (r) => r.required().integer().positive(),
+            }),
+          ],
+          preview: {
+            select: { label: 'label.en', amount: 'amount' },
+            prepare: ({ label, amount }) => ({ title: label, subtitle: `${amount} CZK` }),
+          },
+        }),
+      ],
+    }),
+    localisedString({
+      name: 'ticketNote',
+      title: 'Ticket note',
+      group: 'tickets',
+      description:
+        'One line shown instead of the Buy button when there is no ticket link, e.g. "Sold out. Watch Instagram for returned tickets" or "Free entry, no ticket needed".',
+      max: TICKET_NOTE_MAX_LENGTH,
+    }),
     localisedRichText({ name: 'ticketInfo', title: 'Prices & ticket info', group: 'tickets' }),
     defineField({
       name: 'album',

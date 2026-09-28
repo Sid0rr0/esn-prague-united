@@ -178,6 +178,11 @@ export const events = (now: Date): SluggedDoc[] => [
         answer: enRichText('No, but card holders get a discount.'),
       },
     ],
+    ticketUrl: 'https://example.com/tickets/welcome-party',
+    priceTiers: [
+      { _key: 'card', _type: 'priceTier', label: en('With ESN card'), amount: 150 },
+      { _key: 'no-card', _type: 'priceTier', label: en('Without ESN card'), amount: 250 },
+    ],
   },
   {
     _type: 'event',
@@ -185,5 +190,6 @@ export const events = (now: Date): SluggedDoc[] => [
     slug: slug('orientation-week-trip'),
     startsAt: eveningInDays(now, -PAST_EVENT_DAYS_AGO),
     summary: enText('A day trip out of Prague for new students.'),
+    ticketNote: en('Free for new students, no ticket needed'),
   },
 ]

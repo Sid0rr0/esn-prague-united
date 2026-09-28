@@ -75,6 +75,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@portabletext/to-html':
+        specifier: ^6.0.0
+        version: 6.0.0
       '@sanity/astro':
         specifier: ^3.5.1
         version: 3.5.1(72bfa4d4c5f4723e514300d20032f956)

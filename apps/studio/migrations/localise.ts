@@ -28,6 +28,8 @@ export const TRANSLATABLE_FIELDS: Record<string, FieldSpec> = {
     programme: [{ title: L, description: T }],
     dressCode: R,
     faq: [FAQ_ENTRY],
+    priceTiers: [{ label: L }],
+    ticketNote: L,
     ticketInfo: R,
     seo: SEO,
   },

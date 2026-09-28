@@ -1,0 +1,31 @@
+---
+import { imageUrl } from '../lib/image'
+import type { SanityImage } from '../lib/types'
+
+interface Props {
+  image?: SanityImage
+  width: number
+  height?: number
+  class?: string
+  /** Shown when there's no image, e.g. a tinted block. */
+  fallbackClass?: string
+  eager?: boolean
+}
+
+const { image, width, height, class: className, fallbackClass, eager = false } = Astro.props
+const src = imageUrl(image, { width, height })
+const srcDouble = imageUrl(image, { width: width * 2, height: height ? height * 2 : undefined })
+---
+
+{src ? (
+  <img
+    src={src}
+    srcset={`${src} 1x, ${srcDouble} 2x`}
+    alt={image?.alt ?? ''}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+    class:list={['block object-cover', className]}
+  />
+) : (
+  <div class:list={[className, fallbackClass ?? 'bg-surface']} aria-hidden="true" />
+)}

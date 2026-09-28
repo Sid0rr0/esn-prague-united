@@ -37,11 +37,11 @@ export const homepage = defineType({
     }),
     defineField({
       name: 'about',
-      title: 'About ESN Prague',
+      title: 'About ESN Prague United',
       type: 'object',
       group: 'content',
       fields: [
-        localisedString({ name: 'heading', initialValue: 'What is ESN Prague?' }),
+        localisedString({ name: 'heading', initialValue: 'What is ESN Prague United?' }),
         localisedRichText({ name: 'text' }),
         defineField({
           name: 'stats',

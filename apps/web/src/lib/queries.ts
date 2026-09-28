@@ -4,29 +4,39 @@ import groq from 'groq'
 
 const image = `{..., asset->{_id, url, metadata{lqip, dimensions}}}`
 
+/** GROQ filter: hidden once its "Hide after" date passes (top banner, Quick links). */
+const visibleUntilFilter = (field: string) =>
+  `(!defined(${field}) || dateTime(${field}) > dateTime(now()))`
+
 // The top banner shows only while it's enabled and before its "Hide after" date.
 export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]{
   logo, navigation[]{_key, label, href}, socials, footerText, seo,
   "announcement": select(
-    announcement.enabled == true &&
-      (!defined(announcement.visibleUntil) || dateTime(announcement.visibleUntil) > dateTime(now()))
-      => announcement{text, url}
+    announcement.enabled == true && ${visibleUntilFilter('announcement.visibleUntil')} => announcement{text, url}
   )
 }`
 
-const eventCard = `{title, "slug": slug.current, startsAt, venue, summary, ticketUrl, heroImage${image}}`
+/** The homepage's upcoming list, About numbers and Quick links each show at most this many. */
+const HOMEPAGE_LIST_MAX = 4
 
-// featuredEvent is only what an editor picked, so the hero can take it over; the event card
-// falls back to nextEvent when nothing is picked.
+/** An Event has ended once its end time has passed, or its start time if it has no end time. */
+const HAS_ENDED = `dateTime(coalesce(endsAt, startsAt)) < dateTime(now())`
+
+// featuredEvent is only what an editor picked, so the hero can take it over. The upcoming
+// list never repeats it, and there is no next-event fallback when nothing is picked.
 export const HOMEPAGE_QUERY = groq`{
   "page": *[_id == "homepage"][0]{
-    ...,
-    hero{..., image${image}},
-    "featuredEvent": featuredEvent->${eventCard}
+    hero, about{heading, text, "stats": stats[0...${HOMEPAGE_LIST_MAX}]}, seo,
+    "quickLinks": highlightedLinks[${visibleUntilFilter('visibleUntil')}][0...${HOMEPAGE_LIST_MAX}]{_key, label, url},
+    "featuredEvent": featuredEvent->{
+      title, "slug": slug.current, startsAt, summary, heroImage,
+      ticketUrl, ticketNote, priceTiers[]{_key, label, amount}
+    }
   },
-  "nextEvent": *[_type == "event" && startsAt > now()] | order(startsAt asc)[0]${eventCard},
-  "sections": *[_type == "section"] | order(order asc){name, shortName, "slug": slug.current, tagline, logo},
-  "albums": *[_type == "album"] | order(date desc)[0...4]{title, "slug": slug.current, date, cover${image}}
+  "upcoming": *[
+    _type == "event" && !(${HAS_ENDED}) && _id != *[_id == "homepage"][0].featuredEvent._ref
+  ] | order(startsAt asc)[0...${HOMEPAGE_LIST_MAX}]{_id, title, "slug": slug.current, startsAt},
+  "instagram": *[_id == "siteSettings"][0].socials.instagram
 }`
 
 export const EVENTS_QUERY = groq`*[_type == "event"] | order(startsAt desc){
