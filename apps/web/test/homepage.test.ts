@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import Home from '../src/pages/index.astro'
 import { renderPage } from './seam'
-import { event, homepage, localised, richText, siteSettings } from './fixtures'
+import { allSections, event, homepage, localised, richText, siteSettings } from './fixtures'
 
 const NOW = '2026-10-01T10:00:00Z'
 const FUTURE = '2026-11-26T17:00:00Z'
@@ -214,5 +214,39 @@ describe('homepage content blocks', () => {
     })
 
     expect(html).not.toContain('Orientation week')
+  })
+})
+
+describe('homepage Sections block', () => {
+  const sectionsOf = (html: string) =>
+    html.match(/<section[^>]*data-sections[\s\S]*?<\/section>/)?.[0] ?? ''
+
+  it('shows the 5 Sections in website order in the same colours as the Sections list', async () => {
+    const [cu, ctu, vse, czu, uct] = allSections()
+
+    const html = await renderPage(Home, {
+      now: NOW,
+      documents: [siteSettings(), homepage(), czu, uct, cu, vse, ctu],
+    })
+    const block = sectionsOf(html)
+
+    expect(block).toMatch(
+      /ESN CU Prague[\s\S]*ESN CTU Prague[\s\S]*ESN VSE Prague[\s\S]*ESN CZU Prague[\s\S]*ESN UCT Prague/,
+    )
+    expect(block).toMatch(/href="\/sections\/esn-cu"[^>]*var\(--color-esn-magenta\)/)
+    expect(block).toMatch(/href="\/sections\/esn-ctu"[^>]*var\(--color-esn-blue\)/)
+    expect(block).toMatch(/href="\/sections\/esn-vse"[^>]*var\(--color-esn-orange\)/)
+    expect(block).toMatch(/href="\/sections\/esn-czu"[^>]*var\(--color-esn-green\)/)
+    expect(block).toMatch(/href="\/sections\/esn-uct"[^>]*var\(--color-esn-cyan\)/)
+  })
+
+  it('is hidden when the Homepage turns the Sections block off', async () => {
+    const html = await renderPage(Home, {
+      now: NOW,
+      documents: [siteSettings(), homepage({ showSections: false }), ...allSections()],
+    })
+
+    expect(html).not.toContain('data-sections')
+    expect(html).not.toContain('ESN CU Prague')
   })
 })

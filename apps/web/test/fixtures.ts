@@ -54,3 +54,23 @@ export const richText = (...paragraphs: string[]) =>
       children: [{ _type: 'span', _key: `s${i}`, text, marks: [] }],
     })),
   )
+
+export const section = (
+  slug: string,
+  order: number,
+  overrides: Record<string, unknown> = {},
+): Doc => ({
+  _id: `section-${slug}`,
+  _type: 'section',
+  name: localised(`ESN ${slug.toUpperCase()} Prague`),
+  shortName: `ESN ${slug.toUpperCase()}`,
+  slug: { current: `esn-${slug}` },
+  university: localised(`University ${slug.toUpperCase()}`),
+  tagline: localised(`Tagline of ${slug.toUpperCase()}.`),
+  order,
+  ...overrides,
+})
+
+/** The five Sections in website order, as seeded. */
+export const allSections = () =>
+  ['cu', 'ctu', 'vse', 'czu', 'uct'].map((slug, i) => section(slug, i + 1))

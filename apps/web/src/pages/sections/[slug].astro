@@ -1,0 +1,107 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Picture from '../../components/Picture.astro'
+import RichText from '../../components/RichText.astro'
+import SocialLinks from '../../components/SocialLinks.astro'
+import { fetchContent } from '../../lib/content'
+import { SECTION_QUERY, SECTION_SLUGS_QUERY } from '../../lib/queries'
+import { sectionColours } from '../../lib/section-colours'
+import type { SectionDetail } from '../../lib/types'
+
+export async function getStaticPaths() {
+  const slugs = await fetchContent<string[]>(SECTION_SLUGS_QUERY)
+  return slugs.map((slug) => ({ params: { slug } }))
+}
+
+const section = await fetchContent<SectionDetail | null>(SECTION_QUERY, {
+  slug: Astro.params.slug,
+})
+if (!section) return new Response(null, { status: 404 })
+
+const { colour, textClass } = sectionColours(section.slug)
+const hasAbout = Boolean(section.about || section.buddyProgramUrl)
+const hasOffice = Boolean(section.office || section.email || section.mapUrl)
+const hasSocials = Object.values(section.socials ?? {}).some(Boolean)
+---
+
+<Layout title={section.name}>
+  <Picture
+    image={section.coverImage}
+    width={1280}
+    height={800}
+    eager
+    class="aspect-16/10 w-full lg:aspect-auto lg:h-105"
+  />
+
+  <section
+    style={`background: ${colour}`}
+    class:list={['flex flex-col gap-2.5 px-5 py-6 lg:gap-4 lg:px-14 lg:py-10', textClass]}
+  >
+    <div class="flex items-center gap-3.5 lg:gap-5">
+      <Picture
+        image={section.logo}
+        width={64}
+        height={64}
+        class="size-16 shrink-0 lg:size-20"
+        fallbackClass="bg-white"
+      />
+      <div class="flex flex-col">
+        <h1 class="font-heading text-[34px] leading-none font-bold lg:text-[56px]">
+          {section.name}
+        </h1>
+        {section.university && <p class="text-sm font-bold lg:text-base">{section.university}</p>}
+      </div>
+    </div>
+    {section.tagline && (
+      <p class="max-w-150 text-[17px] leading-normal font-bold lg:text-xl">{section.tagline}</p>
+    )}
+  </section>
+
+  {hasAbout && (
+    <section class="flex flex-col gap-3.5 px-5 py-7 lg:px-14 lg:py-14">
+      <h2 class="font-heading text-[26px] leading-none font-bold lg:text-[36px]">About us</h2>
+      <RichText value={section.about} class="max-w-170 text-base leading-relaxed lg:text-[19px]" />
+      {section.buddyProgramUrl && (
+        <a
+          href={section.buddyProgramUrl}
+          rel="noopener"
+          class="flex h-14 items-center justify-center bg-esn-blue px-6 text-[17px] font-black text-white hover:brightness-92 lg:self-start"
+        >
+          Get a buddy
+        </a>
+      )}
+    </section>
+  )}
+
+  {hasOffice && (
+    <section class="flex flex-col gap-3 bg-surface px-5 py-6 lg:px-14 lg:py-10">
+      <h2 class="font-heading text-[22px] leading-none font-bold lg:text-[30px]">Office</h2>
+      {section.office && (
+        <p class="max-w-170 text-base leading-relaxed whitespace-pre-line">{section.office}</p>
+      )}
+      {section.email && (
+        <a
+          href={`mailto:${section.email}`}
+          class="self-start font-black text-esn-blue hover:text-esn-magenta"
+        >
+          {section.email}
+        </a>
+      )}
+      {section.mapUrl && (
+        <a
+          href={section.mapUrl}
+          rel="noopener"
+          class="mt-2 flex h-12 items-center justify-center border-2 border-esn-blue px-5 font-black text-esn-blue hover:bg-blue-50 lg:self-start"
+        >
+          Open in Maps
+        </a>
+      )}
+    </section>
+  )}
+
+  {hasSocials && (
+    <section aria-label="Socials" class="bg-ink px-5 py-6 lg:px-14 lg:py-10">
+      <SocialLinks socials={section.socials} />
+    </section>
+  )}
+</Layout>

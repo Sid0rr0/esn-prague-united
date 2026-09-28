@@ -4,6 +4,7 @@ import HeroTicket from '../components/HeroTicket.astro'
 import Picture from '../components/Picture.astro'
 import RichText from '../components/RichText.astro'
 import SectionHeading from '../components/SectionHeading.astro'
+import SectionTile from '../components/SectionTile.astro'
 import StatGrid from '../components/StatGrid.astro'
 import { fetchContent } from '../lib/content'
 import { formatKicker, formatShortDate } from '../lib/format'
@@ -17,6 +18,7 @@ const hero = page?.hero
 const featured = page?.featuredEvent
 const about = page?.about
 const quickLinks = page?.quickLinks ?? []
+const sections = page?.sections ?? []
 
 // Empty while an Event is featured → hidden; empty otherwise → "New events coming soon".
 const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon'
@@ -134,6 +136,25 @@ const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon
         <RichText value={about.text} class="max-w-170 text-base leading-relaxed lg:text-[19px]" />
         <StatGrid stats={about.stats ?? []} />
       </div>
+    </section>
+  )}
+
+  {sections.length > 0 && (
+    <section
+      data-sections
+      class="grid gap-3.5 bg-green-50 px-5 py-7 lg:grid-cols-[280px_1fr] lg:gap-12 lg:p-14"
+    >
+      <div class="flex flex-col gap-2.5">
+        <SectionHeading colour="var(--color-esn-green)">Sections</SectionHeading>
+        <p class="hidden text-base leading-normal lg:block">Pick the one at your university.</p>
+      </div>
+      <ul class="grid gap-0.5 lg:grid-cols-5">
+        {sections.map((section) => (
+          <li>
+            <SectionTile section={section} variant="band" />
+          </li>
+        ))}
+      </ul>
     </section>
   )}
 

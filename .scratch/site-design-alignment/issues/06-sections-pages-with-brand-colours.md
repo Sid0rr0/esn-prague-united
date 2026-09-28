@@ -2,11 +2,11 @@
 
 **What to build:** Each Section's brand colour and tint are fixed in code and keyed to the Section. There's no schema field, following ADR 0001.
 
-- CU: cyan
-- CTU: magenta
-- VŠE: green
-- CZU: orange
-- UCT: dark blue
+- CU: magenta
+- CTU: dark blue
+- VŠE: orange
+- CZU: green
+- UCT: cyan
 
 **Sections list page (3m):** all 5 Sections in website order, each with its colour, logo, name, university and one-line description.
 
@@ -23,11 +23,11 @@ The homepage Sections block uses the same colours.
 
 **Blocked by:** 03.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Seam test: the Sections list renders all 5 Sections in website order, each with its fixed colour.
-- [ ] Seam test: a Section page renders about, buddy sign-up, office as prose, email and socials.
-- [ ] Seam test: a Section page renders no events or albums.
-- [ ] Seam test: "Get a buddy" is hidden when there's no buddy sign-up link.
-- [ ] The homepage Sections block renders using the same colour mapping.
-- [ ] Editors can't change a Section's colour from the Studio.
+- [x] Seam test: the Sections list renders all 5 Sections in website order, each with its fixed colour.
+- [x] Seam test: a Section page renders about, buddy sign-up, office as prose, email and socials.
+- [x] Seam test: a Section page renders no events or albums.
+- [x] Seam test: "Get a buddy" is hidden when there's no buddy sign-up link.
+- [x] The homepage Sections block renders using the same colour mapping.
+- [x] Editors can't change a Section's colour from the Studio.

@@ -1,0 +1,58 @@
+---
+import Picture from './Picture.astro'
+import { sectionColours } from '../lib/section-colours'
+import type { SectionSummary } from '../lib/types'
+
+interface Props {
+  section: SectionSummary
+  /** list: a card with its tagline (Sections list); band: a compact tile (homepage block). */
+  variant: 'list' | 'band'
+}
+
+const { section, variant } = Astro.props
+const { colour, tint } = sectionColours(section.slug)
+const isList = variant === 'list'
+const logoSize = isList ? 56 : 48
+---
+
+<a
+  href={`/sections/${section.slug}`}
+  style={`--section-colour: ${colour}; --section-tint: ${tint}`}
+  data-section-tile
+  class:list={[
+    'flex h-full gap-3.5 hover:bg-line',
+    isList
+      ? 'items-start border-t-6 border-(--section-colour) bg-surface px-5 py-4 lg:px-6 lg:py-6'
+      : 'items-center border-l-6 border-(--section-colour) bg-white px-4 py-3.5 lg:flex-col lg:items-start lg:border-t-6 lg:border-l-0 lg:px-4 lg:py-5.5',
+  ]}
+>
+  {/* The homepage band shows logos only on desktop cards; its mobile rows are text only. */}
+  <span class:list={['shrink-0', !isList && 'hidden lg:block']}>
+    <Picture
+      image={section.logo}
+      width={logoSize}
+      height={logoSize}
+      class={isList ? 'size-14' : 'size-12'}
+      fallbackClass={isList ? 'bg-white' : 'bg-(--section-tint)'}
+    />
+  </span>
+  <span class="flex flex-1 flex-col gap-1">
+    <span
+      class:list={[
+        'font-heading font-bold',
+        isList ? 'text-[22px] leading-tight' : 'text-[19px] lg:text-[22px]',
+      ]}
+    >
+      {section.name}
+    </span>
+    {section.university && (
+      <span class:list={['text-[13px] text-muted', isList && 'font-bold']}>
+        {section.university}
+      </span>
+    )}
+    {isList && section.tagline && <span class="text-[15px] leading-normal">{section.tagline}</span>}
+  </span>
+  <span class:list={['font-black text-esn-blue', !isList && 'lg:hidden']} aria-hidden="true">
+    →
+  </span>
+</a>

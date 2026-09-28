@@ -129,9 +129,35 @@ export interface Homepage {
     about?: { heading?: string; text?: RichText; stats?: Stat[] | null } | null
     quickLinks?: LinkItem[] | null
     featuredEvent?: FeaturedEvent | null
+    /** Null when the Homepage turns the Sections block off. */
+    sections?: SectionSummary[] | null
     seo?: Seo
   } | null
   /** Upcoming Events other than the Featured event, soonest first, at most 4. */
   upcoming: EventSummary[]
   instagram?: string | null
+}
+
+export interface SectionSummary {
+  name: string
+  slug: string
+  university?: string
+  logo?: SanityImage
+  tagline?: string
+}
+
+export interface SectionDetail {
+  name: string
+  slug: string
+  university?: string
+  logo?: SanityImage
+  coverImage?: SanityImage
+  tagline?: string
+  about?: RichText
+  buddyProgramUrl?: string
+  email?: string
+  /** Office hours and place as the editor wrote them, shown as prose. */
+  office?: string
+  mapUrl?: string
+  socials?: Socials | null
 }

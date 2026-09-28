@@ -16,6 +16,11 @@ export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]{
   )
 }`
 
+/** The 5 Sections in website order, as the Sections list and the homepage block show them. */
+export const SECTIONS_QUERY = groq`*[_type == "section"] | order(order asc){
+  name, "slug": slug.current, university, logo, tagline
+}`
+
 /** The homepage's upcoming list, About numbers and Quick links each show at most this many. */
 const HOMEPAGE_LIST_MAX = 4
 
@@ -30,6 +35,7 @@ const TICKET_FIELDS = `ticketUrl, ticketNote, priceTiers[]{_key, label, amount},
 export const HOMEPAGE_QUERY = groq`{
   "page": *[_id == "homepage"][0]{
     hero, about{heading, text, "stats": stats[0...${HOMEPAGE_LIST_MAX}]}, seo,
+    "sections": select(showSections != false => ${SECTIONS_QUERY}),
     "quickLinks": highlightedLinks[${visibleUntilFilter('visibleUntil')}][0...${HOMEPAGE_LIST_MAX}]{_key, label, url},
     "featuredEvent": featuredEvent->{
       title, "slug": slug.current, startsAt, summary, heroImage, ${TICKET_FIELDS}
@@ -56,7 +62,7 @@ export const EVENT_QUERY = groq`*[_type == "event" && slug.current == $slug][0]{
 
 export const EVENT_SLUGS_QUERY = groq`*[_type == "event" && defined(slug.current)].slug.current`
 
-export const SECTIONS_QUERY = groq`*[_type == "section"] | order(order asc){..., "slug": slug.current}`
+export const SECTION_SLUGS_QUERY = groq`*[_type == "section" && defined(slug.current)].slug.current`
 
 export const SECTION_QUERY = groq`*[_type == "section" && slug.current == $slug][0]{
   name, shortName, "slug": slug.current, university, logo, coverImage${image}, tagline, about,
