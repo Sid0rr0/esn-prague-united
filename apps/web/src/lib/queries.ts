@@ -4,7 +4,7 @@ import groq from 'groq'
 
 const image = `{..., asset->{_id, url, metadata{lqip, dimensions}}}`
 
-/** GROQ filter: hidden once its "Hide after" date passes (top banner, Quick links). */
+/** GROQ filter: hidden once its "Hide after" date passes (top banner, Quick links, Links page). */
 const visibleUntilFilter = (field: string) =>
   `(!defined(${field}) || dateTime(${field}) > dateTime(now()))`
 
@@ -105,8 +105,8 @@ export const CONTACTS_QUERY = groq`*[_id == "contactsPage"][0]{
   )
 }`
 
-// Links whose "Hide after" date passed are filtered at build time.
+// Links whose "Hide after" date passed are filtered at build time, like the top banner.
 export const LINKS_QUERY = groq`*[_id == "linksPage"][0]{
-  ...,
-  "links": links[!defined(visibleUntil) || visibleUntil > now()]
+  title, intro, avatar, seo,
+  "links": links[${visibleUntilFilter('visibleUntil')}]{_key, label, url, highlight}
 }`

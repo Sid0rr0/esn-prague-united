@@ -118,6 +118,20 @@ export interface ContactsPage {
   sections?: SectionContact[] | null
 }
 
+export interface LinksPageLink extends LinkItem {
+  /** Shown as a big coloured button above the plain rows. */
+  highlight?: boolean | null
+}
+
+export interface LinksPage {
+  title?: string
+  intro?: string
+  avatar?: SanityImage
+  seo?: Seo
+  /** In editor order, without links past their "Hide after" date. */
+  links?: LinksPageLink[] | null
+}
+
 export interface Venue {
   name?: string
   address?: string

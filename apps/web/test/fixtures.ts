@@ -151,3 +151,24 @@ export const contactsPage = (overrides: Record<string, unknown> = {}): Doc => ({
   socials: { instagram: 'https://instagram.com/esnprague' },
   ...overrides,
 })
+
+/** A link as the Links page and the Homepage's highlighted links store it. */
+export const linkItem = (key: string, label: string, overrides: Record<string, unknown> = {}) => ({
+  _key: key,
+  _type: 'linkItem',
+  label: localised(label),
+  url: `https://example.com/${key}`,
+  icon: 'globe',
+  highlight: false,
+  ...overrides,
+})
+
+/** The Links page Singleton, the link-in-bio target. */
+export const linksPage = (overrides: Record<string, unknown> = {}): Doc => ({
+  _id: 'linksPage',
+  _type: 'linksPage',
+  title: localised('ESN Prague United'),
+  intro: localised('Events, trips and your buddy, all in one place.'),
+  links: [],
+  ...overrides,
+})

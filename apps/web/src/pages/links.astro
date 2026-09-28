@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { fetchContent } from '../lib/content'
+import { imageUrl } from '../lib/image'
+import { LINKS_QUERY } from '../lib/queries'
+import { DEFAULT_LOGO, SITE_NAME } from '../lib/site'
+import type { LinksPage } from '../lib/types'
+
+const AVATAR_SIZE = 192
+const page = (await fetchContent<LinksPage | null>(LINKS_QUERY)) ?? {}
+const title = page.title ?? SITE_NAME
+const avatarSrc = imageUrl(page.avatar, { width: AVATAR_SIZE, height: AVATAR_SIZE }) ?? DEFAULT_LOGO
+const links = page.links ?? []
+const highlighted = links.filter((link) => link.highlight)
+const plain = links.filter((link) => !link.highlight)
+---
+
+<!-- The link-in-bio page: no site header or footer, just a small link back to the site. -->
+<Layout title={title} seo={page.seo} bare>
+  <div class="mx-auto flex min-h-screen w-full max-w-120 flex-col">
+    <header class="flex flex-col items-center gap-3 bg-blue-50 px-5 pt-10 pb-8 text-center">
+      <img src={avatarSrc} alt="" class="block size-24 object-contain" />
+      <h1 class="font-heading text-[32px] leading-none font-bold">{title}</h1>
+      {page.intro && <p class="text-base leading-normal whitespace-pre-line">{page.intro}</p>}
+    </header>
+
+    <div class="flex flex-1 flex-col gap-3 px-5 py-6">
+      {highlighted.map((link) => (
+        <a
+          href={link.url}
+          data-link="highlight"
+          class="block bg-esn-magenta px-5 py-4 text-center text-lg font-black text-white hover:bg-esn-blue hover:text-white"
+        >
+          {link.label}
+        </a>
+      ))}
+      {plain.length > 0 && (
+        <ul class="flex flex-col gap-0.5">
+          {plain.map((link) => (
+            <li>
+              <a
+                href={link.url}
+                data-link="plain"
+                class="flex items-center justify-between bg-surface px-4 py-3.5 font-bold text-ink hover:text-esn-magenta"
+              >
+                {link.label}
+                <span aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    <p class="px-5 pb-8 text-center text-sm">
+      <a href="/" class="font-bold text-muted hover:text-esn-magenta">
+        {SITE_NAME} website
+      </a>
+    </p>
+  </div>
+</Layout>
