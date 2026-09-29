@@ -15,8 +15,6 @@ Workflow: pick a ticket whose blockers are done, run `/implement` on it, then ma
 | instagram-posts   | [03 Privacy policy page](instagram-posts/issues/03-privacy-policy-page.md)                                                                  | ready-for-agent | none       | Built in 7cabc1d and bbc5a14; only the Studio manual check is left, then mark done |
 | related-events    | [01 Related events on the Event page](related-events/issues/01-related-events-on-event-page.md)                                             | ready-for-agent | none       |                                                                                    |
 | related-events    | [02 Studio rules for Related events](related-events/issues/02-studio-rules-for-related-events.md)                                           | ready-for-agent | 01         | Checked by hand in the Studio                                                      |
-| ticket-area       | [01 Pin the Ticket area rules that have no page test yet](ticket-area/issues/01-pin-untested-ticket-area-rules.md)                          | ready-for-agent | none       | Tests only; no production code changes                                             |
-| ticket-area       | [02 One Ticket area module for the Event page and the Homepage hero](ticket-area/issues/02-ticket-area-module.md)                           | ready-for-agent | 01         | Independent of content-reads                                                       |
 | translated-fields | [01 The text migration leaves fields cleared in both languages alone](translated-fields/issues/01-migration-leaves-cleared-fields-alone.md) | ready-for-agent | none       | Studio only; fixes a latent migration bug                                          |
 | translated-fields | [02 Create the translated-fields workspace and move the Studio onto it](translated-fields/issues/02-shared-workspace-and-studio.md)         | ready-for-agent | 01         | Adds a packages/ workspace                                                         |
 | translated-fields | [03 Move the web onto the translated-fields workspace](translated-fields/issues/03-web-onto-shared-workspace.md)                            | ready-for-agent | 02         |                                                                                    |
@@ -24,14 +22,13 @@ Workflow: pick a ticket whose blockers are done, run `/implement` on it, then ma
 
 ## Suggested order
 
-1. ticket-area 01, then 02. Do it before event-partners, related-events and instagram-posts 02, which all add to the Event page
-2. event-partners 01, then 02
-3. related-events 01, then 02
-4. instagram-posts 02
-5. vercel-deploy 03 (01 and 02 done; their dashboard steps are with the maintainer)
-6. translated-fields 01 any time (small, standalone); 02 then 03 just before the Czech rollout starts
-7. instagram-posts 03: do the Studio manual check, then mark it done
-8. brand-compliance 04: triage first
+1. event-partners 01, then 02
+2. related-events 01, then 02
+3. instagram-posts 02
+4. vercel-deploy 03 (01 and 02 done; their dashboard steps are with the maintainer)
+5. translated-fields 01 any time (small, standalone); 02 then 03 just before the Czech rollout starts
+6. instagram-posts 03: do the Studio manual check, then mark it done
+7. brand-compliance 04: triage first
 
 ## Fully done
 
@@ -40,3 +37,4 @@ Workflow: pick a ticket whose blockers are done, run `/implement` on it, then ma
 - content-reads: 01–07
 - instagram-posts: 01, 04
 - vercel-deploy: 01, 02
+- ticket-area: 01, 02
