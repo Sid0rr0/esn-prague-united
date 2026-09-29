@@ -34,6 +34,11 @@ const blockOf = (html: string, marker: string) =>
   html.match(new RegExp(`<(aside|div)[^>]*${marker}[\\s\\S]*?</\\1>`))?.[0] ?? ''
 const sidebarOf = (html: string) => blockOf(html, 'data-ticket-sidebar')
 const stickyBarOf = (html: string) => blockOf(html, 'data-sticky-bar')
+/**
+ * The extra room at the bottom on mobile that keeps the sticky bar off the last content,
+ * reset on desktop. Rendered HTML only shows it as padding classes, so those stand in for it.
+ */
+const hasRoomForStickyBar = (html: string) => /\bpb-28 lg:pb-14\b/.test(html)
 
 /** The ticket UI a visitor could act on: Buy button, any price, Ticket note, sticky bar. */
 const expectNoTicketUi = (html: string) => {
@@ -129,6 +134,39 @@ describe('Event page', () => {
     expect(stickyBarOf(html)).toContain('Buy ticket')
     expect(html).not.toContain('CZK')
   })
+
+  it('still shows the ticket sidebar with the ticket info when that is all an Event has', async () => {
+    const ball = event('ball', { ticketInfo: richText('Tickets go on sale on 1 November.') })
+
+    const html = await renderEvent(ball)
+
+    expect(sidebarOf(html)).toContain('Tickets go on sale on 1 November.')
+    expectNoTicketUi(html)
+    expect(html).not.toContain('data-ticket-note')
+  })
+
+  it.each([
+    { with: 'Buy ticket', fields: { ticketUrl: 'https://tickets.example/ball' }, showsBar: true },
+    { with: 'a Ticket note', fields: { ticketNote: localised('Sold out') }, showsBar: true },
+    {
+      with: 'Price tiers and ticket info but no ticket action',
+      fields: { priceTiers: tiers, ticketInfo: richText('Sales end on 20 November.') },
+      showsBar: false,
+    },
+    {
+      with: 'a ticket link but an end time that has passed',
+      fields: { startsAt: PAST_START, endsAt: PAST_END, ticketUrl: 'https://tickets.example/ball' },
+      showsBar: false,
+    },
+  ])(
+    'leaves room at the bottom on mobile only while the sticky bar shows: $with',
+    async ({ fields, showsBar }) => {
+      const html = await renderEvent(event('ball', fields))
+
+      expect(html.includes('data-sticky-bar')).toBe(showsBar)
+      expect(hasRoomForStickyBar(html)).toBe(showsBar)
+    },
+  )
 
   it('links to the Album and shows no ticket UI once the end time has passed', async () => {
     const ball = event('ball', {
