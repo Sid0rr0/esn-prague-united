@@ -10,9 +10,9 @@ The Event page and the Homepage hero render what the module returns. The compone
 
 **Blocked by:** 01.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The Event page and the Homepage hero no longer check "has ended", Price tiers or ticket info themselves.
-- [ ] No ticket component decides a ticket rule; each only renders its part of the module's result.
-- [ ] CONTEXT.md defines "Ticket area": everything an Event shows where tickets would be (the ticket action, the aside and the sticky bar).
-- [ ] Every Event page and Homepage ticket test, including those from 01, passes unchanged; type checking passes.
+- [x] The Event page and the Homepage hero no longer check "has ended", Price tiers or ticket info themselves.
+- [x] No ticket component decides a ticket rule; each only renders its part of the module's result.
+- [x] CONTEXT.md defines "Ticket area": everything an Event shows where tickets would be (the ticket action, the aside and the sticky bar).
+- [x] Every Event page and Homepage ticket test, including those from 01, passes unchanged; type checking passes.
