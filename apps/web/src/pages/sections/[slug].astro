@@ -63,6 +63,21 @@ const hasSocials = Object.values(section.socials ?? {}).some(Boolean)
     </section>
   )}
 
+  {hasSocials && (
+    <section
+      aria-labelledby="follow-us"
+      class="flex flex-col gap-4 bg-ink px-5 py-6 lg:px-14 lg:py-10"
+    >
+      <h2
+        id="follow-us"
+        class="font-heading text-[22px] leading-none font-bold text-white lg:text-[30px]"
+      >
+        Follow us
+      </h2>
+      <SocialLinks socials={section.socials} />
+    </section>
+  )}
+
   {hasOffice && (
     <section class="flex flex-col gap-3 bg-surface px-5 py-6 lg:px-14 lg:py-10">
       <h2 class="font-heading text-[22px] leading-none font-bold lg:text-[30px]">Office</h2>
@@ -86,12 +101,6 @@ const hasSocials = Object.values(section.socials ?? {}).some(Boolean)
           Open in Maps
         </a>
       )}
-    </section>
-  )}
-
-  {hasSocials && (
-    <section aria-label="Socials" class="bg-ink px-5 py-6 lg:px-14 lg:py-10">
-      <SocialLinks socials={section.socials} />
     </section>
   )}
 </Layout>

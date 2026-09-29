@@ -107,6 +107,20 @@ describe('Section page', () => {
     expect(html).toMatch(/href="https:\/\/wa\.example\/ctu"[^>]*>\s*WhatsApp/)
   })
 
+  it('shows socials under a Follow us heading, above the office rather than by the footer', async () => {
+    const ctu = section('ctu', 2, {
+      office: localised('Masarykova kolej'),
+      socials: { instagram: 'https://instagram.com/esnctu' },
+    })
+
+    const html = await renderSection(ctu)
+
+    const followUs = html.indexOf('Follow us')
+    expect(followUs).toBeGreaterThan(-1)
+    expect(followUs).toBeLessThan(html.indexOf('instagram.com/esnctu'))
+    expect(html.indexOf('instagram.com/esnctu')).toBeLessThan(html.indexOf('>Office<'))
+  })
+
   it('shows no events or albums, even for a Section that still holds them', async () => {
     const party = event('party', { title: localised('Welcome Party') })
     const album = {
