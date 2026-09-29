@@ -24,6 +24,8 @@ const COLOURS = {
 }
 
 const tilesOf = (html: string) => html.match(/<a[^>]*data-section-tile[\s\S]*?<\/a>/g) ?? []
+const contactCardOf = (html: string) =>
+  html.match(/<section[^>]*aria-labelledby="get-in-touch"[\s\S]*?<\/section>/)?.[0] ?? ''
 
 const renderSection = (
   doc: ReturnType<typeof section>,
@@ -129,9 +131,11 @@ describe('Section page', () => {
       }),
     )
 
-    expect(html).toContain('Email')
-    expect(html).toContain('Website')
-    expect(html).not.toContain('Instagram')
+    const card = contactCardOf(html)
+
+    expect(card).toContain('Email')
+    expect(card).toContain('Website')
+    expect(card).not.toContain('Instagram')
   })
 
   it('hides the Get in touch card when the Section has no contact details, and About takes the full width', async () => {

@@ -9,6 +9,13 @@ const EN = {
   previousPost: 'Previous post',
   nextPost: 'Next post',
   privacyPolicy: 'Privacy policy',
+  allowInstagram: 'Allow Instagram content',
+  cookieSettings: 'Cookie settings',
+  consentHeading: 'Instagram content',
+  consentText:
+    'Some pages show Instagram posts. Loading them lets Meta set cookies and see your visit. Do you want to see them?',
+  consentAccept: 'Accept',
+  consentReject: 'Reject',
 } as const
 
 export type UiString = keyof typeof EN
@@ -21,6 +28,13 @@ const CS: Partial<Record<UiString, string>> = {
   previousPost: 'Předchozí příspěvek',
   nextPost: 'Další příspěvek',
   privacyPolicy: 'Zásady ochrany osobních údajů',
+  allowInstagram: 'Povolit obsah z Instagramu',
+  cookieSettings: 'Nastavení cookies',
+  consentHeading: 'Obsah z Instagramu',
+  consentText:
+    'Některé stránky zobrazují příspěvky z Instagramu. Jejich načtením umožníte společnosti Meta ukládat cookies a vidět vaši návštěvu. Chcete je zobrazit?',
+  consentAccept: 'Přijmout',
+  consentReject: 'Odmítnout',
 }
 
 const STRINGS: Record<Language, Partial<Record<UiString, string>>> = { en: EN, cs: CS }

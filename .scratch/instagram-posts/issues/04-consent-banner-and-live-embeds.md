@@ -19,14 +19,14 @@
 
 **Blocked by:** 01 (Instagram posts in the Updates block on the homepage), 03 (Privacy policy page)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Consent seam test: an undecided visitor sees the banner.
-- [ ] Consent seam test: Accept hides the banner, turns placeholders into embeds and loads the Instagram script exactly once.
-- [ ] Consent seam test: Reject hides the banner and keeps the placeholders.
-- [ ] Consent seam test: the stored choice survives a reload (accepted loads embeds without a banner, rejected shows placeholders without a banner).
-- [ ] Consent seam test: "Allow Instagram content" on a placeholder behaves like Accept.
-- [ ] Consent seam test: "Cookie settings" reopens the banner.
-- [ ] Consent seam test: storage that throws behaves as undecided, without errors.
-- [ ] Seam test: the footer contains the "Cookie settings" control, and the banner markup links to the Privacy policy.
-- [ ] Manual check in a browser: accepting shows real Instagram embeds in the carousel, and no request goes to Instagram before consent.
+- [x] Consent seam test: an undecided visitor sees the banner.
+- [x] Consent seam test: Accept hides the banner, turns placeholders into embeds and loads the Instagram script exactly once.
+- [x] Consent seam test: Reject hides the banner and keeps the placeholders.
+- [x] Consent seam test: the stored choice survives a reload (accepted loads embeds without a banner, rejected shows placeholders without a banner).
+- [x] Consent seam test: "Allow Instagram content" on a placeholder behaves like Accept.
+- [x] Consent seam test: "Cookie settings" reopens the banner.
+- [x] Consent seam test: storage that throws behaves as undecided, without errors.
+- [x] Seam test: the footer contains the "Cookie settings" control, and the banner markup links to the Privacy policy.
+- [x] Manual check in a browser: accepting shows real Instagram embeds in the carousel, and no request goes to Instagram before consent.

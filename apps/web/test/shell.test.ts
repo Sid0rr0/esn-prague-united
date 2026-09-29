@@ -63,6 +63,29 @@ describe('site shell', () => {
 
     expect(footer).toMatch(/<a[^>]*href="\/privacy-policy"[^>]*>\s*Privacy policy\s*<\/a>/)
   })
+
+  it('has a Cookie settings button in the footer', async () => {
+    const html = await renderPage(Home, { now: NOW, documents: [homepage(), siteSettings()] })
+    const footer = footerOf(html)
+
+    expect(footer).toMatch(/<button[^>]*data-consent-settings[^>]*>\s*Cookie settings\s*<\/button>/)
+  })
+})
+
+describe('consent banner markup', () => {
+  const consentBannerOf = (html: string) =>
+    html.match(/<(\w+)[^>]*data-consent-banner[\s\S]*?<\/\1>/)?.[0] ?? ''
+
+  it('starts hidden, asks about Instagram and links to the Privacy policy', async () => {
+    const html = await renderPage(Home, { now: NOW, documents: [homepage(), siteSettings()] })
+    const banner = consentBannerOf(html)
+
+    expect(banner).toMatch(/data-consent-banner[^>]*\bhidden\b|\bhidden\b[^>]*data-consent-banner/)
+    expect(banner).toContain('Instagram')
+    expect(banner).toMatch(/<a[^>]*href="\/privacy-policy"/)
+    expect(banner).toMatch(/<button[^>]*data-consent-accept[^>]*>\s*Accept\s*<\/button>/)
+    expect(banner).toMatch(/<button[^>]*data-consent-reject[^>]*>\s*Reject\s*<\/button>/)
+  })
 })
 
 describe('top banner', () => {

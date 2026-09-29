@@ -13,7 +13,16 @@ const { text } = Astro.props
     <span class="font-heading text-lg font-bold">{SITE_NAME}</span>
     {text && <p class="text-sm text-on-blue-muted">{text}</p>}
   </div>
-  <a href="/privacy-policy" class="text-sm font-bold text-white hover:underline">
-    {uiString('privacyPolicy')}
-  </a>
+  <div class="flex items-center gap-5">
+    <a href="/privacy-policy" class="text-sm font-bold text-white hover:underline">
+      {uiString('privacyPolicy')}
+    </a>
+    <button
+      type="button"
+      data-consent-settings
+      class="text-sm font-bold text-white hover:underline"
+    >
+      {uiString('cookieSettings')}
+    </button>
+  </div>
 </footer>

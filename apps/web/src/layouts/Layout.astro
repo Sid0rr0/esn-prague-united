@@ -3,6 +3,7 @@ import '../styles/global.css'
 import Banner from '../components/Banner.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
+import ConsentBanner from '../components/ConsentBanner.astro'
 import { fetchContent } from '../lib/content'
 import { SETTINGS_QUERY } from '../lib/queries'
 import { SITE_NAME } from '../lib/site'
@@ -55,5 +56,6 @@ const shareImage = imageUrl(seo?.image ?? settings.seo?.image, { width: 1200, he
       <slot />
     </main>
     <Footer text={settings.footerText} />
+    <ConsentBanner />
   </body>
 </html>
