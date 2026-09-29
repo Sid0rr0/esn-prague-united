@@ -4,10 +4,9 @@ import { DEFAULT_LANGUAGE, localise, type Language } from './i18n'
 import { fetchRaw } from './sanity-client'
 import type { Seo, Socials } from './shapes'
 
-// Exported only so the dropped-data test can check contact people stay out; pages read through
-// readContacts. The Section contacts toggle starts on, so a document that never touched it lists
-// them too.
-export const CONTACTS_QUERY = groq`*[_id == "contactsPage"][0]{
+// Contact people are left out; the design dropped them. The Section contacts toggle starts on,
+// so a document that never touched it lists them too.
+const CONTACTS_QUERY = groq`*[_id == "contactsPage"][0]{
   title, intro, generalEmail, address, socials, seo,
   "sections": select(
     showSectionContacts != false => *[_type == "section"] | order(order asc){name, "slug": slug.current, email}

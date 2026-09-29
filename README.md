@@ -5,7 +5,7 @@ Monorepo for the ESN Prague website: Sanity Studio (content) + Astro (site), hos
 ## Apps
 
 - [`apps/studio`](apps/studio) — Sanity Studio, editorial content schemas. See its [README](apps/studio/README.md).
-- [`apps/web`](apps/web) — Astro site that reads content via the GROQ queries in [`apps/web/src/lib/queries.ts`](apps/web/src/lib/queries.ts).
+- [`apps/web`](apps/web) — Astro site that reads content through one content-read module per page in [`apps/web/src/lib/`](apps/web/src/lib).
 
 ## Setup
 

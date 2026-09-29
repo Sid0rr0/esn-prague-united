@@ -1,7 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import Home from '../src/pages/index.astro'
-import { CONTACTS_QUERY, EVENT_QUERY, SECTION_QUERY } from '../src/lib/queries'
-import { queryInMemory, renderPage } from './seam'
+import { readContacts } from '../src/lib/contacts'
+import { readEvent } from '../src/lib/events'
+import { readSection } from '../src/lib/sections'
+import { renderPage } from './seam'
 
 const NOW = '2026-10-01T10:00:00Z'
 
@@ -36,22 +38,22 @@ beforeEach(async () => {
 
 describe('data the design dropped', () => {
   it('leaves organisers out of the Event', async () => {
-    const result = await queryInMemory<Record<string, unknown>>(EVENT_QUERY, { slug: 'czech-ball' })
+    const result = await readEvent('czech-ball')
 
-    expect(result.title).toBe('Czech Ball')
+    expect(result?.title).toBe('Czech Ball')
     expect(result).not.toHaveProperty('organisers')
   })
 
   it("leaves the Section's events and albums out of the Section", async () => {
-    const result = await queryInMemory<Record<string, unknown>>(SECTION_QUERY, { slug: 'esn-ctu' })
+    const result = await readSection('esn-ctu')
 
-    expect(result.name).toBe('ESN CTU')
+    expect(result?.name).toBe('ESN CTU')
     expect(result).not.toHaveProperty('events')
     expect(result).not.toHaveProperty('albums')
   })
 
   it('leaves people out of Contacts', async () => {
-    const result = await queryInMemory<Record<string, unknown>>(CONTACTS_QUERY)
+    const result = await readContacts()
 
     expect(result.title).toBe('Contact us')
     expect(result).not.toHaveProperty('people')

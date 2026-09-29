@@ -8,9 +8,9 @@ import type { RichText, SanityImage, SectionSummary, Socials } from './shapes'
 // The Homepage reads the same list through homepage.ts.
 const SECTIONS_QUERY = groq`${SECTIONS_IN_ORDER}`
 
-// Exported only so the dropped-data test can check the Section's events and albums stay out;
-// pages read through readSection.
-export const SECTION_QUERY = groq`*[_type == "section" && slug.current == $slug][0]{
+// Lists its fields rather than spreading the document, so the Section's old events and albums
+// never reach a page.
+const SECTION_QUERY = groq`*[_type == "section" && slug.current == $slug][0]{
   name, shortName, "slug": slug.current, university, coverImage${IMAGE}, tagline, about,
   buddyProgramUrl, email, office, mapUrl, socials
 }`

@@ -19,8 +19,7 @@ const EVENTS_LIST_QUERY = groq`{
 
 // Detail queries list their fields rather than spreading the document, so data the design
 // dropped (e.g. Event organisers) never reaches a page even if an old document still holds it.
-// Exported only so the dropped-data test can check that; pages read through readEvent.
-export const EVENT_QUERY = groq`*[_type == "event" && slug.current == $slug][0]{
+const EVENT_QUERY = groq`*[_type == "event" && slug.current == $slug][0]{
   title, "slug": slug.current, startsAt, endsAt, venue, heroImage${IMAGE}, summary, description,
   programme[]{_key, time, title, description}, dressCode, faq[]{_key, question, answer},
   ticketInfo, seo, ${TICKET_FIELDS},
