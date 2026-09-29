@@ -3,11 +3,9 @@ import Layout from '../layouts/Layout.astro'
 import FaqAccordion from '../components/FaqAccordion.astro'
 import PageHeader from '../components/PageHeader.astro'
 import SectionHeading from '../components/SectionHeading.astro'
-import { fetchContent } from '../lib/content'
-import { FAQ_QUERY } from '../lib/queries'
-import type { FaqPage } from '../lib/types'
+import { readFaq } from '../lib/faq'
 
-const page = (await fetchContent<FaqPage | null>(FAQ_QUERY)) ?? {}
+const page = await readFaq()
 const title = page.title ?? 'Frequently asked questions'
 const topics = (page.topics ?? []).map((topic) => ({ ...topic, id: `topic-${topic._key}` }))
 ---

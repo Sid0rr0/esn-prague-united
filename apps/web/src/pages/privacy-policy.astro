@@ -2,12 +2,10 @@
 import Layout from '../layouts/Layout.astro'
 import PageHeader from '../components/PageHeader.astro'
 import RichText from '../components/RichText.astro'
-import { fetchContent } from '../lib/content'
-import { PRIVACY_POLICY_QUERY } from '../lib/queries'
-import type { PrivacyPolicy } from '../lib/types'
+import { readPrivacyPolicy } from '../lib/privacy-policy'
 import { uiString } from '../lib/ui-strings'
 
-const page = (await fetchContent<PrivacyPolicy | null>(PRIVACY_POLICY_QUERY)) ?? {}
+const page = await readPrivacyPolicy()
 const title = page.title ?? uiString('privacyPolicy')
 ---
 

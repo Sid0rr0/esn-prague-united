@@ -1,12 +1,10 @@
 ---
 import { externalLinkProps } from '../lib/external-link'
 import Layout from '../layouts/Layout.astro'
-import { fetchContent } from '../lib/content'
-import { LINKS_QUERY } from '../lib/queries'
+import { readLinksPage } from '../lib/links-page'
 import { SITE_NAME } from '../lib/site'
-import type { LinksPage } from '../lib/types'
 
-const page = (await fetchContent<LinksPage | null>(LINKS_QUERY)) ?? {}
+const page = await readLinksPage()
 const title = page.title ?? SITE_NAME
 const links = page.links ?? []
 const highlighted = links.filter((link) => link.highlight)

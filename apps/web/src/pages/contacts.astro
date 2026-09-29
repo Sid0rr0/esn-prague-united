@@ -3,12 +3,10 @@ import Layout from '../layouts/Layout.astro'
 import PageHeader from '../components/PageHeader.astro'
 import SectionHeading from '../components/SectionHeading.astro'
 import SocialLinks from '../components/SocialLinks.astro'
-import { fetchContent } from '../lib/content'
-import { CONTACTS_QUERY } from '../lib/queries'
+import { readContacts } from '../lib/contacts'
 import { sectionColours } from '../lib/section-colours'
-import type { ContactsPage } from '../lib/types'
 
-const page = (await fetchContent<ContactsPage | null>(CONTACTS_QUERY)) ?? {}
+const page = await readContacts()
 const title = page.title ?? 'Contact us'
 const sections = (page.sections ?? []).map((section) => ({
   ...section,

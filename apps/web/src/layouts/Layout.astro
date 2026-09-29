@@ -4,12 +4,10 @@ import Banner from '../components/Banner.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import ConsentBanner from '../components/ConsentBanner.astro'
-import { fetchContent } from '../lib/content'
-import { SETTINGS_QUERY } from '../lib/queries'
 import { SITE_NAME } from '../lib/site'
 import { imageUrl } from '../lib/image'
+import { readSiteSettings } from '../lib/site-settings'
 import type { Seo } from '../lib/shapes'
-import type { Settings } from '../lib/types'
 
 interface Props {
   title?: string
@@ -19,7 +17,7 @@ interface Props {
 }
 
 const { title, seo, navAccent } = Astro.props
-const settings = (await fetchContent<Settings | null>(SETTINGS_QUERY)) ?? {}
+const settings = await readSiteSettings()
 const pageTitle = seo?.title ?? title
 // A page titled with the site name (e.g. /links) doesn't repeat it after the dot.
 const fullTitle = pageTitle && pageTitle !== SITE_NAME ? `${pageTitle} · ${SITE_NAME}` : SITE_NAME
