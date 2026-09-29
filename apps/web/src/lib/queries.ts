@@ -1,13 +1,12 @@
 // Usage: import { fetchContent } from './content'
-//   const home = await fetchContent(HOMEPAGE_QUERY)
+//   const sections = await fetchContent(SECTIONS_QUERY)
 import groq from 'groq'
 import {
   ALBUM_CARD,
   HAS_ENDED,
-  HOMEPAGE_LIST_MAX,
   IMAGE,
   PHOTO_COUNT,
-  SECTION_SUMMARY,
+  SECTIONS_IN_ORDER,
   TICKET_FIELDS,
   visibleUntilFilter,
 } from './query-pieces'
@@ -22,31 +21,8 @@ export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]{
   )
 }`
 
-/** The 5 Sections in website order, as the Sections list and the homepage block show them. */
-export const SECTIONS_QUERY = groq`*[_type == "section"] | order(order asc)${SECTION_SUMMARY}`
-
-/** A picked Instagram post list as just its links, in order; a broken reference is null. */
-const INSTAGRAM_POST_LINKS = `[]->link`
-
-// featuredEvent is only what an editor picked, so the hero can take it over. The upcoming
-// list never repeats it, and there is no next-event fallback when nothing is picked.
-export const HOMEPAGE_QUERY = groq`{
-  "page": *[_id == "homepage"][0]{
-    hero, about{heading, text, "stats": stats[0...${HOMEPAGE_LIST_MAX}]}, seo,
-    "sections": select(showSections != false => ${SECTIONS_QUERY}),
-    "latestAlbums": select(
-      showGallery != false => *[_type == "album"] | order(date desc)[0...${HOMEPAGE_LIST_MAX}]${ALBUM_CARD}
-    ),
-    "updates": select(showUpdates != false => updates{heading, "links": posts${INSTAGRAM_POST_LINKS}}),
-    "quickLinks": highlightedLinks[${visibleUntilFilter('visibleUntil')}][0...${HOMEPAGE_LIST_MAX}]{_key, label, url},
-    "featuredEvent": featuredEvent->{
-      title, "slug": slug.current, startsAt, summary, heroImage, ${TICKET_FIELDS}
-    }
-  },
-  "upcoming": *[
-    _type == "event" && !(${HAS_ENDED}) && _id != *[_id == "homepage"][0].featuredEvent._ref
-  ] | order(startsAt asc)[0...${HOMEPAGE_LIST_MAX}]{_id, title, "slug": slug.current, startsAt}
-}`
+/** The Sections list page; the Homepage reads the same list through homepage.ts. */
+export const SECTIONS_QUERY = groq`${SECTIONS_IN_ORDER}`
 
 /** An Event as the Events list page's cards show it: no price or Ticket note. */
 const EVENT_CARD = `{

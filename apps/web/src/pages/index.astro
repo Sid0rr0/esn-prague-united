@@ -9,29 +9,25 @@ import RichText from '../components/RichText.astro'
 import SectionHeading from '../components/SectionHeading.astro'
 import SectionTile from '../components/SectionTile.astro'
 import StatGrid from '../components/StatGrid.astro'
-import { fetchContent } from '../lib/content'
 import { formatKicker, formatShortDate } from '../lib/format'
+import { readHomepage } from '../lib/homepage'
 import { instagramPostUrls } from '../lib/instagram-link'
-import { HOMEPAGE_QUERY } from '../lib/queries'
 import { SITE_NAME } from '../lib/site'
 import { ticketDisplay } from '../lib/tickets'
 import { uiString } from '../lib/ui-strings'
-import type { Homepage } from '../lib/types'
 
-const { page, upcoming } = await fetchContent<Homepage>(HOMEPAGE_QUERY)
-const hero = page?.hero
-const featured = page?.featuredEvent
-const about = page?.about
-const quickLinks = page?.quickLinks ?? []
-const sections = page?.sections ?? []
-const latestAlbums = page?.latestAlbums ?? []
-const updatesUrls = instagramPostUrls(page?.updates?.links)
-
-// Empty while an Event is featured → hidden; empty otherwise → "New events coming soon".
-const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon'
+const home = await readHomepage()
+const hero = home.hero
+const featured = home.featuredEvent
+const about = home.about
+const upcoming = home.upcoming
+const quickLinks = home.quickLinks ?? []
+const sections = home.sections ?? []
+const latestAlbums = home.latestAlbums ?? []
+const updatesUrls = instagramPostUrls(home.updates?.links)
 ---
 
-<Layout seo={page?.seo}>
+<Layout seo={home.seo}>
   <section data-hero class="grid bg-esn-blue text-white lg:grid-cols-2">
     <Picture
       image={featured ? featured.heroImage : hero?.image}
@@ -90,17 +86,17 @@ const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon
     </div>
   </section>
 
-  {upcomingState !== 'hidden' && (
+  {upcoming.state !== 'hidden' && (
     <section
       data-upcoming
       class="grid gap-3.5 bg-cyan-50 px-5 py-7 lg:grid-cols-[280px_1fr] lg:gap-12 lg:p-14"
     >
       <SectionHeading colour="var(--color-esn-cyan)">
-        {upcomingState === 'soon' ? 'New events coming soon' : 'Upcoming events'}
+        {upcoming.state === 'coming-soon' ? 'New events coming soon' : 'Upcoming events'}
       </SectionHeading>
-      {upcomingState === 'list' && (
+      {upcoming.state === 'list' && (
         <ul class="grid gap-0.5 lg:grid-cols-2">
-          {upcoming.map((item) => (
+          {upcoming.events.map((item) => (
             <li>
               <a
                 href={`/events/${item.slug}`}
@@ -158,7 +154,7 @@ const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon
       class="grid gap-3.5 bg-blue-50 px-5 py-7 lg:grid-cols-[280px_1fr] lg:gap-12"
     >
       <SectionHeading colour="var(--color-esn-blue)">
-        {page?.updates?.heading ?? uiString('updatesHeading')}
+        {home.updates?.heading ?? uiString('updatesHeading')}
       </SectionHeading>
       <InstagramCarousel urls={updatesUrls} />
     </section>

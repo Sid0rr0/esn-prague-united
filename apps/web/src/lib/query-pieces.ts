@@ -26,5 +26,8 @@ export const SECTION_SUMMARY = `{
   name, "slug": slug.current, university, tagline
 }`
 
+/** The 5 Sections in website order, as the Sections list and the homepage block show them. */
+export const SECTIONS_IN_ORDER = `*[_type == "section"] | order(order asc)${SECTION_SUMMARY}`
+
 /** The homepage's upcoming list, About numbers, Quick links and Latest albums each show at most this many. */
 export const HOMEPAGE_LIST_MAX = 4

@@ -73,3 +73,10 @@ export interface FaqEntry {
   question: string
   answer?: RichText
 }
+
+/** A link as the Homepage's Quick links and the Links page show it. */
+export interface LinkItem {
+  _key: string
+  label: string
+  url: string
+}

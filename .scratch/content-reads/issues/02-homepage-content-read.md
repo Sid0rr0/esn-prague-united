@@ -10,9 +10,13 @@ The Homepage renders from the tag instead of computing the state. Visitors see e
 
 **Blocked by:** 01.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The Homepage calls one read function and imports no query, result shape or `fetchContent`.
-- [ ] The Upcoming list state is decided in the Homepage module, not in the page.
-- [ ] The read function takes an optional language, defaulting to English.
-- [ ] Homepage tests pass unchanged; type checking passes.
+- [x] The Homepage calls one read function and imports no query, result shape or `fetchContent`.
+- [x] The Upcoming list state is decided in the Homepage module, not in the page.
+- [x] The read function takes an optional language, defaulting to English.
+- [x] Homepage tests pass unchanged; type checking passes.
+
+## Comments
+
+Done. `readHomepage()` in `apps/web/src/lib/homepage.ts` owns the projection, the shapes and the Upcoming list state (`list` / `hidden` / `coming-soon`). The Sections list expression moved to `SECTIONS_IN_ORDER` in `query-pieces.ts`, so the Homepage and the Sections page share it. `LinkItem` moved to `shapes.ts` because the Links page uses it too. The Homepage GROQ string is unchanged, and all 167 tests pass without edits.

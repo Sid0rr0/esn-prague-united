@@ -1,12 +1,10 @@
 /** Page-only shapes returned by the GROQ queries in queries.ts, after i18n.ts resolved translated fields. */
 import type {
-  AlbumSummary,
   EventCardData,
-  EventSummary,
   FaqEntry,
+  LinkItem,
   RichText,
   SanityImage,
-  SectionSummary,
   Seo,
   Socials,
   TicketFields,
@@ -23,29 +21,10 @@ export interface Settings {
   showsInstagram?: boolean
 }
 
-export interface Cta {
-  label?: string
-  url?: string
-}
-
-export interface LinkItem {
-  _key: string
-  label: string
-  url: string
-}
-
 /** The Events list page: Upcoming soonest first, Past newest first. */
 export interface EventsList {
   upcoming: EventCardData[]
   past: EventCardData[]
-}
-
-export interface FeaturedEvent extends TicketFields {
-  title: string
-  slug: string
-  startsAt: string
-  summary?: string
-  heroImage?: SanityImage
 }
 
 export interface ProgrammeItem {
@@ -128,36 +107,6 @@ export interface EventDetail extends TicketFields {
   ticketInfo?: RichText
   seo?: Seo
   album?: { title: string; slug: string } | null
-}
-
-export interface Stat {
-  _key: string
-  value: string
-  label: string
-}
-
-export interface Homepage {
-  page: {
-    hero?: {
-      heading?: string
-      subheading?: string
-      image?: SanityImage
-      primaryButton?: Cta
-      secondaryButton?: Cta
-    }
-    about?: { heading?: string; text?: RichText; stats?: Stat[] | null } | null
-    quickLinks?: LinkItem[] | null
-    /** The picked Instagram posts' links as stored; see instagramPostUrls. */
-    updates?: { heading?: string; links?: (string | null)[] | null } | null
-    featuredEvent?: FeaturedEvent | null
-    /** Null when the Homepage turns the Sections block off. */
-    sections?: SectionSummary[] | null
-    /** Newest first, at most 4; null when the Homepage turns Latest albums off. */
-    latestAlbums?: AlbumSummary[] | null
-    seo?: Seo
-  } | null
-  /** Upcoming Events other than the Featured event, soonest first, at most 4. */
-  upcoming: EventSummary[]
 }
 
 export interface SectionDetail {
