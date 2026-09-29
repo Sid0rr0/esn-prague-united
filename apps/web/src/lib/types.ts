@@ -199,7 +199,6 @@ export interface SectionSummary {
   name: string
   slug: string
   university?: string
-  logo?: SanityImage
   tagline?: string
 }
 

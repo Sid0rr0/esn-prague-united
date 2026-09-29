@@ -47,6 +47,21 @@ describe('Sections list', () => {
       expect(tiles[i]).toContain(`Tagline of ${slug.toUpperCase()}.`)
     })
   })
+
+  it('shows no Section logo or logo placeholder on any tile, even when every Section has a logo', async () => {
+    const html = await renderPage(SectionsPage, {
+      now: NOW,
+      documents: [siteSettings(), ...allSections()],
+    })
+    const tiles = tilesOf(html)
+
+    expect(tiles).toHaveLength(5)
+    tiles.forEach((tile) => {
+      expect(tile).not.toContain('<img')
+      expect(tile).not.toContain('<div')
+      expect(tile).not.toContain('/logo')
+    })
+  })
 })
 
 describe('Section page', () => {

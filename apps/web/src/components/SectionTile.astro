@@ -1,5 +1,4 @@
 ---
-import Picture from './Picture.astro'
 import { sectionColours } from '../lib/section-colours'
 import type { SectionSummary } from '../lib/types'
 
@@ -10,14 +9,13 @@ interface Props {
 }
 
 const { section, variant } = Astro.props
-const { colour, tint } = sectionColours(section.slug)
+const { colour } = sectionColours(section.slug)
 const isList = variant === 'list'
-const logoSize = isList ? 56 : 48
 ---
 
 <a
   href={`/sections/${section.slug}`}
-  style={`--section-colour: ${colour}; --section-tint: ${tint}`}
+  style={`--section-colour: ${colour}`}
   data-section-tile
   class:list={[
     'flex h-full gap-3.5 hover:bg-line',
@@ -26,16 +24,7 @@ const logoSize = isList ? 56 : 48
       : 'items-center border-l-6 border-(--section-colour) bg-white px-4 py-3.5 lg:flex-col lg:items-start lg:border-t-6 lg:border-l-0 lg:px-4 lg:py-5.5',
   ]}
 >
-  {/* The homepage band shows logos only on desktop cards; its mobile rows are text only. */}
-  <span class:list={['shrink-0', !isList && 'hidden lg:block']}>
-    <Picture
-      image={section.logo}
-      width={logoSize}
-      height={logoSize}
-      class={isList ? 'size-14' : 'size-12'}
-      fallbackClass={isList ? 'bg-white' : 'bg-(--section-tint)'}
-    />
-  </span>
+  {/* No Section logo: tiles are listed together, and the manual allows one ESN star per view (docs/agents/brand-rules.md). */}
   <span class="flex flex-1 flex-col gap-1">
     <span
       class:list={[

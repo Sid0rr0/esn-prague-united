@@ -18,7 +18,7 @@ export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]{
 
 /** The 5 Sections in website order, as the Sections list and the homepage block show them. */
 export const SECTIONS_QUERY = groq`*[_type == "section"] | order(order asc){
-  name, "slug": slug.current, university, logo, tagline
+  name, "slug": slug.current, university, tagline
 }`
 
 /** An Album without photos has no photos field, so its count is null without coalesce. */

@@ -113,9 +113,17 @@ export const section = (
   ...overrides,
 })
 
-/** The five Sections in website order, as seeded. */
+/** A Section logo: a wide logotype, as ESN provides it. */
+export const sectionLogo = (slug: string) => ({
+  _type: 'image',
+  asset: { _type: 'reference', _ref: `image-logo${slug}-800x200-png` },
+})
+
+/** The five Sections in website order, as seeded, each with its Section logo. */
 export const allSections = () =>
-  ['cu', 'ctu', 'vse', 'czu', 'uct'].map((slug, i) => section(slug, i + 1))
+  ['cu', 'ctu', 'vse', 'czu', 'uct'].map((slug, i) =>
+    section(slug, i + 1, { logo: sectionLogo(slug) }),
+  )
 
 /** A photo in an Album, with its image asset document so the page can build its URLs. */
 export const photo = (id: string) => ({

@@ -240,6 +240,21 @@ describe('homepage Sections block', () => {
     expect(block).toMatch(/href="\/sections\/esn-uct"[^>]*var\(--color-esn-cyan\)/)
   })
 
+  it('shows no Section logo or logo placeholder, even when every Section has a logo', async () => {
+    const html = await renderPage(Home, {
+      now: NOW,
+      documents: [siteSettings(), homepage(), ...allSections()],
+    })
+    const tiles = sectionsOf(html).match(/<a[^>]*data-section-tile[\s\S]*?<\/a>/g) ?? []
+
+    expect(tiles).toHaveLength(5)
+    tiles.forEach((tile) => {
+      expect(tile).not.toContain('<img')
+      expect(tile).not.toContain('<div')
+      expect(tile).not.toContain('/logo')
+    })
+  })
+
   it('is hidden when the Homepage turns the Sections block off', async () => {
     const html = await renderPage(Home, {
       now: NOW,
