@@ -66,7 +66,7 @@ The posts render as Instagram's own embeds, and only after the visitor agrees. A
   - It normalises a link to `https://www.instagram.com/<p|reel>/<code>/` and drops the query string and fragment.
   - The Studio validates with it. The site normalises with it at render time, so links stored before a fix still work.
 - **Shared list shape:** "a list of Instagram post references, maximum 8, no duplicates". It's defined once in the schema and reused by the Homepage and the Event.
-- **Homepage singleton gets an Updates object** in its "Content blocks" group. It holds a translated heading (initial value "Updates") and the list of Instagram post references. The order of the list is the order on the site.
+- **Homepage singleton gets an Updates object** in its "Content blocks" group. It holds a translated heading (initial value "Updates") and the list of Instagram post references. The order of the list is the order on the site. A "Show the Updates block" toggle (on by default, like "Show the 5 sections block") hides the block without clearing the picked posts.
 - **Event gets an `instagramPosts` list** in its "Programme & info" group, using the same shared shape.
 - **New Privacy policy singleton:** a translated heading and translated rich text. Like the other Singletons, it has no list view and no delete action. It's added to the singleton list in the Studio structure and gets its own page on the site. The route and footer placement match the other Singleton pages.
 - **Queries:** the homepage and Event queries project each list to just the normalised links, in order. Broken references and links that fail the link rules are dropped. The Updates block is hidden when no valid posts remain.
@@ -76,7 +76,7 @@ The posts render as Instagram's own embeds, and only after the visitor agrees. A
 - **Server-rendered markup is always the placeholder.** Each card is a branded placeholder with a "View on Instagram" link to the post (opens in a new tab) and an "Allow Instagram content" button. It carries the post link in a data attribute. The static HTML never includes Instagram's script or iframes.
 - **Consent module** (client-side, the only browser behaviour on the site):
   - **Stored choice:** on the device. There are three states: undecided, accepted and rejected. Reading and writing the choice never throws. If storage is unavailable, the visitor is treated as undecided.
-  - **Banner:** shown site-wide while the visitor is undecided. It has equally weighted Accept and Reject buttons and a link to the Privacy policy. It only asks about Instagram content, the site's only third-party service, so there are no cookie categories.
+  - **Banner:** shown while the visitor is undecided, on any page that shows Instagram posts. Pages without them (including the homepage when editors turn off "Show the Updates block") don't ask; "Cookie settings" still opens it anywhere. It has equally weighted Accept and Reject buttons and a link to the Privacy policy. It only asks about Instagram content, the site's only third-party service, so there are no cookie categories.
   - **Accept** (from the banner or from any placeholder's Allow button) stores the choice and turns every placeholder on the page into Instagram's embed. Instagram's embed script is loaded then, and only once.
   - **Reject** stores the choice and keeps the placeholders.
   - **"Cookie settings" link** in the footer: reopens the banner at any time.

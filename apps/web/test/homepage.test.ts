@@ -354,6 +354,16 @@ describe('homepage Updates block', () => {
     )
   })
 
+  it('is hidden when Show the Updates block is off, even with posts picked', async () => {
+    const html = await renderPage(Home, {
+      now: NOW,
+      documents: [siteSettings(), homepage({ showUpdates: false, updates: picked('a') }), ...posts],
+    })
+
+    expect(html).not.toContain('data-updates')
+    expect(html).not.toContain('data-instagram-post')
+  })
+
   it('comes after the Sections block and before Latest albums, with posts in the editor’s order', async () => {
     const html = await renderPage(Home, {
       now: NOW,

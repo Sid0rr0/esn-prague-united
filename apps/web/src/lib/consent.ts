@@ -2,6 +2,7 @@
  * The visitor's consent to Instagram content, the site's only third-party service. Server
  * HTML always holds placeholders; this module swaps them for Instagram's embeds once the
  * visitor accepts, and runs the banner, the placeholders' Allow buttons and Cookie settings.
+ * The banner asks only on pages that show Instagram posts.
  */
 
 export type ConsentChoice = 'undecided' | 'accepted' | 'rejected'
@@ -126,7 +127,10 @@ export function startConsent(document: Document, storage: () => ConsentStorage):
     })
   })
 
+  // With nothing from Instagram on this page there's nothing to ask about; Cookie settings
+  // still opens the banner.
+  const hasInstagramPosts = document.querySelector('[data-instagram-post]') !== null
   const choice = readConsent(storage)
-  setBannerShown(choice === 'undecided')
+  setBannerShown(choice === 'undecided' && hasInstagramPosts)
   if (choice === 'accepted') accept()
 }

@@ -55,6 +55,35 @@ describe('consent banner', () => {
   })
 })
 
+describe('consent banner on a page without Instagram posts', () => {
+  let htmlWithoutPosts: string
+
+  beforeAll(async () => {
+    htmlWithoutPosts = await renderPage(Home, {
+      now: NOW,
+      documents: [
+        siteSettings(),
+        homepage({ showUpdates: false, updates: { posts: [instagramPostRef('a')] } }),
+        instagramPost('a', POST_A),
+      ],
+    })
+  })
+
+  it('is not shown to an undecided visitor', () => {
+    const page = visit(htmlWithoutPosts, deviceStorage)
+
+    expect(page.isBannerShown()).toBe(false)
+  })
+
+  it('still opens from Cookie settings', () => {
+    const page = visit(htmlWithoutPosts, deviceStorage)
+
+    page.openCookieSettings()
+
+    expect(page.isBannerShown()).toBe(true)
+  })
+})
+
 describe('stored consent choice', () => {
   it('loads embeds without a banner on the next visit after Accept', () => {
     const storage = deviceStorage()

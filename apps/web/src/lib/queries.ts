@@ -50,7 +50,7 @@ export const HOMEPAGE_QUERY = groq`{
     "latestAlbums": select(
       showGallery != false => *[_type == "album"] | order(date desc)[0...${HOMEPAGE_LIST_MAX}]${ALBUM_CARD}
     ),
-    "updates": updates{heading, "links": posts${INSTAGRAM_POST_LINKS}},
+    "updates": select(showUpdates != false => updates{heading, "links": posts${INSTAGRAM_POST_LINKS}}),
     "quickLinks": highlightedLinks[${visibleUntilFilter('visibleUntil')}][0...${HOMEPAGE_LIST_MAX}]{_key, label, url},
     "featuredEvent": featuredEvent->{
       title, "slug": slug.current, startsAt, summary, heroImage, ${TICKET_FIELDS}
