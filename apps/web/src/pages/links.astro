@@ -1,4 +1,5 @@
 ---
+import { externalLinkProps } from '../lib/external-link'
 import Layout from '../layouts/Layout.astro'
 import { fetchContent } from '../lib/content'
 import { LINKS_QUERY } from '../lib/queries'
@@ -24,6 +25,7 @@ const plain = links.filter((link) => !link.highlight)
       {highlighted.map((link) => (
         <a
           href={link.url}
+          {...externalLinkProps(link.url)}
           data-link="highlight"
           class="block bg-esn-magenta px-5 py-4 text-center text-lg font-black text-white hover:bg-esn-blue hover:text-white"
         >
@@ -36,6 +38,7 @@ const plain = links.filter((link) => !link.highlight)
             <li>
               <a
                 href={link.url}
+                {...externalLinkProps(link.url)}
                 data-link="plain"
                 class="flex items-center justify-between bg-surface px-4 py-3.5 font-bold text-ink hover:text-esn-magenta"
               >

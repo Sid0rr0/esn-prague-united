@@ -1,4 +1,5 @@
 ---
+import { externalLinkProps } from '../../lib/external-link'
 import Layout from '../../layouts/Layout.astro'
 import Picture from '../../components/Picture.astro'
 import RichText from '../../components/RichText.astro'
@@ -54,7 +55,7 @@ const hasSocials = Object.values(section.socials ?? {}).some(Boolean)
       {section.buddyProgramUrl && (
         <a
           href={section.buddyProgramUrl}
-          rel="noopener"
+          {...externalLinkProps(section.buddyProgramUrl)}
           class="flex h-14 items-center justify-center bg-esn-blue px-6 text-[17px] font-black text-white hover:brightness-92 lg:self-start"
         >
           Get a buddy
@@ -95,7 +96,7 @@ const hasSocials = Object.values(section.socials ?? {}).some(Boolean)
       {section.mapUrl && (
         <a
           href={section.mapUrl}
-          rel="noopener"
+          {...externalLinkProps(section.mapUrl)}
           class="mt-2 flex h-12 items-center justify-center border-2 border-esn-blue px-5 font-black text-esn-blue hover:bg-blue-50 lg:self-start"
         >
           Open in Maps

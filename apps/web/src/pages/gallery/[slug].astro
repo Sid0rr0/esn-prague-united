@@ -1,4 +1,5 @@
 ---
+import { externalLinkProps } from '../../lib/external-link'
 import Layout from '../../layouts/Layout.astro'
 import Picture from '../../components/Picture.astro'
 import PageHeader from '../../components/PageHeader.astro'
@@ -41,7 +42,7 @@ const photos = album.photos ?? []
         {album.fullAlbumUrl && (
           <a
             href={album.fullAlbumUrl}
-            rel="noopener"
+            {...externalLinkProps(album.fullAlbumUrl)}
             class="flex h-12 items-center justify-center bg-esn-blue px-5 text-white hover:brightness-92"
           >
             Full album ↗

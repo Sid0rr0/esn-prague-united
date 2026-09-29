@@ -83,3 +83,19 @@ describe('Links page', () => {
     expect(html).toContain('<footer')
   })
 })
+
+describe('Links page outgoing links', () => {
+  it('opens every link in a new tab', async () => {
+    const html = await renderLinks([
+      linkItem('ball', 'Czech Ball tickets', { highlight: true }),
+      linkItem('insta', 'Instagram'),
+    ])
+    const anchors = [...highlightedOf(html), ...plainOf(html)]
+
+    expect(anchors).toHaveLength(2)
+    for (const anchor of anchors) {
+      expect(anchor).toContain('target="_blank"')
+      expect(anchor).toContain('rel="noopener noreferrer"')
+    }
+  })
+})

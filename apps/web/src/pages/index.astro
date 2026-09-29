@@ -1,4 +1,5 @@
 ---
+import { externalLinkProps } from '../lib/external-link'
 import Layout from '../layouts/Layout.astro'
 import AlbumCard from '../components/AlbumCard.astro'
 import HeroTicket from '../components/HeroTicket.astro'
@@ -64,6 +65,7 @@ const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon
             {hero?.primaryButton?.url && (
               <a
                 href={hero.primaryButton.url}
+                {...externalLinkProps(hero.primaryButton.url)}
                 class="flex h-14 items-center justify-center bg-white px-6 text-[17px] text-esn-blue hover:bg-blue-50"
               >
                 {hero.primaryButton.label}
@@ -72,6 +74,7 @@ const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon
             {hero?.secondaryButton?.url && (
               <a
                 href={hero.secondaryButton.url}
+                {...externalLinkProps(hero.secondaryButton.url)}
                 class="flex h-14 items-center justify-center border-2 border-white px-6 text-base hover:bg-white/12"
               >
                 {hero.secondaryButton.label}
@@ -173,6 +176,7 @@ const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon
           <li>
             <a
               href={link.url}
+              {...externalLinkProps(link.url)}
               class="flex h-14 items-center justify-between bg-surface px-4 text-base font-black hover:bg-line lg:h-16 lg:px-5"
             >
               {link.label}

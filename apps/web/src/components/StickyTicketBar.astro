@@ -1,4 +1,5 @@
 ---
+import { externalLinkProps } from '../lib/external-link'
 import { formatPrice } from '../lib/format'
 import type { TicketDisplay } from '../lib/tickets'
 
@@ -15,6 +16,7 @@ const { tickets } = Astro.props
   >
     <a
       href={tickets.url}
+      {...externalLinkProps(tickets.url)}
       class="flex h-13 flex-1 items-center justify-center bg-esn-magenta px-6 text-[17px] text-white hover:brightness-92"
     >
       Buy ticket

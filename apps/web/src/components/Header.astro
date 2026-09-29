@@ -1,4 +1,5 @@
 ---
+import { externalLinkProps } from '../lib/external-link'
 import { imageUrl } from '../lib/image'
 import { DEFAULT_LOGO, SITE_NAME } from '../lib/site'
 import type { SanityImage } from '../lib/types'
@@ -44,6 +45,7 @@ const isActive = (href: string) =>
             <li>
               <a
                 href={item.href}
+                {...externalLinkProps(item.href)}
                 aria-current={isActive(item.href) ? 'page' : undefined}
                 class="block py-2 hover:text-esn-magenta aria-[current=page]:text-esn-blue aria-[current=page]:shadow-[inset_0_-3px_0_var(--color-esn-cyan)] lg:py-1"
               >

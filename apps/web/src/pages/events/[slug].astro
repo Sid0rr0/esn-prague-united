@@ -1,4 +1,5 @@
 ---
+import { externalLinkProps } from '../../lib/external-link'
 import Layout from '../../layouts/Layout.astro'
 import FaqAccordion from '../../components/FaqAccordion.astro'
 import Picture from '../../components/Picture.astro'
@@ -117,7 +118,7 @@ const hasTicketBlock =
           {venue.mapUrl && (
             <a
               href={venue.mapUrl}
-              rel="noopener"
+              {...externalLinkProps(venue.mapUrl)}
               class="flex h-12 items-center justify-center border-2 border-esn-blue px-5 font-black text-esn-blue hover:bg-blue-50 lg:self-start"
             >
               Open in Maps
