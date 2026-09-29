@@ -4,8 +4,10 @@ import { uiString } from '../lib/ui-strings'
 
 interface Props {
   text?: string
+  /** Shows the Privacy policy and Cookie settings links; off while Updates is hidden. */
+  hasConsentLinks?: boolean
 }
-const { text } = Astro.props
+const { text, hasConsentLinks = true } = Astro.props
 ---
 
 <footer class="flex flex-col gap-3.5 bg-esn-blue px-5 py-3 text-white lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-5">
@@ -13,16 +15,18 @@ const { text } = Astro.props
     <span class="font-heading text-lg font-bold">{SITE_NAME}</span>
     {text && <p class="text-sm text-on-blue-muted">{text}</p>}
   </div>
-  <div class="flex items-center gap-5">
-    <a href="/privacy-policy" class="text-sm font-bold text-white hover:underline">
-      {uiString('privacyPolicy')}
-    </a>
-    <button
-      type="button"
-      data-consent-settings
-      class="text-sm font-bold text-white hover:underline"
-    >
-      {uiString('cookieSettings')}
-    </button>
-  </div>
+  {hasConsentLinks && (
+    <div class="flex items-center gap-5">
+      <a href="/privacy-policy" class="text-sm font-bold text-white hover:underline">
+        {uiString('privacyPolicy')}
+      </a>
+      <button
+        type="button"
+        data-consent-settings
+        class="text-sm font-bold text-white hover:underline"
+      >
+        {uiString('cookieSettings')}
+      </button>
+    </div>
+  )}
 </footer>

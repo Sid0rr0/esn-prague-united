@@ -8,9 +8,11 @@ const image = `{..., asset->{_id, url, metadata{lqip, dimensions}}}`
 const visibleUntilFilter = (field: string) =>
   `(!defined(${field}) || dateTime(${field}) > dateTime(now()))`
 
-// The top banner shows only while it's enabled and before its "Hide after" date.
+// The top banner shows only while it's enabled and before its "Hide after" date. The footer's
+// Privacy policy and Cookie settings links follow the Homepage's "Show the Updates block".
 export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]{
   logo, navigation[]{_key, label, href}, footerText, seo,
+  "showsInstagram": *[_id == "homepage"][0].showUpdates != false,
   "announcement": select(
     announcement.enabled == true && ${visibleUntilFilter('announcement.visibleUntil')} => announcement{text, url}
   )

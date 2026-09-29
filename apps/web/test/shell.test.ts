@@ -70,6 +70,18 @@ describe('site shell', () => {
 
     expect(footer).toMatch(/<button[^>]*data-consent-settings[^>]*>\s*Cookie settings\s*<\/button>/)
   })
+
+  it('hides the Privacy policy and Cookie settings links while the Updates block is hidden', async () => {
+    const html = await renderPage(Home, {
+      now: NOW,
+      documents: [homepage({ showUpdates: false }), siteSettings()],
+    })
+    const footer = footerOf(html)
+
+    expect(footer).not.toBe('')
+    expect(footer).not.toContain('href="/privacy-policy"')
+    expect(footer).not.toContain('data-consent-settings')
+  })
 })
 
 describe('consent banner markup', () => {

@@ -28,6 +28,8 @@ export interface Settings {
   seo?: Seo
   /** Only set while the banner is enabled and before its "Hide after" date. */
   announcement?: { text?: string; url?: string } | null
+  /** False while the Homepage hides its Updates block (see SETTINGS_QUERY). */
+  showsInstagram?: boolean
 }
 
 /** Portable Text blocks (and inline images) as stored by the Studio's rich text field. */

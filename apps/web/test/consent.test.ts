@@ -61,11 +61,7 @@ describe('consent banner on a page without Instagram posts', () => {
   beforeAll(async () => {
     htmlWithoutPosts = await renderPage(Home, {
       now: NOW,
-      documents: [
-        siteSettings(),
-        homepage({ showUpdates: false, updates: { posts: [instagramPostRef('a')] } }),
-        instagramPost('a', POST_A),
-      ],
+      documents: [siteSettings(), homepage()],
     })
   })
 
