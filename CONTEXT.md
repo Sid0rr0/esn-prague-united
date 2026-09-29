@@ -48,12 +48,20 @@ _Avoid_: Sponsor level, partner type, category
 A set of photos shown on `/gallery`, optionally linked from one Event (not every Event has one yet, and an Album doesn't need an Event). Albums don't belong to Sections.
 _Avoid_: Gallery (that's the page; Album is the content type)
 
+**Instagram post**:
+A link to one public Instagram post or reel, shown on the site as Instagram's own embed. It is usually from a Section's account, but can be anyone's (e.g. a Partner's). It isn't attributed to a Section on the site. One Instagram post can be shown in several places, such as the homepage and an Event's page. An Event keeps showing its Instagram posts after it has ended.
+_Avoid_: Update (that's the block), IG post, story
+
+**Updates**:
+The block on the homepage that shows a hand-picked, ordered set of Instagram posts in a carousel. It is hidden when no posts are picked.
+_Avoid_: Feed, news, Instagram feed
+
 **FAQ** vs **Event FAQ**:
 The FAQ is the site-wide list of general questions about ESN Prague United (ESN card, buddy programme, joining). An Event FAQ holds questions about one Event (e.g. the Czech Ball) and lives on that Event's page. Event-specific questions never go in the FAQ.
 _Avoid_: Ball FAQ (as a separate page)
 
 **Singleton**:
-A document type with exactly one instance, opened directly from the Studio sidebar with no list view and no delete action (Homepage, FAQ, Contacts, Links page, Site settings).
+A document type with exactly one instance, opened directly from the Studio sidebar with no list view and no delete action (Homepage, FAQ, Contacts, Links page, Privacy policy, Site settings).
 _Avoid_: Page (ambiguous — Event and Album also render as pages, but aren't singletons)
 
 **Highlight** (Links page):
