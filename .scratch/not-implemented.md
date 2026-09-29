@@ -6,36 +6,37 @@ Workflow: pick a ticket whose blockers are done, run `/implement` on it, then ma
 
 ## Open
 
-| Feature           | Ticket                                                                                                                                      | Status                          | Blocked by | Notes                                                             |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ---------- | ----------------------------------------------------------------- |
-| content-reads     | [01 Pull shared query pieces and shapes out of the queries and types modules](content-reads/issues/01-shared-query-pieces-and-shapes.md)    | ready-for-agent                 | none       | Prefactor; no page changes                                        |
-| content-reads     | [02 Homepage content-read module](content-reads/issues/02-homepage-content-read.md)                                                         | ready-for-agent                 | 01         |                                                                   |
-| content-reads     | [03 Events content-read module](content-reads/issues/03-events-content-read.md)                                                             | ready-for-agent                 | 01         |                                                                   |
-| content-reads     | [04 Sections content-read module](content-reads/issues/04-sections-content-read.md)                                                         | ready-for-agent                 | 01         |                                                                   |
-| content-reads     | [05 Gallery and Album content-read module](content-reads/issues/05-gallery-content-read.md)                                                 | ready-for-agent                 | 01         |                                                                   |
-| content-reads     | [06 Singleton content-read modules](content-reads/issues/06-singleton-content-reads.md)                                                     | ready-for-agent                 | 01         |                                                                   |
-| content-reads     | [07 Delete the old query and shape pairing](content-reads/issues/07-delete-old-pairing.md)                                                  | ready-for-agent                 | 02–06      |                                                                   |
-| event-partners    | [01 Partners section on the Event page](event-partners/issues/01-partners-section-on-event-page.md)                                         | no `Status:` line (not started) | none       | Needs triage: add a `Status:` line                                |
-| event-partners    | [02 Group Partners by Partner tier](event-partners/issues/02-group-partners-by-tier.md)                                                     | no `Status:` line (not started) | 01         | Needs triage: add a `Status:` line                                |
-| related-events    | [01 Related events on the Event page](related-events/issues/01-related-events-on-event-page.md)                                             | ready-for-agent                 | none       |                                                                   |
-| related-events    | [02 Studio rules for Related events](related-events/issues/02-studio-rules-for-related-events.md)                                           | ready-for-agent                 | 01         | Checked by hand in the Studio                                     |
-| ticket-area       | [01 Pin the Ticket area rules that have no page test yet](ticket-area/issues/01-pin-untested-ticket-area-rules.md)                          | ready-for-agent                 | none       | Tests only; no production code changes                            |
-| ticket-area       | [02 One Ticket area module for the Event page and the Homepage hero](ticket-area/issues/02-ticket-area-module.md)                           | ready-for-agent                 | 01         | Independent of content-reads                                      |
-| translated-fields | [01 The text migration leaves fields cleared in both languages alone](translated-fields/issues/01-migration-leaves-cleared-fields-alone.md) | ready-for-agent                 | none       | Studio only; fixes a latent migration bug                         |
-| translated-fields | [02 Create the translated-fields workspace and move the Studio onto it](translated-fields/issues/02-shared-workspace-and-studio.md)         | ready-for-agent                 | 01         | Adds a packages/ workspace                                        |
-| translated-fields | [03 Move the web onto the translated-fields workspace](translated-fields/issues/03-web-onto-shared-workspace.md)                            | ready-for-agent                 | 02         |                                                                   |
-| vercel-deploy     | [03 Rebuild the site every morning](vercel-deploy/issues/03-daily-rebuild.md)                                                               | ready-for-agent                 | 01         | Agent writes workflow and docs; replaces site-design-alignment 13 |
+| Feature           | Ticket                                                                                                                                      | Status          | Blocked by | Notes                                                                              |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ---------- | ---------------------------------------------------------------------------------- |
+| brand-compliance  | [04 Explore ways to show the Section logo on the Section page](brand-compliance/issues/04-explore-showing-the-section-logo.md)              | needs-triage    | none       | Exploration; triage before an agent picks it up                                    |
+| event-partners    | [01 Partners section on the Event page](event-partners/issues/01-partners-section-on-event-page.md)                                         | ready-for-agent | none       |                                                                                    |
+| event-partners    | [02 Group Partners by Partner tier](event-partners/issues/02-group-partners-by-tier.md)                                                     | ready-for-agent | 01         |                                                                                    |
+| instagram-posts   | [02 Instagram posts on the Event page ("On Instagram")](instagram-posts/issues/02-instagram-posts-on-event-page.md)                         | ready-for-agent | 01 (done)  | Adds to the Event page                                                             |
+| instagram-posts   | [03 Privacy policy page](instagram-posts/issues/03-privacy-policy-page.md)                                                                  | ready-for-agent | none       | Built in 7cabc1d and bbc5a14; only the Studio manual check is left, then mark done |
+| related-events    | [01 Related events on the Event page](related-events/issues/01-related-events-on-event-page.md)                                             | ready-for-agent | none       |                                                                                    |
+| related-events    | [02 Studio rules for Related events](related-events/issues/02-studio-rules-for-related-events.md)                                           | ready-for-agent | 01         | Checked by hand in the Studio                                                      |
+| ticket-area       | [01 Pin the Ticket area rules that have no page test yet](ticket-area/issues/01-pin-untested-ticket-area-rules.md)                          | ready-for-agent | none       | Tests only; no production code changes                                             |
+| ticket-area       | [02 One Ticket area module for the Event page and the Homepage hero](ticket-area/issues/02-ticket-area-module.md)                           | ready-for-agent | 01         | Independent of content-reads                                                       |
+| translated-fields | [01 The text migration leaves fields cleared in both languages alone](translated-fields/issues/01-migration-leaves-cleared-fields-alone.md) | ready-for-agent | none       | Studio only; fixes a latent migration bug                                          |
+| translated-fields | [02 Create the translated-fields workspace and move the Studio onto it](translated-fields/issues/02-shared-workspace-and-studio.md)         | ready-for-agent | 01         | Adds a packages/ workspace                                                         |
+| translated-fields | [03 Move the web onto the translated-fields workspace](translated-fields/issues/03-web-onto-shared-workspace.md)                            | ready-for-agent | 02         |                                                                                    |
+| vercel-deploy     | [03 Rebuild the site every morning](vercel-deploy/issues/03-daily-rebuild.md)                                                               | ready-for-agent | 01         | Agent writes workflow and docs; replaces site-design-alignment 13                  |
 
 ## Suggested order
 
-1. content-reads 01, then 02–06 (any order, or in parallel), then 07. Do it before new page work, so new pages follow the content-read pattern
-2. ticket-area 01, then 02. Do it before event-partners and related-events, which both add to the Event page
-3. event-partners 01, then 02
-4. related-events 01, then 02
+1. ticket-area 01, then 02. Do it before event-partners, related-events and instagram-posts 02, which all add to the Event page
+2. event-partners 01, then 02
+3. related-events 01, then 02
+4. instagram-posts 02
 5. vercel-deploy 03 (01 and 02 done; their dashboard steps are with the maintainer)
 6. translated-fields 01 any time (small, standalone); 02 then 03 just before the Czech rollout starts
+7. instagram-posts 03: do the Studio manual check, then mark it done
+8. brand-compliance 04: triage first
 
 ## Fully done
 
 - site-design-alignment: 01–13 (13 was superseded by vercel-deploy 03)
 - brand-compliance: 01, 02, 03
+- content-reads: 01–07
+- instagram-posts: 01, 04
+- vercel-deploy: 01, 02
