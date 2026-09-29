@@ -1,6 +1,6 @@
 # ESN Prague: Sanity Studio
 
-Content schemas for the ESN Prague website (Astro + Sanity + Cloudflare Pages).
+Content schemas for the ESN Prague website (Astro + Sanity; the site is hosted on Vercel, the Studio on Sanity).
 
 ## Content types
 
@@ -31,7 +31,7 @@ npm run deploy               # -> https://esnprague.sanity.studio
 
 - Singletons (Homepage, FAQ, Contacts, Links page, Site settings) open directly and cannot be deleted.
 - Sections cannot be created from the "+" menu; there are exactly 5. Admins create them once.
-- After you press **Publish**, the website rebuilds automatically (about a minute).
+- Publishing a document does not update the website by itself. The website picks up everything published at the next Site update: the daily early-morning rebuild, or sooner when an editor starts one with the **Update website** button (coming soon).
 - Links page: tick "Highlight" for 1 to 2 main links; set "Hide after" for time-limited links (ticket sales).
 
 `astro-queries.ts` contains the GROQ queries for the Astro site.

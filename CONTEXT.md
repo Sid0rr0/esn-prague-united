@@ -1,6 +1,6 @@
 # ESN Prague: Sanity Studio
 
-Content schema and editorial model for the ESN Prague website (Astro + Sanity + Cloudflare Pages). Editors manage all site content through Sanity Studio; the Astro site reads it via the GROQ queries in `astro-queries.ts`.
+Content schema and editorial model for the ESN Prague website. Editors manage all site content through Sanity Studio; the Astro site reads it via the GROQ queries in `astro-queries.ts`.
 
 ## Language
 

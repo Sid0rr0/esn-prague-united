@@ -1,6 +1,6 @@
 # ESN Prague
 
-Monorepo for the ESN Prague website: Sanity Studio (content) + Astro (site), deployed to Cloudflare Pages.
+Monorepo for the ESN Prague website: Sanity Studio (content) + Astro (site), hosted on Vercel (setup: [`apps/web/VERCEL-SETUP.md`](apps/web/VERCEL-SETUP.md)).
 
 ## Apps
 

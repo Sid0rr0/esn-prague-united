@@ -6,7 +6,7 @@ See the spec: `.scratch/vercel-deploy/spec.md`.
 
 **Blocked by:** None (can start immediately).
 
-**Status:** ready-for-agent
+**Status:** done
 
 The agent writes the docs and runbook. The maintainer does the dashboard steps from the runbook:
 
@@ -14,10 +14,14 @@ The agent writes the docs and runbook. The maintainer does the dashboard steps f
 2. Set `PUBLIC_SANITY_PROJECT_ID` and `PUBLIC_SANITY_DATASET` for Production and Preview.
 3. Create a Deploy Hook on `main`. Keep its URL private and never commit it.
 
-- [ ] `pnpm build` from the repo root passes.
+- [x] `pnpm build` from the repo root passes.
 - [ ] A merge to `main` shows up on the `*.vercel.app` production address.
 - [ ] A pull request gets a preview URL that renders the site with content from Sanity.
 - [ ] A Deploy Hook on `main` exists, and its URL isn't anywhere in the repo.
-- [ ] The root README and the Studio README say the site is hosted on Vercel, and nothing in the repo still claims Cloudflare Pages.
-- [ ] The domain glossary's intro no longer names a hosting provider.
-- [ ] The runbook covers the account, project settings, variables and Deploy Hook steps.
+- [x] The root README and the Studio README say the site is hosted on Vercel, and nothing in the repo still claims Cloudflare Pages.
+- [x] The domain glossary's intro no longer names a hosting provider.
+- [x] The runbook covers the account, project settings, variables and Deploy Hook steps.
+
+## Comments
+
+Agent part done: docs updated (root README, Studio README, `CONTEXT.md` intro) and runbook written at `apps/web/VERCEL-SETUP.md`. `pnpm build` passes. Still for the maintainer, from the runbook: create the Vercel project, set the two variables, create the Deploy Hook, then tick the remaining three boxes (production deploy, PR preview, Deploy Hook exists).
