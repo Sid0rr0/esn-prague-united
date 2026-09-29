@@ -20,7 +20,7 @@ The existing queries are rebuilt from the shared pieces, with identical output. 
 
 **Blocked by:** None (can start immediately).
 
-**Status:** ready-for-agent
+**Status:** done
 
 - [x] Each shared GROQ piece is written once, in the shared pieces module, with its content rule as a comment.
 - [x] Each shared shape is defined once, in the shared shapes module.
