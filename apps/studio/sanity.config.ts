@@ -36,6 +36,7 @@ const structure: StructureResolver = (S) =>
       singleton(S, 'faqPage', 'FAQ'),
       singleton(S, 'contactsPage', 'Contacts'),
       singleton(S, 'linksPage', 'Links page'),
+      singleton(S, 'privacyPolicy', 'Privacy policy'),
       S.divider(),
       singleton(S, 'siteSettings', 'Site settings'),
     ])

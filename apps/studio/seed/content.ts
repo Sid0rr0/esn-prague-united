@@ -134,6 +134,15 @@ export const singletons = (): Singleton[] => [
       },
     ],
   },
+  {
+    _id: 'privacyPolicy',
+    _type: 'privacyPolicy',
+    title: en('Privacy policy'),
+    body: enRichText(
+      'Placeholder: replace this with ESN Prague United’s privacy policy before launch.',
+      'This site stores one choice in your browser: whether you allow Instagram content. Instagram’s embeds are loaded only after you allow them, and Instagram then handles your data under its own privacy policy.',
+    ),
+  },
 ]
 
 /** Contacts as each Section publishes them on its own website and Instagram. */

@@ -16,7 +16,7 @@ import { instagramPost } from './documents/instagramPost'
 import { siteSettings } from './singletons/siteSettings'
 import { homepage } from './singletons/homepage'
 import { siteUpdateRequest } from './singletons/siteUpdateRequest'
-import { faqPage, contactsPage, linksPage } from './singletons/pages'
+import { faqPage, contactsPage, linksPage, privacyPolicy } from './singletons/pages'
 
 export const SINGLETONS = [
   'siteSettings',
@@ -24,6 +24,7 @@ export const SINGLETONS = [
   'faqPage',
   'contactsPage',
   'linksPage',
+  'privacyPolicy',
   'siteUpdateRequest',
 ] as const
 
@@ -51,5 +52,6 @@ export const schemaTypes = [
   faqPage,
   contactsPage,
   linksPage,
+  privacyPolicy,
   siteUpdateRequest,
 ]

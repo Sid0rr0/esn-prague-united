@@ -2,7 +2,8 @@ import { defineArrayMember, defineField, defineType } from 'sanity'
 import { HelpCircleIcon } from '@sanity/icons/HelpCircle'
 import { EnvelopeIcon } from '@sanity/icons/Envelope'
 import { LinkIcon } from '@sanity/icons/Link'
-import { localisedString, localisedText } from '../objects/locale'
+import { LockIcon } from '@sanity/icons/Lock'
+import { localisedRichText, localisedString, localisedText } from '../objects/locale'
 
 /** /faq: questions grouped by topic, drag & drop to reorder. */
 export const faqPage = defineType({
@@ -96,4 +97,18 @@ export const linksPage = defineType({
     defineField({ name: 'seo', type: 'seo' }),
   ],
   preview: { prepare: () => ({ title: 'Links page' }) },
+})
+
+/** /privacy-policy: how the site handles visitors' data. */
+export const privacyPolicy = defineType({
+  name: 'privacyPolicy',
+  title: 'Privacy policy',
+  type: 'document',
+  icon: LockIcon,
+  fields: [
+    localisedString({ name: 'title', initialValue: 'Privacy policy' }),
+    localisedRichText({ name: 'body', title: 'Text', required: true }),
+    defineField({ name: 'seo', type: 'seo' }),
+  ],
+  preview: { prepare: () => ({ title: 'Privacy policy' }) },
 })

@@ -49,6 +49,15 @@ describe('seed content', () => {
     )
   })
 
+  it('has a placeholder Privacy policy with a heading and text', () => {
+    const policy = singletons().find((doc) => doc._id === 'privacyPolicy')
+    const body = policy?.body as { en?: unknown[] } | undefined
+
+    assert.equal(policy?._type, 'privacyPolicy')
+    assert.equal((policy?.title as { en?: string } | undefined)?.en, 'Privacy policy')
+    assert.ok((body?.en?.length ?? 0) > 0)
+  })
+
   it('picks every sample Instagram post for the homepage, each with a valid link', () => {
     const homepage = singletons().find((doc) => doc._id === 'homepage')
     const picked = (homepage?.updates as { posts: { _ref: string }[] }).posts
