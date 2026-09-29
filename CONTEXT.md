@@ -32,6 +32,14 @@ _Avoid_: Highlighted event, main event
 An Event is upcoming until it has ended, and past from then on. An Event has ended once its end time has passed, or its start time when it has no end time. Outside the homepage hero, the Featured event is an Upcoming event like any other.
 _Avoid_: Finished event, old event, archived event
 
+**Partner**:
+An outside organisation credited on an Event's page for supporting it, whether with money, a venue, drinks or media coverage. A Partner is known once and can support many Events, at a different level each time. Partners appear only on Event pages; ESN Prague United has no site-wide partner list. A Partner's name is its brand and is never translated. An Event keeps crediting its Partners after it has ended.
+_Avoid_: Sponsor, supporter
+
+**Partner tier**:
+How prominently an Event credits one of its Partners: General partner, Partner, or Media partner. The tier belongs to the Partner's role in that one Event, not to the Partner itself. A Partner holds exactly one tier per Event. The set of tiers is fixed; editors pick from it and cannot invent new ones.
+_Avoid_: Sponsor level, partner type, category
+
 **Album**:
 A set of photos shown on `/gallery`, optionally linked from one Event (not every Event has one yet, and an Album doesn't need an Event). Albums don't belong to Sections.
 _Avoid_: Gallery (that's the page; Album is the content type)
