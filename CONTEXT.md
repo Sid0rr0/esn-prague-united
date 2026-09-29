@@ -28,6 +28,10 @@ _Avoid_: Ticket type, fare
 A one-line message shown in place of the Buy button when an Event has no ticket link (e.g. "Sold out. Watch Instagram for returned tickets"). Longer ticket details go in the Event's ticket info.
 _Avoid_: Ticket status
 
+**Ticket area**:
+Everything an Event shows where tickets would be: the ticket action (Buy ticket with the headline price, the Ticket note, or nothing), the aside (the ticket sidebar, or the Album link once the Event has ended) and the sticky bar on mobile. The Homepage hero shows the Featured event's ticket action by the same rules as its Event page.
+_Avoid_: Ticket display, ticket block
+
 **Featured event**:
 The Event an editor picks to promote on the homepage. Only a picked Event takes over the homepage hero; when none is picked, the hero stays about ESN Prague United. The homepage's upcoming-events list never repeats the Featured event; if that leaves it empty, the list is hidden.
 _Avoid_: Highlighted event, main event
