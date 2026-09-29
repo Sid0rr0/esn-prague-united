@@ -4,6 +4,7 @@ import Banner from '../components/Banner.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import ConsentBanner from '../components/ConsentBanner.astro'
+import Analytics from '@vercel/analytics/astro'
 import { SITE_NAME } from '../lib/site'
 import { imageUrl } from '../lib/image'
 import { readSiteSettings } from '../lib/site-settings'
@@ -56,5 +57,6 @@ const shareImage = imageUrl(seo?.image ?? settings.seo?.image, { width: 1200, he
     </main>
     <Footer text={settings.footerText} hasConsentLinks={settings.showsInstagram !== false} />
     <ConsentBanner />
+    <Analytics />
   </body>
 </html>
