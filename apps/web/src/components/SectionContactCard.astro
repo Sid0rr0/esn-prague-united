@@ -1,0 +1,76 @@
+---
+import { externalLinkProps } from '../lib/external-link'
+import { instagramHandle, websiteDomain } from '../lib/contact-links'
+import type { SectionDetail } from '../lib/types'
+
+interface Props {
+  email?: SectionDetail['email']
+  socials?: SectionDetail['socials']
+}
+
+const { email, socials } = Astro.props
+
+interface Row {
+  label: string
+  value: string
+  href: string
+  arrow: string
+  isEmail?: boolean
+}
+
+const candidates: (Row | undefined)[] = [
+  email
+    ? { label: 'Email', value: email, href: `mailto:${email}`, arrow: '→', isEmail: true }
+    : undefined,
+  socials?.instagram
+    ? {
+        label: 'Instagram',
+        value: instagramHandle(socials.instagram),
+        href: socials.instagram,
+        arrow: '↗',
+      }
+    : undefined,
+  socials?.website
+    ? { label: 'Website', value: websiteDomain(socials.website), href: socials.website, arrow: '↗' }
+    : undefined,
+]
+const rows = candidates.filter((row): row is Row => row !== undefined)
+---
+
+{rows.length > 0 && (
+  <section
+    aria-labelledby="get-in-touch"
+    class="flex flex-col gap-0.5 self-start lg:sticky lg:top-6 lg:col-start-2"
+  >
+    <h2
+      id="get-in-touch"
+      class="bg-esn-blue px-4 py-4 font-heading text-[22px] leading-none font-bold text-white lg:px-6 lg:pt-6 lg:pb-5 lg:text-[26px]"
+    >
+      Get in touch
+    </h2>
+    {rows.map((row) => (
+      <a
+        href={row.href}
+        {...externalLinkProps(row.href)}
+        class="flex min-h-16 items-center justify-between gap-3 bg-surface px-4 py-3 hover:bg-line focus-visible:outline-3 focus-visible:-outline-offset-3 focus-visible:outline-esn-blue lg:px-6 lg:py-4.5"
+      >
+        <span class="flex min-w-0 flex-col gap-0.5">
+          <span class="text-[11px] font-black tracking-[.1em] text-muted uppercase lg:text-xs">
+            {row.label}
+          </span>
+          <span
+            class:list={[
+              'wrap-break-word text-base font-black lg:text-[17px]',
+              row.isEmail && 'text-esn-blue',
+            ]}
+          >
+            {row.value}
+          </span>
+        </span>
+        <span aria-hidden="true" class="font-black text-esn-blue">
+          {row.arrow}
+        </span>
+      </a>
+    ))}
+  </section>
+)}

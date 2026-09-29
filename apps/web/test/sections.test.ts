@@ -82,15 +82,8 @@ describe('Section page logo', () => {
 })
 
 describe('Section page', () => {
-  it('shows about, buddy sign-up, office as prose, email, Open in Maps and socials', async () => {
-    const ctu = section('ctu', 2, {
-      about: richText('About 40 volunteers at CTU.'),
-      buddyProgramUrl: 'https://buddy.example/ctu',
-      office: localised('Tue, Thu 14:00–16:00\nMasarykova kolej, room 012'),
-      email: 'ctu@esnprague.cz',
-      mapUrl: 'https://maps.example/ctu',
-      socials: { instagram: 'https://instagram.com/esnctu', whatsapp: 'https://wa.example/ctu' },
-    })
+  it('shows the hero text and the About us prose', async () => {
+    const ctu = section('ctu', 2, { about: richText('About 40 volunteers at CTU.') })
 
     const html = await renderSection(ctu)
 
@@ -98,13 +91,92 @@ describe('Section page', () => {
     expect(html).toContain('University CTU')
     expect(html).toContain('Tagline of CTU.')
     expect(html).toContain(COLOURS.ctu)
+    expect(html).toMatch(/SECTIONS \/\s*University CTU/i)
+    expect(html).toContain('About us')
     expect(html).toContain('<p>About 40 volunteers at CTU.</p>')
-    expect(html).toMatch(/href="https:\/\/buddy\.example\/ctu"[^>]*>\s*Get a buddy/)
-    expect(html).toContain('Tue, Thu 14:00–16:00\nMasarykova kolej, room 012')
-    expect(html).toMatch(/href="mailto:ctu@esnprague\.cz"[^>]*>\s*ctu@esnprague\.cz/)
-    expect(html).toMatch(/href="https:\/\/maps\.example\/ctu"[^>]*>\s*Open in Maps/)
-    expect(html).toMatch(/href="https:\/\/instagram\.com\/esnctu"[^>]*>\s*Instagram/)
-    expect(html).toMatch(/href="https:\/\/wa\.example\/ctu"[^>]*>\s*WhatsApp/)
+  })
+
+  it('lists email, Instagram and website in a Get in touch card, the two links opening in a new tab', async () => {
+    const cu = section('cu', 1, {
+      email: 'info@esncuprague.cz',
+      socials: {
+        instagram: 'https://www.instagram.com/esncuprague/?hl=en',
+        website: 'https://www.esncuprague.cz/about',
+        whatsapp: 'https://wa.example/cu',
+      },
+    })
+
+    const html = await renderSection(cu)
+
+    expect(html).toContain('Get in touch')
+    expect(html).toMatch(
+      /<a[^>]*href="mailto:info@esncuprague\.cz"[^>]*>[\s\S]*?info@esncuprague\.cz/,
+    )
+    expect(html).toMatch(
+      /<a[^>]*href="https:\/\/www\.instagram\.com\/esncuprague\/\?hl=en"[^>]*target="_blank"[^>]*>[\s\S]*?@esncuprague/,
+    )
+    expect(html).toMatch(
+      /<a[^>]*href="https:\/\/www\.esncuprague\.cz\/about"[^>]*target="_blank"[^>]*>[\s\S]*?>\s*esncuprague\.cz\s*</,
+    )
+    expect(html).not.toContain('wa.example')
+  })
+
+  it('hides a contact row when its field is empty', async () => {
+    const html = await renderSection(
+      section('cu', 1, {
+        email: 'info@esncuprague.cz',
+        socials: { website: 'https://esncuprague.cz' },
+      }),
+    )
+
+    expect(html).toContain('Email')
+    expect(html).toContain('Website')
+    expect(html).not.toContain('Instagram')
+  })
+
+  it('hides the Get in touch card when the Section has no contact details, and About takes the full width', async () => {
+    const html = await renderSection(section('cu', 1, { about: richText('About CU.') }))
+
+    expect(html).not.toContain('Get in touch')
+    expect(html).toContain('About CU.')
+    expect(html).not.toContain('lg:grid-cols-[minmax(0,1fr)_400px]')
+  })
+
+  it('shows only the hero when there is neither about nor contact details', async () => {
+    const html = await renderSection(section('cu', 1))
+
+    expect(html).toContain('Tagline of CU.')
+    expect(html).not.toContain('About us')
+    expect(html).not.toContain('Get in touch')
+  })
+
+  it('shows no buddy button, office, map link or Follow us block, even when the Section has them', async () => {
+    const html = await renderSection(
+      section('ctu', 2, {
+        buddyProgramUrl: 'https://buddy.example/ctu',
+        office: localised('Masarykova kolej, room 012'),
+        mapUrl: 'https://maps.example/ctu',
+        socials: { facebook: 'https://facebook.example/ctu' },
+      }),
+    )
+
+    for (const text of [
+      'Get a buddy',
+      'buddy.example',
+      'Masarykova',
+      'Open in Maps',
+      'maps.example',
+      'Follow us',
+      'facebook.example',
+    ]) {
+      expect(html).not.toContain(text)
+    }
+  })
+
+  it('underlines Sections in the header in the Section colour', async () => {
+    const html = await renderSection(section('cu', 1))
+
+    expect(html).toContain('--nav-accent: var(--color-esn-magenta)')
   })
 
   it.each([
@@ -134,20 +206,6 @@ describe('Section page', () => {
     }
   })
 
-  it('shows socials under a Follow us heading, above the office rather than by the footer', async () => {
-    const ctu = section('ctu', 2, {
-      office: localised('Masarykova kolej'),
-      socials: { instagram: 'https://instagram.com/esnctu' },
-    })
-
-    const html = await renderSection(ctu)
-
-    const followUs = html.indexOf('Follow us')
-    expect(followUs).toBeGreaterThan(-1)
-    expect(followUs).toBeLessThan(html.indexOf('instagram.com/esnctu'))
-    expect(html.indexOf('instagram.com/esnctu')).toBeLessThan(html.indexOf('>Office<'))
-  })
-
   it('shows no events or albums, even for a Section that still holds them', async () => {
     const party = event('party', { title: localised('Welcome Party') })
     const album = {
@@ -167,11 +225,5 @@ describe('Section page', () => {
     expect(html).not.toContain('Krumlov trip')
     expect(html).not.toContain('/events/')
     expect(html).not.toContain('/gallery/')
-  })
-
-  it('hides Get a buddy when there is no buddy sign-up link', async () => {
-    const html = await renderSection(section('ctu', 2))
-
-    expect(html).not.toContain('Get a buddy')
   })
 })

@@ -17,27 +17,27 @@ export interface SectionColours {
 const MAGENTA: SectionColours = {
   colour: 'var(--color-esn-magenta)',
   textClass: 'text-white',
-  universityClass: 'text-white text-[19px] font-bold',
+  universityClass: 'font-heading text-white text-[19px] font-bold lg:text-2xl',
 }
 const BLUE: SectionColours = {
   colour: 'var(--color-esn-blue)',
   textClass: 'text-white',
-  universityClass: 'text-on-blue-muted text-sm font-bold lg:text-base',
+  universityClass: 'font-heading text-on-blue-muted text-xl font-light lg:text-2xl',
 }
 const ORANGE: SectionColours = {
   colour: 'var(--color-esn-orange)',
   textClass: 'text-ink',
-  universityClass: 'text-ink text-sm font-light lg:text-base',
+  universityClass: 'font-heading text-ink text-xl font-light lg:text-2xl',
 }
 const GREEN: SectionColours = {
   colour: 'var(--color-esn-green)',
   textClass: 'text-ink',
-  universityClass: 'text-ink text-sm font-light lg:text-base',
+  universityClass: 'font-heading text-ink text-xl font-light lg:text-2xl',
 }
 const CYAN: SectionColours = {
   colour: 'var(--color-esn-cyan)',
   textClass: 'text-ink',
-  universityClass: 'text-ink text-sm font-light lg:text-base',
+  universityClass: 'font-heading text-ink text-xl font-light lg:text-2xl',
 }
 
 const BY_SLUG: Record<string, SectionColours> = {

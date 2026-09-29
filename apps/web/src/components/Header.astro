@@ -7,10 +7,12 @@ import type { SanityImage } from '../lib/types'
 interface Props {
   logo?: SanityImage
   navigation: { _key: string; label: string; href: string }[]
+  /** Colour of the active item's underline. */
+  accent?: string
 }
 
 const LOGO_HEIGHT = 104
-const { logo, navigation } = Astro.props
+const { logo, navigation, accent } = Astro.props
 const logoSrc = imageUrl(logo, { height: LOGO_HEIGHT }) ?? DEFAULT_LOGO
 const path = Astro.url.pathname
 const isActive = (href: string) =>
@@ -38,6 +40,7 @@ const isActive = (href: string) =>
       <nav
         id="site-menu"
         aria-label="Main"
+        style={accent ? `--nav-accent: ${accent}` : undefined}
         class="absolute inset-x-0 top-full z-20 hidden bg-white shadow-[0_2px_0_var(--color-line)] data-[open]:block lg:static lg:block lg:shadow-none"
       >
         <ul class="flex flex-col gap-0.5 p-4 font-heading text-[17px] font-bold lg:flex-row lg:gap-8 lg:p-0">
@@ -47,7 +50,7 @@ const isActive = (href: string) =>
                 href={item.href}
                 {...externalLinkProps(item.href)}
                 aria-current={isActive(item.href) ? 'page' : undefined}
-                class="block py-2 hover:text-esn-magenta aria-[current=page]:text-esn-blue aria-[current=page]:shadow-[inset_0_-3px_0_var(--color-esn-cyan)] lg:py-1"
+                class="block py-2 hover:text-esn-magenta aria-[current=page]:text-esn-blue aria-[current=page]:shadow-[inset_0_-3px_0_var(--nav-accent,var(--color-esn-cyan))] lg:py-1"
               >
                 {item.label}
               </a>

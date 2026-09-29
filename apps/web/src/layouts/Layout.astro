@@ -12,9 +12,11 @@ import type { Seo, Settings } from '../lib/types'
 interface Props {
   title?: string
   seo?: Seo
+  /** Colour of the active nav item's underline; the Events cyan by default. */
+  navAccent?: string
 }
 
-const { title, seo } = Astro.props
+const { title, seo, navAccent } = Astro.props
 const settings = (await fetchContent<Settings | null>(SETTINGS_QUERY)) ?? {}
 const pageTitle = seo?.title ?? title
 // A page titled with the site name (e.g. /links) doesn't repeat it after the dot.
@@ -48,7 +50,7 @@ const shareImage = imageUrl(seo?.image ?? settings.seo?.image, { width: 1200, he
   </head>
   <body class="flex min-h-screen flex-col bg-white">
     {settings.announcement && <Banner {...settings.announcement} />}
-    <Header logo={settings.logo} navigation={settings.navigation ?? []} />
+    <Header logo={settings.logo} navigation={settings.navigation ?? []} accent={navAccent} />
     <main class="flex-1">
       <slot />
     </main>
