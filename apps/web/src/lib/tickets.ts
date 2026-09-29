@@ -1,4 +1,4 @@
-import type { PriceTier, TicketFields } from './types'
+import type { PriceTier, TicketFields } from './shapes'
 
 /**
  * What an Event shows where tickets would be (homepage hero, Event page sidebar and sticky

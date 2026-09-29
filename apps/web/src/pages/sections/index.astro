@@ -4,7 +4,7 @@ import PageHeader from '../../components/PageHeader.astro'
 import SectionTile from '../../components/SectionTile.astro'
 import { fetchContent } from '../../lib/content'
 import { SECTIONS_QUERY } from '../../lib/queries'
-import type { SectionSummary } from '../../lib/types'
+import type { SectionSummary } from '../../lib/shapes'
 
 const sections = await fetchContent<SectionSummary[]>(SECTIONS_QUERY)
 ---

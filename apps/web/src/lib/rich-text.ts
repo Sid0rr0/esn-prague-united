@@ -1,6 +1,6 @@
 import { escapeHTML, toHTML } from '@portabletext/to-html'
 import { imageUrl } from './image'
-import type { RichText, SanityImage } from './types'
+import type { RichText, SanityImage } from './shapes'
 
 const RICH_TEXT_IMAGE_WIDTH = 1200
 

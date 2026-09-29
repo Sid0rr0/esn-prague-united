@@ -1,5 +1,5 @@
 import { createImageUrlBuilder } from '@sanity/image-url'
-import type { SanityImage } from './types'
+import type { SanityImage } from './shapes'
 
 const builder = createImageUrlBuilder({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID ?? 'unset',

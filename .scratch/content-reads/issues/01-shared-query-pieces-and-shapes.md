@@ -22,7 +22,11 @@ The existing queries are rebuilt from the shared pieces, with identical output. 
 
 **Status:** ready-for-agent
 
-- [ ] Each shared GROQ piece is written once, in the shared pieces module, with its content rule as a comment.
-- [ ] Each shared shape is defined once, in the shared shapes module.
-- [ ] Every existing query produces the same result as before.
-- [ ] All page tests pass unchanged; type checking passes.
+- [x] Each shared GROQ piece is written once, in the shared pieces module, with its content rule as a comment.
+- [x] Each shared shape is defined once, in the shared shapes module.
+- [x] Every existing query produces the same result as before.
+- [x] All page tests pass unchanged; type checking passes.
+
+## Comments
+
+Done. The pieces live in `apps/web/src/lib/query-pieces.ts` and the shared shapes in `apps/web/src/lib/shapes.ts`; `types.ts` keeps only page-only shapes. A dump of every exported query string before and after the change was byte-identical.

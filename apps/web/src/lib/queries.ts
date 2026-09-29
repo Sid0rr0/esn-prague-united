@@ -1,12 +1,16 @@
 // Usage: import { fetchContent } from './content'
 //   const home = await fetchContent(HOMEPAGE_QUERY)
 import groq from 'groq'
-
-const image = `{..., asset->{_id, url, metadata{lqip, dimensions}}}`
-
-/** GROQ filter: hidden once its "Hide after" date passes (top banner, Quick links, Links page). */
-const visibleUntilFilter = (field: string) =>
-  `(!defined(${field}) || dateTime(${field}) > dateTime(now()))`
+import {
+  ALBUM_CARD,
+  HAS_ENDED,
+  HOMEPAGE_LIST_MAX,
+  IMAGE,
+  PHOTO_COUNT,
+  SECTION_SUMMARY,
+  TICKET_FIELDS,
+  visibleUntilFilter,
+} from './query-pieces'
 
 // The top banner shows only while it's enabled and before its "Hide after" date. The footer's
 // Privacy policy and Cookie settings links follow the Homepage's "Show the Updates block".
@@ -19,26 +23,7 @@ export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]{
 }`
 
 /** The 5 Sections in website order, as the Sections list and the homepage block show them. */
-export const SECTIONS_QUERY = groq`*[_type == "section"] | order(order asc){
-  name, "slug": slug.current, university, tagline
-}`
-
-/** An Album without photos has no photos field, so its count is null without coalesce. */
-const PHOTO_COUNT = `"photoCount": coalesce(count(photos), 0)`
-
-/** An Album as the Gallery and the homepage's Latest albums show it. */
-const ALBUM_CARD = `{
-  _id, title, "slug": slug.current, date, cover${image}, ${PHOTO_COUNT}
-}`
-
-/** The homepage's upcoming list, About numbers, Quick links and Latest albums each show at most this many. */
-const HOMEPAGE_LIST_MAX = 4
-
-/** An Event has ended once its end time has passed, or its start time if it has no end time. */
-const HAS_ENDED = `dateTime(coalesce(endsAt, startsAt)) < dateTime(now())`
-
-/** What ticketDisplay in tickets.ts needs to decide what shows where tickets would be. */
-const TICKET_FIELDS = `ticketUrl, ticketNote, priceTiers[]{_key, label, amount}, "hasEnded": ${HAS_ENDED}`
+export const SECTIONS_QUERY = groq`*[_type == "section"] | order(order asc)${SECTION_SUMMARY}`
 
 /** A picked Instagram post list as just its links, in order; a broken reference is null. */
 const INSTAGRAM_POST_LINKS = `[]->link`
@@ -65,7 +50,7 @@ export const HOMEPAGE_QUERY = groq`{
 
 /** An Event as the Events list page's cards show it: no price or Ticket note. */
 const EVENT_CARD = `{
-  _id, title, "slug": slug.current, startsAt, "venueName": venue.name, heroImage${image}
+  _id, title, "slug": slug.current, startsAt, "venueName": venue.name, heroImage${IMAGE}
 }`
 
 // The Featured event is listed like any other here. Past events keep their Albums reachable,
@@ -78,7 +63,7 @@ export const EVENTS_LIST_QUERY = groq`{
 // Detail queries list their fields rather than spreading the document, so data the design
 // dropped (e.g. Event organisers) never reaches a page even if an old document still holds it.
 export const EVENT_QUERY = groq`*[_type == "event" && slug.current == $slug][0]{
-  title, "slug": slug.current, startsAt, endsAt, venue, heroImage${image}, summary, description,
+  title, "slug": slug.current, startsAt, endsAt, venue, heroImage${IMAGE}, summary, description,
   programme[]{_key, time, title, description}, dressCode, faq[]{_key, question, answer},
   ticketInfo, seo, ${TICKET_FIELDS},
   album->{title, "slug": slug.current}
@@ -89,7 +74,7 @@ export const EVENT_SLUGS_QUERY = groq`*[_type == "event" && defined(slug.current
 export const SECTION_SLUGS_QUERY = groq`*[_type == "section" && defined(slug.current)].slug.current`
 
 export const SECTION_QUERY = groq`*[_type == "section" && slug.current == $slug][0]{
-  name, shortName, "slug": slug.current, university, coverImage${image}, tagline, about,
+  name, shortName, "slug": slug.current, university, coverImage${IMAGE}, tagline, about,
   buddyProgramUrl, email, office, mapUrl, socials
 }`
 
@@ -100,7 +85,7 @@ export const ALBUMS_QUERY = groq`*[_type == "album"] | order(date desc)${ALBUM_C
 
 export const ALBUM_QUERY = groq`*[_type == "album" && slug.current == $slug][0]{
   title, "slug": slug.current, date, photographer, fullAlbumUrl,
-  photos[]${image}, ${PHOTO_COUNT},
+  photos[]${IMAGE}, ${PHOTO_COUNT},
   "event": *[_type == "event" && album._ref == ^._id && defined(slug.current)][0]{"slug": slug.current}
 }`
 
