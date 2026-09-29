@@ -43,15 +43,21 @@ describe('favicon', () => {
     expect(manifest.name).toBe('ESN Prague United')
     expect(manifest.short_name).toBe('ESN Prague United')
     expect(manifest.display).toBe('browser')
+    expect(manifest.icons.every((icon: { purpose: string }) => icon.purpose === 'any')).toBe(true)
     expect(manifest.icons.map((icon: { src: string }) => icon.src)).toEqual([
       '/web-app-manifest-192x192.png',
       '/web-app-manifest-512x512.png',
     ])
   })
 
-  it('puts the star on a white plate so it stays legible on dark tabs', () => {
+  it('shows the star on a transparent background, filling the icon', () => {
     const svg = readPublic('favicon.svg')
+    const [, , width] = svg
+      .match(/viewBox="([\d. ]+)"/)![1]
+      .split(' ')
+      .map(Number)
 
-    expect(svg).toMatch(/<rect[^>]*fill="#fff(?:fff)?"/i)
+    expect(svg).not.toContain('<rect')
+    expect(width).toBeLessThanOrEqual(44)
   })
 })
