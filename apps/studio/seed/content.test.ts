@@ -26,6 +26,19 @@ describe('seed content', () => {
     )
   })
 
+  it('gives every section an email, a website and an Instagram link', () => {
+    for (const section of sections()) {
+      const socials = section.socials as { website?: string; instagram?: string } | undefined
+      assert.match(String(section.email), /^\S+@\S+\.\S+$/, section.slug.current)
+      assert.match(String(socials?.website), /^https:\/\//, section.slug.current)
+      assert.match(
+        String(socials?.instagram),
+        /^https:\/\/www\.instagram\.com\//,
+        section.slug.current,
+      )
+    }
+  })
+
   it('has one upcoming and one past event', () => {
     const startTimes = events(NOW).map((event) => new Date(event.startsAt as string))
 

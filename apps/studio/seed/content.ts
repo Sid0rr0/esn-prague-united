@@ -117,31 +117,52 @@ export const singletons = (): Singleton[] => [
   },
 ]
 
+/** Contacts as each Section publishes them on its own website and Instagram. */
 const SECTIONS = [
-  { slug: 'esn-cu', shortName: 'ESN CU', name: 'ESN CU Prague', university: 'Charles University' },
+  {
+    slug: 'esn-cu',
+    shortName: 'ESN CU',
+    name: 'ESN CU Prague',
+    university: 'Charles University',
+    email: 'info@esncuprague.cz',
+    website: 'https://www.esncuprague.cz/',
+    instagram: 'https://www.instagram.com/esncuprague/',
+  },
   {
     slug: 'esn-ctu',
     shortName: 'ESN CTU',
     name: 'ESN CTU in Prague',
     university: 'Czech Technical University in Prague',
+    email: 'esn@esn.cvut.cz',
+    website: 'https://esn.cvut.cz/',
+    instagram: 'https://www.instagram.com/esn.ctu/',
   },
   {
     slug: 'esn-vse',
     shortName: 'ESN VŠE',
     name: 'ESN VŠE Prague',
     university: 'Prague University of Economics and Business',
+    email: 'info@esnvseprague.cz',
+    website: 'https://esnvseprague.cz/',
+    instagram: 'https://www.instagram.com/esnvseprague/',
   },
   {
     slug: 'esn-czu',
-    shortName: 'ESN CULS',
-    name: 'ESN CULS Prague',
+    shortName: 'ESN CZU',
+    name: 'ESN CZU Prague',
     university: 'Czech University of Life Sciences Prague',
+    email: 'info@esnczu.cz',
+    website: 'https://esnczu.cz/',
+    instagram: 'https://www.instagram.com/esnczu/',
   },
   {
     slug: 'esn-uct',
     shortName: 'ESN UCT',
     name: 'ESN UCT Prague',
     university: 'University of Chemistry and Technology, Prague',
+    email: 'board@esnuct.cz',
+    website: 'https://www.esnuct.cz/',
+    instagram: 'https://www.instagram.com/esnuctprague/',
   },
 ]
 
@@ -154,6 +175,8 @@ export const sections = (): SluggedDoc[] =>
     university: en(section.university),
     tagline: en(`International students at ${section.university}.`),
     about: enRichText(`${section.name} welcomes exchange students with a buddy and events.`),
+    email: section.email,
+    socials: { website: section.website, instagram: section.instagram },
     order: i + 1,
   }))
 
