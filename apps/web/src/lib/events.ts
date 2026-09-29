@@ -23,7 +23,8 @@ const EVENT_QUERY = groq`*[_type == "event" && slug.current == $slug][0]{
   title, "slug": slug.current, startsAt, endsAt, venue, heroImage${IMAGE}, summary, description,
   programme[]{_key, time, title, description}, dressCode, faq[]{_key, question, answer},
   ticketInfo, seo, ${TICKET_FIELDS},
-  album->{title, "slug": slug.current}
+  album->{title, "slug": slug.current},
+  "relatedEvents": (relatedEvents[]->${EVENT_CARD})[defined(slug)]
 }`
 
 const EVENT_SLUGS_QUERY = groq`*[_type == "event" && defined(slug.current)].slug.current`
@@ -63,6 +64,8 @@ export interface EventDetail extends TicketFields {
   ticketInfo?: RichText
   seo?: Seo
   album?: { title: string; slug: string } | null
+  /** In the editor's order, without entries that no longer resolve to an Event with a web address. */
+  relatedEvents?: EventCardData[] | null
 }
 
 export async function readEventsList(language: Language = DEFAULT_LANGUAGE): Promise<EventsList> {

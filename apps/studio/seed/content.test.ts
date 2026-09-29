@@ -49,6 +49,19 @@ describe('seed content', () => {
     )
   })
 
+  it('gives the Welcome Party a Related event that exists', () => {
+    const [welcome] = events(NOW)
+    const related = welcome.relatedEvents as { _ref: string }[]
+
+    assert.ok(related.length > 0)
+    for (const { _ref } of related) {
+      assert.ok(
+        events(NOW).some((event) => event._id === _ref && event !== welcome),
+        _ref,
+      )
+    }
+  })
+
   it('has a placeholder Privacy policy with a heading and text', () => {
     const policy = singletons().find((doc) => doc._id === 'privacyPolicy')
     const body = policy?.body as { en?: unknown[] } | undefined

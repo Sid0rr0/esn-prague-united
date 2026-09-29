@@ -4,11 +4,15 @@ import type { EventCardData } from '../lib/shapes'
 
 interface Props {
   events: EventCardData[]
+  /** Columns on desktop. */
+  columns?: 3 | 4
 }
-const { events } = Astro.props
+const { events, columns = 4 } = Astro.props
 ---
 
-<ul class="grid gap-0.5 md:grid-cols-2 lg:grid-cols-4">
+<ul
+  class:list={['grid gap-0.5 md:grid-cols-2', columns === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-4']}
+>
   {events.map((event) => (
     <li>
       <EventCard event={event} />

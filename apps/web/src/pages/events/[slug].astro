@@ -1,6 +1,7 @@
 ---
 import { externalLinkProps } from '../../lib/external-link'
 import Layout from '../../layouts/Layout.astro'
+import EventGrid from '../../components/EventGrid.astro'
 import FaqAccordion from '../../components/FaqAccordion.astro'
 import Picture from '../../components/Picture.astro'
 import RichText from '../../components/RichText.astro'
@@ -10,6 +11,7 @@ import TicketSidebar from '../../components/TicketSidebar.astro'
 import { readEvent, readEventSlugs } from '../../lib/events'
 import { formatLongDate, formatTimeRange } from '../../lib/format'
 import { ticketArea } from '../../lib/ticket-area'
+import { uiString } from '../../lib/ui-strings'
 
 export async function getStaticPaths() {
   const slugs = await readEventSlugs()
@@ -23,6 +25,7 @@ const { ticketAction, aside, hasStickyBar } = ticketArea(event)
 const programme = event.programme ?? []
 const faq = event.faq ?? []
 const venue = event.venue
+const relatedEvents = event.relatedEvents ?? []
 ---
 
 <Layout title={event.title} seo={event.seo}>
@@ -66,7 +69,7 @@ const venue = event.venue
   <div
     class:list={[
       'grid gap-8 px-5 py-7 lg:grid-cols-[1fr_360px] lg:gap-14 lg:p-14',
-      hasStickyBar && 'pb-28 lg:pb-14',
+      hasStickyBar && relatedEvents.length === 0 && 'pb-28 lg:pb-14',
     ]}
   >
     <div class="flex flex-col gap-10 lg:gap-14">
@@ -145,6 +148,24 @@ const venue = event.venue
       </div>
     )}
   </div>
+
+  {relatedEvents.length > 0 && (
+    <section
+      data-related-events
+      class:list={['flex flex-col gap-6 px-5 lg:px-14 lg:pb-14', hasStickyBar ? 'pb-28' : 'pb-10']}
+    >
+      <SectionHeading colour="var(--color-esn-cyan)">
+        {uiString('relatedEventsHeading')}
+      </SectionHeading>
+      <EventGrid events={relatedEvents} columns={3} />
+      <a
+        href="/events"
+        class="flex h-12 items-center justify-center border-2 border-esn-blue px-5 font-black text-esn-blue hover:bg-blue-50 lg:self-start"
+      >
+        {uiString('seeAllEvents')}
+      </a>
+    </section>
+  )}
 
   {hasStickyBar && <StickyTicketBar ticketAction={ticketAction} />}
 </Layout>

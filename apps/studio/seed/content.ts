@@ -209,6 +209,8 @@ export const sections = (): SluggedDoc[] =>
     order: i + 1,
   }))
 
+const ORIENTATION_TRIP_ID = 'event-orientation-week-trip'
+
 export const events = (now: Date): SluggedDoc[] => [
   {
     _type: 'event',
@@ -230,6 +232,7 @@ export const events = (now: Date): SluggedDoc[] => [
         answer: enRichText('No, but card holders get a discount.'),
       },
     ],
+    relatedEvents: [{ ...reference(ORIENTATION_TRIP_ID), _weak: true }],
     ticketUrl: 'https://example.com/tickets/welcome-party',
     priceTiers: [
       { _key: 'card', _type: 'priceTier', label: en('With ESN card'), amount: 150 },
@@ -237,6 +240,7 @@ export const events = (now: Date): SluggedDoc[] => [
     ],
   },
   {
+    _id: ORIENTATION_TRIP_ID,
     _type: 'event',
     title: en('Orientation Week Trip'),
     slug: slug('orientation-week-trip'),

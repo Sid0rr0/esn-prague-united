@@ -16,6 +16,8 @@ const EN = {
     'Some pages show Instagram posts. Loading them lets Meta set cookies and see your visit. Do you want to see them?',
   consentAccept: 'Accept',
   consentReject: 'Reject',
+  relatedEventsHeading: 'Related events',
+  seeAllEvents: 'See all events',
 } as const
 
 export type UiString = keyof typeof EN
@@ -35,6 +37,8 @@ const CS: Partial<Record<UiString, string>> = {
     'Některé stránky zobrazují příspěvky z Instagramu. Jejich načtením umožníte společnosti Meta ukládat cookies a vidět vaši návštěvu. Chcete je zobrazit?',
   consentAccept: 'Přijmout',
   consentReject: 'Odmítnout',
+  relatedEventsHeading: 'Související akce',
+  seeAllEvents: 'Všechny akce',
 }
 
 const STRINGS: Record<Language, Partial<Record<UiString, string>>> = { en: EN, cs: CS }

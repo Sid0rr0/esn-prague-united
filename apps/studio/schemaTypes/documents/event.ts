@@ -63,6 +63,16 @@ export const event = defineType({
       of: [defineArrayMember({ type: 'faqEntry' })],
     }),
     defineField({
+      name: 'relatedEvents',
+      title: 'Related events',
+      type: 'array',
+      group: 'details',
+      description:
+        "Up to 3 other Events to show at the bottom of this page, e.g. last year's edition.",
+      // Weak, so an Event that others list as related can still be deleted.
+      of: [defineArrayMember({ type: 'reference', to: [{ type: 'event' }], weak: true })],
+    }),
+    defineField({
       name: 'ticketUrl',
       title: 'Ticket link',
       type: 'url',
