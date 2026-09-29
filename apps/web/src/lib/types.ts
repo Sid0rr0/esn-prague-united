@@ -206,7 +206,6 @@ export interface SectionDetail {
   name: string
   slug: string
   university?: string
-  logo?: SanityImage
   coverImage?: SanityImage
   tagline?: string
   about?: RichText

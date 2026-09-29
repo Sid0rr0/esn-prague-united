@@ -6,7 +6,6 @@ import {
   allSections,
   event,
   localised,
-  photo,
   richText,
   section,
   sectionLogo,
@@ -74,42 +73,11 @@ describe('Sections list', () => {
 })
 
 describe('Section page logo', () => {
-  const plateOf = (html: string) => html.match(/<div[^>]*data-logo-plate[\s\S]*?<\/div>/)?.[0] ?? ''
-  const cover = photo('cover')
+  it('shows no Section logo, even when the Section has one', async () => {
+    const html = await renderSection(section('ctu', 2, { logo: sectionLogo('ctu') }))
 
-  it('shows the whole Section logo, fitted and never cropped, inside a white plate', async () => {
-    const ctu = section('ctu', 2, {
-      logo: { ...sectionLogo('ctu'), crop: { top: 0.1, bottom: 0, left: 0, right: 0 } },
-    })
-
-    const plate = plateOf(await renderSection(ctu))
-    const img = plate.match(/<img[^>]*>/)?.[0] ?? ''
-
-    expect(plate).toContain('bg-white')
-    expect(img).toContain('/logoctu-144x80.svg')
-    expect(img).toContain('fit=max')
-    expect(img).not.toContain('fit=crop')
-    expect(img).not.toContain('rect=')
-    expect(img).toContain('object-contain')
-    expect(img).not.toContain('object-cover')
-  })
-
-  it('shows the white placeholder in the plate when the Section has no logo', async () => {
-    const plate = plateOf(await renderSection(section('ctu', 2)))
-
-    expect(plate).toContain('bg-white')
-    expect(plate).toMatch(/<div[^>]*aria-hidden="true"/)
-    expect(plate).not.toContain('<img')
-  })
-
-  it('still crops the cover photo to its hotspot', async () => {
-    const ctu = section('ctu', 2, { logo: sectionLogo('ctu'), coverImage: cover.photo })
-
-    const html = await renderSection(ctu, cover.asset)
-    const coverImg = html.match(/<img[^>]*cover-1200x800[^>]*>/)?.[0] ?? ''
-
-    expect(coverImg).toContain('fit=crop')
-    expect(coverImg).toContain('object-cover')
+    expect(html).toContain('ESN CTU Prague')
+    expect(html).not.toContain('/logoctu')
   })
 })
 

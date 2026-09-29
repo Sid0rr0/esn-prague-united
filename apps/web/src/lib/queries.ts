@@ -83,7 +83,7 @@ export const EVENT_SLUGS_QUERY = groq`*[_type == "event" && defined(slug.current
 export const SECTION_SLUGS_QUERY = groq`*[_type == "section" && defined(slug.current)].slug.current`
 
 export const SECTION_QUERY = groq`*[_type == "section" && slug.current == $slug][0]{
-  name, shortName, "slug": slug.current, university, logo, coverImage${image}, tagline, about,
+  name, shortName, "slug": slug.current, university, coverImage${image}, tagline, about,
   buddyProgramUrl, email, office, mapUrl, socials
 }`
 

@@ -18,3 +18,4 @@
 
 - Checked by eye at 1280px wide: in the current dataset only ESN CTU has a Section logo (whole, legible, clear space on blue). The other four pages show the white placeholder plate on magenta, orange, green and cyan. Recheck each page once its Section logo is uploaded.
 - The plate's padding is half the logo's height (24px / 32px on desktop). Check it against the manual's safe-zone definition (p.13) and widen it if that asks for more.
+- 2026-09-29: the white plate looked out of place, so it was removed together with the Section logo on the Section page. The page shows no Section logo for now. Exploring other ways to show it is ticket 04.
