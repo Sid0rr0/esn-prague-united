@@ -12,6 +12,10 @@ _Avoid_: ESN Prague (on its own), ESN Praha
 One of the exactly 5 ESN local chapters in Prague, each based at a different university (e.g. "ESN CTU in Prague"). Sections are created once by an admin; editors cannot add or delete them from the Studio UI. Each Section has a fixed brand colour that editors can't change.
 _Avoid_: Chapter, branch, club
 
+**Section logo**:
+A Section's official ESN logotype (the ESN star, "ESN" and the descriptor with the Section's name), used exactly as provided by ESN. It appears only on that Section's own page, never where several Sections are listed together.
+_Avoid_: Section icon, badge, avatar
+
 **Event**:
 A single ESN Prague United event with a date, venue, optional programme, and ticket info (e.g. the Czech Ball). Events belong to ESN Prague United as a whole, not to individual Sections. Ticket availability is inferred from whether a ticket link is set — there's no separate status field; without a link, the Event shows its Ticket note instead (e.g. "Sold out", "Free entry"). Once an Event has ended it no longer offers tickets and points to its Album instead, if it has one.
 _Avoid_: Party, activity
