@@ -354,26 +354,24 @@ describe('homepage Updates block', () => {
     )
   })
 
-  it('comes after upcoming events and before About, with posts in the editor’s order', async () => {
+  it('comes after the Sections block and before Latest albums, with posts in the editor’s order', async () => {
     const html = await renderPage(Home, {
       now: NOW,
       documents: [
         siteSettings(),
-        homepage({
-          updates: picked('c', 'a', 'b'),
-          about: { heading: localised('About ESN Prague United') },
-        }),
+        homepage({ updates: picked('c', 'a', 'b') }),
         ...posts,
-        event('next', { title: localised('Kutná Hora trip'), startsAt: FUTURE }),
+        ...allSections(),
+        album('ball', { title: localised('Czech Ball photos') }),
       ],
     })
 
-    const upcomingAt = html.indexOf('data-upcoming')
+    const sectionsAt = html.indexOf('data-sections')
     const updatesAt = html.indexOf('data-updates')
-    const aboutAt = html.indexOf('About ESN Prague United')
-    expect(upcomingAt).toBeGreaterThan(-1)
-    expect(updatesAt).toBeGreaterThan(upcomingAt)
-    expect(aboutAt).toBeGreaterThan(updatesAt)
+    const albumsAt = html.indexOf('data-latest-albums')
+    expect(sectionsAt).toBeGreaterThan(-1)
+    expect(updatesAt).toBeGreaterThan(sectionsAt)
+    expect(albumsAt).toBeGreaterThan(updatesAt)
     expect(updatesOf(html).match(/data-instagram-post="[^"]*"/g)).toEqual([
       'data-instagram-post="https://www.instagram.com/p/CCC333/"',
       'data-instagram-post="https://www.instagram.com/p/AAA111/"',

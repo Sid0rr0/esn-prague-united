@@ -8,7 +8,7 @@ The latest news from ESN Prague United lives on the Sections' Instagram accounts
 
 ## Solution
 
-Editors keep each **Instagram post** once in the Studio by pasting its link and giving it a short title that only editors see. On the homepage they pick and order up to 8 posts for the **Updates** block, which shows them in a carousel after the upcoming events. On any Event they pick that Event's own posts, shown under "On Instagram". The same post can appear in both places.
+Editors keep each **Instagram post** once in the Studio by pasting its link and giving it a short title that only editors see. On the homepage they pick and order up to 8 posts for the **Updates** block, which shows them in a carousel below the Sections block. On any Event they pick that Event's own posts, shown under "On Instagram". The same post can appear in both places.
 
 The posts render as Instagram's own embeds, and only after the visitor agrees. A site-wide consent banner asks once with equally weighted Accept and Reject buttons and links to a new **Privacy policy** page. Visitors who reject, or haven't chosen yet, see a branded placeholder for each post with a "View on Instagram" link and an "Allow Instagram content" button. A "Cookie settings" link in the footer lets visitors change their choice.
 
@@ -34,7 +34,7 @@ The posts render as Instagram's own embeds, and only after the visitor agrees. A
 18. As an editor, I want to write and update the Privacy policy in the Studio, in English and Czech, so that it stays correct without a developer.
 19. As an editor, I want the Privacy policy to open directly from the Studio sidebar like the other Singletons, so that there's only ever one.
 20. As a visitor, I want to see recent Instagram posts on the homepage, so that I know what ESN Prague United is up to.
-21. As a visitor, I want the Updates block right after upcoming events, so that the most time-sensitive content is near the top.
+21. As a visitor, I want the Updates block right after the Sections block, so that I see the latest news once I know who ESN Prague United is.
 22. As a visitor on a phone, I want to swipe through the posts, so that the carousel feels native.
 23. As a visitor on a desktop, I want previous/next arrows, so that I can browse posts without a trackpad gesture.
 24. As a visitor, I want a single post shown centred with no arrows, so that the block doesn't look broken.
@@ -70,7 +70,7 @@ The posts render as Instagram's own embeds, and only after the visitor agrees. A
 - **Event gets an `instagramPosts` list** in its "Programme & info" group, using the same shared shape.
 - **New Privacy policy singleton:** a translated heading and translated rich text. Like the other Singletons, it has no list view and no delete action. It's added to the singleton list in the Studio structure and gets its own page on the site. The route and footer placement match the other Singleton pages.
 - **Queries:** the homepage and Event queries project each list to just the normalised links, in order. Broken references and links that fail the link rules are dropped. The Updates block is hidden when no valid posts remain.
-- **One shared carousel component** renders a list of Instagram posts. The homepage uses it for the Updates block, placed after upcoming events and before About. The Event page uses it under an "On Instagram" heading after the description and programme, before the Event FAQ. It's shown whether the Event is upcoming or past.
+- **One shared carousel component** renders a list of Instagram posts. The homepage uses it for the Updates block, placed after the Sections block and before Latest albums. The Event page uses it under an "On Instagram" heading after the description and programme, before the Event FAQ. It's shown whether the Event is upcoming or past.
   - One post is centred with no arrows.
   - Two or more posts go in a horizontal scroll-snap row with the cards top-aligned: prev/next arrows on desktop, swipe on mobile, no autoplay.
 - **Server-rendered markup is always the placeholder.** Each card is a branded placeholder with a "View on Instagram" link to the post (opens in a new tab) and an "Allow Instagram content" button. It carries the post link in a data attribute. The static HTML never includes Instagram's script or iframes.
@@ -89,7 +89,7 @@ The posts render as Instagram's own embeds, and only after the visitor agrees. A
 - A good test drives the feature through a seam and checks only what an editor or visitor would observe: the rendered HTML, the page's state after a click, or the validation result. It doesn't test query shapes, component props or internal helpers directly.
 - **Seam 1 is the existing page render seam** (in-memory Sanity documents, real GROQ, `now` pinned). Most cases go here:
   - Homepage with no Instagram posts picked: no Updates block.
-  - Homepage with posts: the Updates block comes after upcoming events and before About, with posts in the editor's order and the editor's heading (the default heading if none is set).
+  - Homepage with posts: the Updates block comes after the Sections block and before Latest albums, with posts in the editor's order and the editor's heading (the default heading if none is set).
   - One post renders without arrows. Two or more render with arrows.
   - A broken reference or invalid link is skipped, and the rest still render. If every reference is broken, the block is hidden.
   - Each card is a placeholder linking to the normalised post link, opening in a new tab. No Instagram script or iframe is in the static HTML.

@@ -42,7 +42,7 @@ export const homepage = defineType({
       type: 'object',
       group: 'content',
       description:
-        'Instagram posts in a carousel after the upcoming events. Hidden when no posts are picked.',
+        'Instagram posts in a carousel below the Sections block. Hidden when no posts are picked.',
       fields: [
         localisedString({ name: 'heading', initialValue: 'Updates' }),
         instagramPostList({

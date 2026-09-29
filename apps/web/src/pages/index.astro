@@ -121,18 +121,6 @@ const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon
     </section>
   )}
 
-  {updatesUrls.length > 0 && (
-    <section
-      data-updates
-      class="grid gap-3.5 bg-blue-50 px-5 py-7 lg:grid-cols-[280px_1fr] lg:gap-12 lg:p-14"
-    >
-      <SectionHeading colour="var(--color-esn-blue)">
-        {page?.updates?.heading ?? uiString('updatesHeading')}
-      </SectionHeading>
-      <InstagramCarousel urls={updatesUrls} />
-    </section>
-  )}
-
   {about && (
     <section class="grid gap-3.5 px-5 py-7 lg:grid-cols-[280px_1fr] lg:gap-12 lg:p-14">
       <SectionHeading colour="var(--color-esn-magenta)">
@@ -161,6 +149,18 @@ const upcomingState = upcoming.length > 0 ? 'list' : featured ? 'hidden' : 'soon
           </li>
         ))}
       </ul>
+    </section>
+  )}
+
+  {updatesUrls.length > 0 && (
+    <section
+      data-updates
+      class="grid gap-3.5 bg-blue-50 px-5 py-7 lg:grid-cols-[280px_1fr] lg:gap-12 lg:p-14"
+    >
+      <SectionHeading colour="var(--color-esn-blue)">
+        {page?.updates?.heading ?? uiString('updatesHeading')}
+      </SectionHeading>
+      <InstagramCarousel urls={updatesUrls} />
     </section>
   )}
 
