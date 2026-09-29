@@ -111,6 +111,12 @@ export interface FaqPage {
   topics?: FaqTopic[] | null
 }
 
+export interface PrivacyPolicy {
+  title?: string
+  body?: RichText
+  seo?: Seo
+}
+
 /** A Section's name and email as the Contacts page lists them. */
 export interface SectionContact {
   name: string

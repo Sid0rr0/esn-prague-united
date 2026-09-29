@@ -121,3 +121,5 @@ export const LINKS_QUERY = groq`*[_id == "linksPage"][0]{
   title, intro, avatar, seo,
   "links": links[${visibleUntilFilter('visibleUntil')}]{_key, label, url, highlight}
 }`
+
+export const PRIVACY_POLICY_QUERY = groq`*[_id == "privacyPolicy"][0]{title, body, seo}`

@@ -5,6 +5,8 @@ import { homepage, localised, siteSettings } from './fixtures'
 
 const NOW = '2026-10-01T10:00:00Z'
 
+const footerOf = (html: string) => html.match(/<footer[\s\S]*?<\/footer>/)?.[0] ?? ''
+
 const withBanner = (announcement: Record<string, unknown>) =>
   renderPage(Home, {
     now: NOW,
@@ -48,10 +50,18 @@ describe('site shell', () => {
         }),
       ],
     })
-    const footer = html.match(/<footer[\s\S]*?<\/footer>/)?.[0] ?? ''
+    const footer = footerOf(html)
 
     expect(footer).not.toBe('')
-    expect(footer).not.toContain('<a')
+    expect(footer).not.toContain('instagram.com')
+    expect(footer).not.toContain('fb.example')
+  })
+
+  it('links to the Privacy policy page from the footer', async () => {
+    const html = await renderPage(Home, { now: NOW, documents: [homepage(), siteSettings()] })
+    const footer = footerOf(html)
+
+    expect(footer).toMatch(/<a[^>]*href="\/privacy-policy"[^>]*>\s*Privacy policy\s*<\/a>/)
   })
 })
 

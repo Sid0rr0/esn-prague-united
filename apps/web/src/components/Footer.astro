@@ -1,5 +1,6 @@
 ---
 import { SITE_NAME } from '../lib/site'
+import { uiString } from '../lib/ui-strings'
 
 interface Props {
   text?: string
@@ -12,4 +13,7 @@ const { text } = Astro.props
     <span class="font-heading text-lg font-bold">{SITE_NAME}</span>
     {text && <p class="text-sm text-on-blue-muted">{text}</p>}
   </div>
+  <a href="/privacy-policy" class="text-sm font-bold text-white hover:underline">
+    {uiString('privacyPolicy')}
+  </a>
 </footer>

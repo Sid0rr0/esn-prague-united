@@ -97,6 +97,18 @@ export const faqPage = (overrides: Record<string, unknown> = {}): Doc => ({
   ...overrides,
 })
 
+/** The Privacy policy Singleton: a heading and two paragraphs of rich text. */
+export const privacyPolicy = (overrides: Record<string, unknown> = {}): Doc => ({
+  _id: 'privacyPolicy',
+  _type: 'privacyPolicy',
+  title: localised('Privacy policy'),
+  body: richText(
+    'We only store your Instagram content choice in your browser.',
+    'Write to us to ask what we know about you.',
+  ),
+  ...overrides,
+})
+
 export const section = (
   slug: string,
   order: number,

@@ -8,6 +8,7 @@ const EN = {
   viewOnInstagram: 'View on Instagram',
   previousPost: 'Previous post',
   nextPost: 'Next post',
+  privacyPolicy: 'Privacy policy',
 } as const
 
 export type UiString = keyof typeof EN
@@ -19,6 +20,7 @@ const CS: Partial<Record<UiString, string>> = {
   viewOnInstagram: 'Zobrazit na Instagramu',
   previousPost: 'Předchozí příspěvek',
   nextPost: 'Další příspěvek',
+  privacyPolicy: 'Zásady ochrany osobních údajů',
 }
 
 const STRINGS: Record<Language, Partial<Record<UiString, string>>> = { en: EN, cs: CS }
