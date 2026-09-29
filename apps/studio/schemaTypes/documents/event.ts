@@ -2,6 +2,9 @@ import { defineArrayMember, defineField, defineType } from 'sanity'
 import { CalendarIcon } from '@sanity/icons/Calendar'
 import { localisedRichText, localisedString, localisedText } from '../objects/locale'
 
+/** What the site shows under an Event, so the Studio refuses more. */
+const RELATED_EVENTS_MAX = 3
+
 /** Keeps the Ticket note to one line in the homepage hero. */
 const TICKET_NOTE_MAX_LENGTH = 60
 
@@ -70,7 +73,24 @@ export const event = defineType({
       description:
         "Up to 3 other Events to show at the bottom of this page, e.g. last year's edition.",
       // Weak, so an Event that others list as related can still be deleted.
-      of: [defineArrayMember({ type: 'reference', to: [{ type: 'event' }], weak: true })],
+      validation: (r) => [r.max(RELATED_EVENTS_MAX), r.unique()],
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{ type: 'event' }],
+          weak: true,
+          options: {
+            // An Event can't be its own Related event, opened as a draft or as published.
+            filter: ({ document }) => {
+              const publishedId = document._id.replace(/^drafts\./, '')
+              return {
+                filter: '!(_id in $ownIds)',
+                params: { ownIds: [publishedId, `drafts.${publishedId}`] },
+              }
+            },
+          },
+        }),
+      ],
     }),
     defineField({
       name: 'ticketUrl',
