@@ -31,7 +31,7 @@ npm run deploy               # -> https://esnprague.sanity.studio
 
 - Singletons (Homepage, FAQ, Contacts, Links page, Site settings) open directly and cannot be deleted.
 - Sections cannot be created from the "+" menu; there are exactly 5. Admins create them once.
-- Publishing a document does not update the website by itself. The website picks up everything published at the next Site update: the daily early-morning rebuild, or sooner when an editor starts one with the **Update website** button (coming soon).
+- Publishing a document does not update the website by itself. Published content goes live when someone presses **Update website** in the top bar (live in about two minutes), and otherwise at the next early-morning rebuild. The button shows "Updating…" for 45 seconds after anyone presses it.
 - Links page: tick "Highlight" for 1 to 2 main links; set "Hide after" for time-limited links (ticket sales).
 
 `astro-queries.ts` contains the GROQ queries for the Astro site.

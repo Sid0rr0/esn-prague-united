@@ -14,6 +14,7 @@ import { event } from './documents/event'
 import { album } from './documents/album'
 import { siteSettings } from './singletons/siteSettings'
 import { homepage } from './singletons/homepage'
+import { siteUpdateRequest } from './singletons/siteUpdateRequest'
 import { faqPage, contactsPage, linksPage } from './singletons/pages'
 
 export const SINGLETONS = [
@@ -22,6 +23,7 @@ export const SINGLETONS = [
   'faqPage',
   'contactsPage',
   'linksPage',
+  'siteUpdateRequest',
 ] as const
 
 export const schemaTypes = [
@@ -47,4 +49,5 @@ export const schemaTypes = [
   faqPage,
   contactsPage,
   linksPage,
+  siteUpdateRequest,
 ]

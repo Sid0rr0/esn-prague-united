@@ -6,11 +6,12 @@
     "dev": "sanity dev",
     "deploy": "sanity deploy",
     "typecheck": "tsc --noEmit",
-    "test": "node --test 'migrations/*.test.ts' 'seed/*.test.ts'",
+    "test": "node --test 'migrations/*.test.ts' 'seed/*.test.ts' 'siteUpdate/*.test.ts'",
     "seed": "sanity exec seed/seed.ts --with-user-token"
   },
   "dependencies": {
     "@sanity/icons": "^5.2.2",
+    "@sanity/ui": "^4.2.7",
     "@sanity/vision": "^6.16.0",
     "groq": "^6.16.0",
     "react": "^19.3.0",

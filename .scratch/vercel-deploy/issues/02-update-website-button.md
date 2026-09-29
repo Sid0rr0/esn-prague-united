@@ -6,7 +6,7 @@ See the spec: `.scratch/vercel-deploy/spec.md`. The term is **Site update** in `
 
 **Blocked by:** 01 (Deploy the site on Vercel, with PR previews).
 
-**Status:** ready-for-agent
+**Status:** done
 
 How it works:
 
@@ -23,6 +23,10 @@ The agent writes the code and docs. The maintainer does the dashboard step from 
 - [ ] Publishing, unpublishing or deleting a document, or saving a draft, does not start a build.
 - [ ] The button stays in "Updating…" for 45 seconds after any editor presses it, and a second press in that time does nothing.
 - [ ] A failed write shows an error toast, not the success one.
-- [ ] `pnpm test` covers building the request document and the cooldown check, including the edges (never pressed, just under and just over 45 seconds).
-- [ ] The Studio README says published content goes live when someone presses Update website, and otherwise at the next morning's rebuild.
-- [ ] The runbook documents the webhook's triggers, filter and target, but not the hook URL itself.
+- [x] `pnpm test` covers building the request document and the cooldown check, including the edges (never pressed, just under and just over 45 seconds).
+- [x] The Studio README says published content goes live when someone presses Update website, and otherwise at the next morning's rebuild.
+- [x] The runbook documents the webhook's triggers, filter and target, but not the hook URL itself.
+
+## Comments
+
+Agent part done: `siteUpdate/` module with tests, hidden `siteUpdateRequest` singleton, navbar button, README and runbook (section 5). Typecheck, `pnpm test` and `sanity build` pass. Still for the maintainer: create the Sanity webhook from the runbook, then check the first three boxes by hand (button starts a production build; publish/unpublish/delete/draft do not; 45-second shared cooldown) and the error-toast box by simulating a failed write.

@@ -44,6 +44,9 @@ importers:
       '@sanity/icons':
         specifier: ^5.2.2
         version: 5.2.2(react@19.3.0)
+      '@sanity/ui':
+        specifier: ^4.2.7
+        version: 4.2.7(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(styled-components@6.5.3(react-dom@19.3.0(react@19.3.0))(react@19.3.0))
       '@sanity/vision':
         specifier: ^6.16.0
         version: 6.16.0(30d2b0027fe7f33822dc959727847835)

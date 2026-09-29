@@ -18,7 +18,7 @@ Workflow: pick a ticket whose blockers are done, run `/implement` on it, then ma
 
 1. brand-compliance 03 (unblocked, already started)
 2. event-partners 01, then 02
-3. vercel-deploy 02 and 03 in either order (01 done; its dashboard steps are with the maintainer)
+3. vercel-deploy 03 (01 and 02 done; their dashboard steps are with the maintainer)
 
 ## Fully done
 

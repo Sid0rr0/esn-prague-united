@@ -1,6 +1,7 @@
 import { defineConfig } from 'sanity'
 import { structureTool, type StructureResolver } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
+import { UpdateWebsiteNavbar } from './siteUpdate/UpdateWebsiteNavbar'
 import { schemaTypes, SINGLETONS } from './schemaTypes'
 
 /**
@@ -53,6 +54,7 @@ export default defineConfig({
     // hide singletons and sections from the global "+ Create" menu
     templates: (templates) => templates.filter(({ schemaType }) => !noCreate.has(schemaType)),
   },
+  studio: { components: { navbar: UpdateWebsiteNavbar } },
   document: {
     // no duplicate/delete on singletons
     actions: (actions, { schemaType }) =>

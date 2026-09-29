@@ -34,7 +34,24 @@ Under **Settings → Git → Deploy Hooks**, create a hook named `site-update` o
 
 Keep the URL private and **never commit it**. Anyone holding it can trigger builds. It is used later in two places only: Sanity's webhook settings (Update website button) and the `VERCEL_DEPLOY_HOOK_URL` GitHub repository secret (daily rebuild).
 
-## 5. Check it works
+## 5. Sanity webhook (Update website button)
+
+The **Update website** button in the Studio writes the `siteUpdateRequest` document. A Sanity webhook on that type calls the Deploy Hook, so pressing the button starts a Site update. In [sanity.io/manage](https://www.sanity.io/manage) → project → **API → Webhooks**, create:
+
+| Setting     | Value                                                 |
+| ----------- | ----------------------------------------------------- |
+| Dataset     | `production`                                          |
+| Trigger on  | Create and Update (not Delete)                        |
+| Filter      | `_type == "siteUpdateRequest"`                        |
+| URL         | the Deploy Hook URL from step 4 (paste it here only)  |
+| HTTP method | `POST`                                                |
+| Payload     | none: leave the projection empty and disable the body |
+
+Do not add a webhook on publish: publishing must not start a build. Drafts never match, because the request is a published document.
+
+## 6. Check it works
 
 - Merge to `main`: the change appears on the `*.vercel.app` production address.
 - Open a pull request: it gets a preview URL that renders the site with Sanity content.
+- Press **Update website** in the Studio: a production build starts within moments and the button shows "Updating…" for 45 seconds.
+- Publish, unpublish, delete or save a draft: no build starts.
