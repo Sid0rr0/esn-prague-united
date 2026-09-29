@@ -19,7 +19,7 @@ const section = await fetchContent<SectionDetail | null>(SECTION_QUERY, {
 })
 if (!section) return new Response(null, { status: 404 })
 
-const { colour, textClass } = sectionColours(section.slug)
+const { colour, textClass, universityClass } = sectionColours(section.slug)
 const hasAbout = Boolean(section.about || section.buddyProgramUrl)
 const hasOffice = Boolean(section.office || section.email || section.mapUrl)
 const hasSocials = Object.values(section.socials ?? {}).some(Boolean)
@@ -41,10 +41,16 @@ const hasSocials = Object.values(section.socials ?? {}).some(Boolean)
     {/* No Section logo until we find a way to show it that follows the brand rules (docs/agents/brand-rules.md). */}
     <div class="flex flex-col">
       <h1 class="font-heading text-[34px] leading-none font-bold lg:text-[56px]">{section.name}</h1>
-      {section.university && <p class="text-sm font-bold lg:text-base">{section.university}</p>}
+      {section.university && (
+        <p data-section-university class={universityClass}>
+          {section.university}
+        </p>
+      )}
     </div>
     {section.tagline && (
-      <p class="max-w-150 text-[17px] leading-normal font-bold lg:text-xl">{section.tagline}</p>
+      <p data-section-tagline class="max-w-150 text-[19px] leading-normal font-bold lg:text-xl">
+        {section.tagline}
+      </p>
     )}
   </section>
 

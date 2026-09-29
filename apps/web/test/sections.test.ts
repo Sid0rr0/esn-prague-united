@@ -107,6 +107,33 @@ describe('Section page', () => {
     expect(html).toMatch(/href="https:\/\/wa\.example\/ctu"[^>]*>\s*WhatsApp/)
   })
 
+  it.each([
+    ['cu', 'text-white', 'text-white'],
+    ['ctu', 'text-white', 'text-on-blue-muted'],
+    ['vse', 'text-ink', 'text-ink font-light'],
+    ['czu', 'text-ink', 'text-ink font-light'],
+    ['uct', 'text-ink', 'text-ink font-light'],
+  ])('sets %s band text to %s and its university line to %s', async (slug, band, university) => {
+    const html = await renderSection(section(slug, 1))
+
+    const bandTag = html.match(/<section[^>]*style="background: [^"]*"[^>]*>/)?.[0] ?? ''
+    expect(bandTag).toContain(band)
+    const universityTag = html.match(/<p[^>]*data-section-university[^>]*>/)?.[0] ?? ''
+    for (const cls of university.split(' ')) expect(universityTag).toContain(cls)
+  })
+
+  it('keeps small grey text off the magenta band: bold, 19px or bigger', async () => {
+    const html = await renderSection(section('cu', 1))
+
+    const universityTag = html.match(/<p[^>]*data-section-university[^>]*>/)?.[0] ?? ''
+    const taglineTag = html.match(/<p[^>]*data-section-tagline[^>]*>/)?.[0] ?? ''
+    for (const tag of [universityTag, taglineTag]) {
+      expect(tag).toContain('font-bold')
+      expect(tag).toContain('text-[19px]')
+      expect(tag).not.toMatch(/text-muted/)
+    }
+  })
+
   it('shows socials under a Follow us heading, above the office rather than by the footer', async () => {
     const ctu = section('ctu', 2, {
       office: localised('Masarykova kolej'),
