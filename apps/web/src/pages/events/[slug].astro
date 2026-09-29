@@ -42,7 +42,7 @@ const hasTicketBlock =
       fallbackClass="bg-esn-blue-shade"
     />
     <div class="flex flex-col justify-center gap-3.5 px-5 pt-7 pb-8 lg:gap-5 lg:px-14 lg:py-16">
-      <h1 class="font-heading text-[52px] leading-[.9] font-bold lg:text-[88px]">{event.title}</h1>
+      <h1 class="font-heading text-[44px] leading-[.9] font-bold lg:text-[72px]">{event.title}</h1>
       <dl class="flex flex-col gap-1 text-base lg:text-lg">
         <div class="flex gap-2">
           <dt class="sr-only">Date</dt>
@@ -76,10 +76,7 @@ const hasTicketBlock =
     ]}
   >
     <div class="flex flex-col gap-10 lg:gap-14">
-      <RichText
-        value={event.description}
-        class="max-w-170 text-base leading-relaxed lg:text-[19px]"
-      />
+      <RichText value={event.description} class="text-base leading-relaxed lg:text-[19px]" />
 
       {programme.length > 0 && (
         <section class="flex flex-col gap-4">
@@ -103,7 +100,7 @@ const hasTicketBlock =
       {event.dressCode && (
         <section class="flex flex-col gap-4">
           <SectionHeading colour="var(--color-esn-magenta)">Dress code</SectionHeading>
-          <RichText value={event.dressCode} class="max-w-170 text-base leading-relaxed" />
+          <RichText value={event.dressCode} class="text-base leading-relaxed" />
         </section>
       )}
 
@@ -115,7 +112,7 @@ const hasTicketBlock =
             {venue.address && <span>{venue.address}</span>}
           </address>
           {venue.transport && (
-            <p class="max-w-170 text-base leading-relaxed whitespace-pre-line">{venue.transport}</p>
+            <p class="text-base leading-relaxed whitespace-pre-line">{venue.transport}</p>
           )}
           {venue.mapUrl && (
             <a

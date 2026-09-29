@@ -60,7 +60,7 @@ const hasSocials = Object.values(section.socials ?? {}).some(Boolean)
   {hasAbout && (
     <section class="flex flex-col gap-3.5 px-5 py-7 lg:px-14 lg:py-14">
       <h2 class="font-heading text-[26px] leading-none font-bold lg:text-[36px]">About us</h2>
-      <RichText value={section.about} class="max-w-170 text-base leading-relaxed lg:text-[19px]" />
+      <RichText value={section.about} class="text-base leading-relaxed lg:text-[19px]" />
       {section.buddyProgramUrl && (
         <a
           href={section.buddyProgramUrl}
@@ -77,7 +77,7 @@ const hasSocials = Object.values(section.socials ?? {}).some(Boolean)
     <section class="flex flex-col gap-3 bg-surface px-5 py-6 lg:px-14 lg:py-10">
       <h2 class="font-heading text-[22px] leading-none font-bold lg:text-[30px]">Office</h2>
       {section.office && (
-        <p class="max-w-170 text-base leading-relaxed whitespace-pre-line">{section.office}</p>
+        <p class="text-base leading-relaxed whitespace-pre-line">{section.office}</p>
       )}
       {section.email && (
         <a
