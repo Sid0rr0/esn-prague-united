@@ -7,8 +7,8 @@
 
 **Blocked by:** None (can start immediately).
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Seam test: an Event that hasn't ended with only ticket info shows the ticket sidebar and no ticket action.
-- [ ] Seam test: the extra room at the bottom is there while the sticky bar shows, and missing when it doesn't.
-- [ ] The new tests pass against today's code; no production code changes.
+- [x] Seam test: an Event that hasn't ended with only ticket info shows the ticket sidebar and no ticket action.
+- [x] Seam test: the extra room at the bottom is there while the sticky bar shows, and missing when it doesn't.
+- [x] The new tests pass against today's code; no production code changes.
