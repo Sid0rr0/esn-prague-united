@@ -1,0 +1,65 @@
+---
+import InstagramPlaceholder from './InstagramPlaceholder.astro'
+import { uiString } from '../lib/ui-strings'
+
+interface Props {
+  /** Normalised post links in the editor's order; at least one. */
+  urls: string[]
+}
+
+const { urls } = Astro.props
+const [singleUrl] = urls
+---
+
+{urls.length === 1 ? (
+  <div class="mx-auto w-full max-w-90">
+    <InstagramPlaceholder url={singleUrl} />
+  </div>
+) : (
+  <div data-carousel class="flex min-w-0 flex-col gap-3.5">
+    <ul
+      data-carousel-track
+      class="flex snap-x snap-mandatory items-start gap-0.5 overflow-x-auto overscroll-x-contain"
+    >
+      {urls.map((url) => (
+        <li class="w-[85%] max-w-90 shrink-0 snap-start">
+          <InstagramPlaceholder url={url} />
+        </li>
+      ))}
+    </ul>
+    <div class="hidden gap-0.5 self-end lg:flex">
+      <button
+        type="button"
+        data-carousel-prev
+        aria-label={uiString('previousPost')}
+        class="flex size-12 items-center justify-center border-2 border-esn-blue text-xl text-esn-blue hover:bg-blue-50"
+      >
+        ←
+      </button>
+      <button
+        type="button"
+        data-carousel-next
+        aria-label={uiString('nextPost')}
+        class="flex size-12 items-center justify-center border-2 border-esn-blue text-xl text-esn-blue hover:bg-blue-50"
+      >
+        →
+      </button>
+    </div>
+  </div>
+)}
+
+<script>
+  // Prev/next scroll the row by one card; swiping and scroll-snap need no script.
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>('[data-carousel-track]')!
+    const step = (direction: number) => {
+      const card = track.firstElementChild as HTMLElement | null
+      track.scrollBy({
+        left: direction * (card?.offsetWidth ?? track.clientWidth),
+        behavior: 'smooth',
+      })
+    }
+    carousel.querySelector('[data-carousel-prev]')?.addEventListener('click', () => step(-1))
+    carousel.querySelector('[data-carousel-next]')?.addEventListener('click', () => step(1))
+  })
+</script>

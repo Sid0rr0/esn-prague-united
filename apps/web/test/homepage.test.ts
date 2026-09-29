@@ -1,7 +1,17 @@
 import { describe, expect, it } from 'vitest'
 import Home from '../src/pages/index.astro'
 import { renderPage } from './seam'
-import { album, allSections, event, homepage, localised, richText, siteSettings } from './fixtures'
+import {
+  album,
+  allSections,
+  event,
+  homepage,
+  instagramPost,
+  instagramPostRef,
+  localised,
+  richText,
+  siteSettings,
+} from './fixtures'
 
 const NOW = '2026-10-01T10:00:00Z'
 const FUTURE = '2026-11-26T17:00:00Z'
@@ -314,5 +324,114 @@ describe('homepage Latest albums block', () => {
     })
 
     expect(html).not.toContain('data-latest-albums')
+  })
+})
+
+describe('homepage Updates block', () => {
+  const updatesOf = (html: string) =>
+    html.match(/<section[^>]*data-updates[\s\S]*?<\/section>/)?.[0] ?? ''
+
+  const posts = [
+    instagramPost('a', 'https://www.instagram.com/p/AAA111/'),
+    instagramPost('b', 'https://instagram.com/reel/BBB222?igsh=tracking'),
+    instagramPost('c', 'https://www.instagram.com/p/CCC333'),
+  ]
+
+  const withUpdates = (updates: Record<string, unknown> | undefined, ...others: Doc[]) =>
+    renderPage(Home, {
+      now: NOW,
+      documents: [siteSettings(), homepage(updates ? { updates } : {}), ...posts, ...others],
+    })
+
+  const picked = (...ids: string[]) => ({ posts: ids.map(instagramPostRef) })
+
+  it('is hidden when no Instagram posts are picked', async () => {
+    const html = await withUpdates(undefined)
+
+    expect(html).not.toContain('data-updates')
+    expect(await withUpdates({ heading: localised('Updates'), posts: [] })).not.toContain(
+      'data-updates',
+    )
+  })
+
+  it('comes after upcoming events and before About, with posts in the editor’s order', async () => {
+    const html = await renderPage(Home, {
+      now: NOW,
+      documents: [
+        siteSettings(),
+        homepage({
+          updates: picked('c', 'a', 'b'),
+          about: { heading: localised('About ESN Prague United') },
+        }),
+        ...posts,
+        event('next', { title: localised('Kutná Hora trip'), startsAt: FUTURE }),
+      ],
+    })
+
+    const upcomingAt = html.indexOf('data-upcoming')
+    const updatesAt = html.indexOf('data-updates')
+    const aboutAt = html.indexOf('About ESN Prague United')
+    expect(upcomingAt).toBeGreaterThan(-1)
+    expect(updatesAt).toBeGreaterThan(upcomingAt)
+    expect(aboutAt).toBeGreaterThan(updatesAt)
+    expect(updatesOf(html).match(/data-instagram-post="[^"]*"/g)).toEqual([
+      'data-instagram-post="https://www.instagram.com/p/CCC333/"',
+      'data-instagram-post="https://www.instagram.com/p/AAA111/"',
+      'data-instagram-post="https://www.instagram.com/reel/BBB222/"',
+    ])
+  })
+
+  it('shows the editor’s heading, and Updates when none is set', async () => {
+    const renamed = updatesOf(
+      await withUpdates({ heading: localised('Czech Ball news'), ...picked('a') }),
+    )
+    const unnamed = updatesOf(await withUpdates(picked('a')))
+
+    expect(renamed).toMatch(/<h2[^>]*>\s*Czech Ball news\s*<\/h2>/)
+    expect(unnamed).toMatch(/<h2[^>]*>\s*Updates\s*<\/h2>/)
+  })
+
+  it('shows one post without arrows, and two or more with arrows', async () => {
+    const one = updatesOf(await withUpdates(picked('a')))
+    const two = updatesOf(await withUpdates(picked('a', 'b')))
+
+    expect(one).toContain('data-instagram-post=')
+    expect(one).not.toContain('data-carousel-prev')
+    expect(one).not.toContain('data-carousel-next')
+    expect(two).toMatch(/<button[^>]*data-carousel-prev[^>]*aria-label="Previous post"/)
+    expect(two).toMatch(/<button[^>]*data-carousel-next[^>]*aria-label="Next post"/)
+  })
+
+  it('links each card to the normalised post link in a new tab, with no Instagram script or iframe', async () => {
+    const html = await withUpdates(picked('b'))
+    const block = updatesOf(html)
+
+    expect(block).toMatch(
+      /<a[^>]*href="https:\/\/www\.instagram\.com\/reel\/BBB222\/"[^>]*target="_blank"[^>]*>\s*View on Instagram/,
+    )
+    expect(block).not.toContain('igsh')
+    expect(html).not.toMatch(/instagram\.com\/embed|<iframe/)
+  })
+
+  it('shows a post once when two picked Instagram posts link to it', async () => {
+    const copy = instagramPost('copy', 'https://instagram.com/p/AAA111?igsh=other')
+    const block = updatesOf(await withUpdates(picked('a', 'copy', 'c'), copy))
+
+    expect(block.match(/data-instagram-post="[^"]*"/g)).toEqual([
+      'data-instagram-post="https://www.instagram.com/p/AAA111/"',
+      'data-instagram-post="https://www.instagram.com/p/CCC333/"',
+    ])
+  })
+
+  it('skips a broken reference or an invalid link, and is hidden when none remain', async () => {
+    const profile = instagramPost('profile', 'https://www.instagram.com/esnprague/')
+    const mixed = updatesOf(await withUpdates(picked('a', 'deleted', 'profile', 'c'), profile))
+    const noneLeft = await withUpdates(picked('deleted', 'profile'), profile)
+
+    expect(mixed.match(/data-instagram-post="[^"]*"/g)).toEqual([
+      'data-instagram-post="https://www.instagram.com/p/AAA111/"',
+      'data-instagram-post="https://www.instagram.com/p/CCC333/"',
+    ])
+    expect(noneLeft).not.toContain('data-updates')
   })
 })

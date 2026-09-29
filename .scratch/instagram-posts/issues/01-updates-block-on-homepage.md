@@ -16,14 +16,18 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Plain test: the link rules accept post and reel links in their `www.`, trailing-slash and `?igsh=` variants, and all normalise to the same canonical form.
-- [ ] Plain test: the link rules reject profile, story, highlight and non-Instagram links with the documented message.
-- [ ] Seam test: a homepage with no posts picked renders no Updates block.
-- [ ] Seam test: the Updates block comes after upcoming events and before About, with posts in the editor's order.
-- [ ] Seam test: the editor's heading is shown, and "Updates" is shown when none is set.
-- [ ] Seam test: one post renders without arrows, and two or more render with arrows.
-- [ ] Seam test: each card links to the normalised post link in a new tab, and the static HTML contains no Instagram script or iframe.
-- [ ] Seam test: a broken reference or invalid link is skipped, and the block is hidden if none remain.
+- [x] Plain test: the link rules accept post and reel links in their `www.`, trailing-slash and `?igsh=` variants, and all normalise to the same canonical form.
+- [x] Plain test: the link rules reject profile, story, highlight and non-Instagram links with the documented message.
+- [x] Seam test: a homepage with no posts picked renders no Updates block.
+- [x] Seam test: the Updates block comes after upcoming events and before About, with posts in the editor's order.
+- [x] Seam test: the editor's heading is shown, and "Updates" is shown when none is set.
+- [x] Seam test: one post renders without arrows, and two or more render with arrows.
+- [x] Seam test: each card links to the normalised post link in a new tab, and the static HTML contains no Instagram script or iframe.
+- [x] Seam test: a broken reference or invalid link is skipped, and the block is hidden if none remain.
 - [ ] Manual check in the Studio: an Instagram post can be created from the sidebar and inline, a duplicate in the list is flagged, a 9th post is refused, and a referenced post can't be deleted.
+
+## Comments
+
+Done: `instagramPost` document, `instagramPostList()` shared list shape, Homepage `updates` object, "Instagram posts" sidebar list and seed posts in the Studio. On the site: link rules in `apps/web/src/lib/instagram-link.ts` (the Studio imports it by relative path; `sanity build` bundles it), `InstagramCarousel.astro` + `InstagramPlaceholder.astro`, UI strings in `ui-strings.ts`. Repeats of the same post (after normalising) are shown once. The prev/next arrows use a small client script of their own, separate from the consent module in ticket 04. Typecheck, `pnpm test` and both builds pass. Still for the maintainer: the manual Studio check (create from sidebar and inline, duplicate flagged, 9th refused, referenced post can't be deleted). An existing Homepage document won't get the "Updates" initial value; the site falls back to "Updates" when the heading is empty.

@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { HomeIcon } from '@sanity/icons/Home'
+import { INSTAGRAM_POST_LIST_MAX, instagramPostList } from '../objects/instagramPostList'
 import { localisedRichText, localisedString, localisedText } from '../objects/locale'
 
 export const homepage = defineType({
@@ -34,6 +35,22 @@ export const homepage = defineType({
       group: 'hero',
       description:
         'Takes over the top of the homepage (e.g. the Czech Ball during its ticket sales). Clear it to return the top section to ESN Prague United content.',
+    }),
+    defineField({
+      name: 'updates',
+      title: 'Updates',
+      type: 'object',
+      group: 'content',
+      description:
+        'Instagram posts in a carousel after the upcoming events. Hidden when no posts are picked.',
+      fields: [
+        localisedString({ name: 'heading', initialValue: 'Updates' }),
+        instagramPostList({
+          name: 'posts',
+          title: 'Instagram posts',
+          description: `Drag to reorder: the first one is shown first. Max ${INSTAGRAM_POST_LIST_MAX}.`,
+        }),
+      ],
     }),
     defineField({
       name: 'about',

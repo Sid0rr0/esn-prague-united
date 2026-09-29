@@ -33,6 +33,21 @@ const eveningInDays = (now: Date, days: number) => {
   return date.toISOString()
 }
 
+/** Sample Instagram posts, picked for the homepage's Updates block in this order. */
+export const instagramPosts = (): Singleton[] =>
+  [
+    ['welcome', 'Welcome Party – announcement', 'https://www.instagram.com/p/C0SampleWelcome/'],
+    ['trip', 'Orientation Week Trip – recap reel', 'https://www.instagram.com/reel/C0SampleTrip/'],
+    ['buddy', 'Buddy programme – sign-ups open', 'https://www.instagram.com/p/C0SampleBuddy/'],
+  ].map(([id, title, link]) => ({
+    _id: `instagramPost-${id}`,
+    _type: 'instagramPost',
+    title,
+    link,
+  }))
+
+const reference = (_ref: string) => ({ _key: _ref, _type: 'reference', _ref })
+
 export const singletons = (): Singleton[] => [
   {
     _id: 'siteSettings',
@@ -68,6 +83,10 @@ export const singletons = (): Singleton[] => [
         { _key: 'sections', value: '5', label: en('sections') },
         { _key: 'universities', value: '5', label: en('universities') },
       ],
+    },
+    updates: {
+      heading: en('Updates'),
+      posts: instagramPosts().map((post) => reference(post._id)),
     },
     showSections: true,
     showGallery: true,

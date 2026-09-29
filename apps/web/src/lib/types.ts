@@ -184,6 +184,8 @@ export interface Homepage {
     }
     about?: { heading?: string; text?: RichText; stats?: Stat[] | null } | null
     quickLinks?: LinkItem[] | null
+    /** The picked Instagram posts' links as stored; see instagramPostUrls. */
+    updates?: { heading?: string; links?: (string | null)[] | null } | null
     featuredEvent?: FeaturedEvent | null
     /** Null when the Homepage turns the Sections block off. */
     sections?: SectionSummary[] | null

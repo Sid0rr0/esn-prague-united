@@ -22,6 +22,7 @@ const structure: StructureResolver = (S) =>
       singleton(S, 'homepage', 'Homepage'),
       S.documentTypeListItem('event').title('Events'),
       S.documentTypeListItem('album').title('Photo albums'),
+      S.documentTypeListItem('instagramPost').title('Instagram posts'),
       S.divider(),
       S.listItem()
         .title('ESN sections')

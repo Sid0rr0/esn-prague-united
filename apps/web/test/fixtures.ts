@@ -182,3 +182,18 @@ export const linksPage = (overrides: Record<string, unknown> = {}): Doc => ({
   links: [],
   ...overrides,
 })
+
+/** An Instagram post document: the Studio-only title and the link the editor pasted. */
+export const instagramPost = (id: string, link: string): Doc => ({
+  _id: `instagram-${id}`,
+  _type: 'instagramPost',
+  title: `Post ${id}`,
+  link,
+})
+
+/** A reference to an Instagram post, as a picked list stores it. */
+export const instagramPostRef = (id: string) => ({
+  _key: id,
+  _type: 'reference',
+  _ref: `instagram-${id}`,
+})

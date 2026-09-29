@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
-import { events, sections, singletons } from './content.ts'
+import { events, instagramPosts, sections, singletons } from './content.ts'
+import { checkInstagramLink } from '../../web/src/lib/instagram-link.ts'
 import { localisedFields } from '../migrations/localise.ts'
 
 const NOW = new Date('2026-10-01T10:00:00Z')
@@ -46,5 +47,18 @@ describe('seed content', () => {
       startTimes.map((startsAt) => startsAt > NOW),
       [true, false],
     )
+  })
+
+  it('picks every sample Instagram post for the homepage, each with a valid link', () => {
+    const homepage = singletons().find((doc) => doc._id === 'homepage')
+    const picked = (homepage?.updates as { posts: { _ref: string }[] }).posts
+
+    assert.deepEqual(
+      picked.map((ref) => ref._ref),
+      instagramPosts().map((post) => post._id),
+    )
+    for (const post of instagramPosts()) {
+      assert.equal(checkInstagramLink(String(post.link)).ok, true, String(post.link))
+    }
   })
 })

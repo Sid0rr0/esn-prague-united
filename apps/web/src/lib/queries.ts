@@ -38,6 +38,9 @@ const HAS_ENDED = `dateTime(coalesce(endsAt, startsAt)) < dateTime(now())`
 /** What ticketDisplay in tickets.ts needs to decide what shows where tickets would be. */
 const TICKET_FIELDS = `ticketUrl, ticketNote, priceTiers[]{_key, label, amount}, "hasEnded": ${HAS_ENDED}`
 
+/** A picked Instagram post list as just its links, in order; a broken reference is null. */
+const INSTAGRAM_POST_LINKS = `[]->link`
+
 // featuredEvent is only what an editor picked, so the hero can take it over. The upcoming
 // list never repeats it, and there is no next-event fallback when nothing is picked.
 export const HOMEPAGE_QUERY = groq`{
@@ -47,6 +50,7 @@ export const HOMEPAGE_QUERY = groq`{
     "latestAlbums": select(
       showGallery != false => *[_type == "album"] | order(date desc)[0...${HOMEPAGE_LIST_MAX}]${ALBUM_CARD}
     ),
+    "updates": updates{heading, "links": posts${INSTAGRAM_POST_LINKS}},
     "quickLinks": highlightedLinks[${visibleUntilFilter('visibleUntil')}][0...${HOMEPAGE_LIST_MAX}]{_key, label, url},
     "featuredEvent": featuredEvent->{
       title, "slug": slug.current, startsAt, summary, heroImage, ${TICKET_FIELDS}

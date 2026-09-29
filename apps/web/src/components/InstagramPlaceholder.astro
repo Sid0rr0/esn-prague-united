@@ -1,0 +1,28 @@
+---
+import { uiString } from '../lib/ui-strings'
+
+interface Props {
+  /** The normalised post link (see instagram-link.ts). */
+  url: string
+}
+
+const { url } = Astro.props
+---
+
+<!-- Server-rendered stand-in for an Instagram post: no Instagram script or iframe until the
+     visitor consents. data-instagram-post holds the link the embed will be built from. -->
+<article
+  data-instagram-post={url}
+  class="flex aspect-4/5 w-full flex-col justify-between gap-4 bg-esn-blue p-5 text-white lg:p-6"
+>
+  <p class="font-heading text-lg font-bold text-on-blue-label">{uiString('instagramPostLabel')}</p>
+  <p class="text-base leading-normal">{uiString('instagramPlaceholderText')}</p>
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="flex h-12 items-center justify-center bg-white px-5 font-black text-esn-blue hover:bg-blue-50"
+  >
+    {uiString('viewOnInstagram')}
+  </a>
+</article>

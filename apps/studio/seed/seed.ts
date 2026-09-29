@@ -3,11 +3,11 @@
  *
  *   pnpm --filter esn-prague-studio seed
  *
- * Only creates what's missing: singletons by their fixed ID, Sections and Events by their
- * web address. Existing content, including anything an editor changed, is never overwritten.
+ * Only creates what's missing: singletons and Instagram posts by their fixed ID, Sections
+ * and Events by their web address. Existing content, including anything an editor changed, is never overwritten.
  */
 import { getCliClient } from 'sanity/cli'
-import { events, sections, singletons, type SluggedDoc } from './content.ts'
+import { events, instagramPosts, sections, singletons, type SluggedDoc } from './content.ts'
 
 const client = getCliClient({ apiVersion: '2025-01-01', perspective: 'raw' })
 
@@ -27,10 +27,16 @@ async function run() {
   const newDocs = await missingBySlug([...sections(), ...events(new Date())])
   const transaction = newDocs.reduce(
     (tx, doc) => tx.create(doc),
-    singletons().reduce((tx, doc) => tx.createIfNotExists(doc), client.transaction()),
+    // Instagram posts go first: the homepage references them.
+    [...instagramPosts(), ...singletons()].reduce(
+      (tx, doc) => tx.createIfNotExists(doc),
+      client.transaction(),
+    ),
   )
   await transaction.commit()
-  console.info(`Seeded ${newDocs.length} new Sections and Events; created missing singletons only.`)
+  console.info(
+    `Seeded ${newDocs.length} new Sections and Events; created missing singletons and Instagram posts only.`,
+  )
 }
 
 run().catch((error: unknown) => {

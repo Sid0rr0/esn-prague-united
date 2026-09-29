@@ -12,6 +12,7 @@ import { localeRichText, localeString, localeText } from './objects/locale'
 import { section } from './documents/section'
 import { event } from './documents/event'
 import { album } from './documents/album'
+import { instagramPost } from './documents/instagramPost'
 import { siteSettings } from './singletons/siteSettings'
 import { homepage } from './singletons/homepage'
 import { siteUpdateRequest } from './singletons/siteUpdateRequest'
@@ -43,6 +44,7 @@ export const schemaTypes = [
   section,
   event,
   album,
+  instagramPost,
   // singletons (one document each)
   siteSettings,
   homepage,
