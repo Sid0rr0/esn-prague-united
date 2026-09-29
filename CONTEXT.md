@@ -36,6 +36,10 @@ _Avoid_: Highlighted event, main event
 An Event is upcoming until it has ended, and past from then on. An Event has ended once its end time has passed, or its start time when it has no end time. Outside the homepage hero, the Featured event is an Upcoming event like any other.
 _Avoid_: Finished event, old event, archived event
 
+**Related event**:
+Another Event an editor picks to show on an Event's page (e.g. last year's Czech Ball on this year's). An Event has at most 3 Related events, listed in the order the editor picked them, and can't be its own Related event. The link is one-way: picking B on A's page doesn't show A on B's page. Related events are shown whether they're upcoming or past, and an Event with none picked shows no Related events. Deleting an Event quietly removes it from other Events' Related events.
+_Avoid_: Similar event, recommended event, "More events"
+
 **Partner**:
 An outside organisation credited on an Event's page for supporting it, whether with money, a venue, drinks or media coverage. A Partner is known once and can support many Events, at a different level each time. Partners appear only on Event pages; ESN Prague United has no site-wide partner list. A Partner's name is its brand and is never translated. An Event keeps crediting its Partners after it has ended.
 _Avoid_: Sponsor, supporter
