@@ -6,6 +6,8 @@ export const imageWithAlt = defineType({
   name: 'imageWithAlt',
   title: 'Image',
   type: 'image',
+  description:
+    'The ESN Visual Identity Manual forbids photos showing drunkenness, and photos with alcohol as the main subject (pp.27, 29).',
   options: { hotspot: true },
   fields: [
     localisedString({

@@ -8,6 +8,10 @@ Issues are tracked as local markdown files under `.scratch/<feature-slug>/`. See
 
 Single-context layout: `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
 
+## Brand rules
+
+The site follows the ESN Visual Identity Manual. Before touching logos, colours, images or copy, read `docs/agents/brand-rules.md`.
+
 ## Git Commit Convention
 
 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#commit-message-with-scope) with a **scope** naming the workspace touched:

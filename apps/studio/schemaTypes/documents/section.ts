@@ -46,7 +46,14 @@ export const section = defineType({
       description: 'e.g. Czech Technical University in Prague',
       group: 'main',
     }),
-    defineField({ name: 'logo', type: 'image', group: 'main' }),
+    defineField({
+      name: 'logo',
+      title: 'Section logo',
+      type: 'image',
+      description:
+        'Upload the official Section logotype exactly as ESN provided it: SVG, or PNG with a transparent background. Do not crop, recolour or edit it.',
+      group: 'main',
+    }),
     defineField({
       name: 'coverImage',
       title: 'Cover photo',
