@@ -37,6 +37,15 @@ export const homepage = defineType({
         'Takes over the top of the homepage (e.g. the Czech Ball during its ticket sales). Clear it to return the top section to ESN Prague United content.',
     }),
     defineField({
+      name: 'showUpdates',
+      title: 'Show the Updates block',
+      type: 'boolean',
+      group: 'content',
+      initialValue: true,
+      description:
+        'Turn off to hide the Instagram posts, and the Instagram consent banner with them.',
+    }),
+    defineField({
       name: 'updates',
       title: 'Updates',
       type: 'object',
