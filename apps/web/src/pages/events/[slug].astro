@@ -9,7 +9,7 @@ import StickyTicketBar from '../../components/StickyTicketBar.astro'
 import TicketSidebar from '../../components/TicketSidebar.astro'
 import { readEvent, readEventSlugs } from '../../lib/events'
 import { formatLongDate, formatTimeRange } from '../../lib/format'
-import { ticketDisplay } from '../../lib/tickets'
+import { ticketArea } from '../../lib/ticket-area'
 
 export async function getStaticPaths() {
   const slugs = await readEventSlugs()
@@ -19,15 +19,10 @@ export async function getStaticPaths() {
 const event = await readEvent(Astro.params.slug)
 if (!event) return new Response(null, { status: 404 })
 
-const tickets = ticketDisplay(event)
-const tiers = event.priceTiers ?? []
+const { ticketAction, aside, hasStickyBar } = ticketArea(event)
 const programme = event.programme ?? []
 const faq = event.faq ?? []
 const venue = event.venue
-// Once ended, the sidebar's place holds only the Album link, or nothing without an Album.
-const endedAlbum = event.hasEnded ? event.album : null
-const hasTicketBlock =
-  !event.hasEnded && (tickets.kind !== 'none' || tiers.length > 0 || Boolean(event.ticketInfo))
 ---
 
 <Layout title={event.title} seo={event.seo}>
@@ -71,7 +66,7 @@ const hasTicketBlock =
   <div
     class:list={[
       'grid gap-8 px-5 py-7 lg:grid-cols-[1fr_360px] lg:gap-14 lg:p-14',
-      tickets.kind !== 'none' && 'pb-28 lg:pb-14',
+      hasStickyBar && 'pb-28 lg:pb-14',
     ]}
   >
     <div class="flex flex-col gap-10 lg:gap-14">
@@ -133,23 +128,23 @@ const hasTicketBlock =
       )}
     </div>
 
-    {endedAlbum && (
+    {aside.kind === 'album' && (
       <aside aria-label="Photos" class="flex flex-col gap-3 bg-surface p-5 lg:self-start lg:p-7">
         <p class="text-base">This event has ended.</p>
         <a
-          href={`/gallery/${endedAlbum.slug}`}
+          href={`/gallery/${aside.albumSlug}`}
           class="flex h-14 items-center justify-center bg-esn-blue px-6 font-black text-white hover:brightness-92"
         >
           See the photos
         </a>
       </aside>
     )}
-    {hasTicketBlock && (
+    {aside.kind === 'tickets' && (
       <div class="lg:self-start">
-        <TicketSidebar tickets={tickets} tiers={tiers} info={event.ticketInfo} />
+        <TicketSidebar aside={aside} />
       </div>
     )}
   </div>
 
-  <StickyTicketBar tickets={tickets} />
+  {hasStickyBar && <StickyTicketBar ticketAction={ticketAction} />}
 </Layout>

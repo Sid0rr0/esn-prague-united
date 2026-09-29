@@ -1,35 +1,35 @@
 ---
 import { externalLinkProps } from '../lib/external-link'
 import { formatPrice } from '../lib/format'
-import type { TicketDisplay } from '../lib/tickets'
+import type { TicketAction } from '../lib/ticket-area'
 
 interface Props {
-  tickets: TicketDisplay
+  ticketAction: TicketAction
 }
-const { tickets } = Astro.props
+const { ticketAction } = Astro.props
 ---
 
-{tickets.kind === 'buy' && (
+{ticketAction.kind === 'buy' && (
   <div class="flex font-black lg:self-start">
     <a
-      href={tickets.url}
-      {...externalLinkProps(tickets.url)}
+      href={ticketAction.url}
+      {...externalLinkProps(ticketAction.url)}
       class="flex h-14 flex-1 items-center justify-center bg-esn-magenta px-7.5 text-[17px] text-white hover:brightness-92 lg:h-14.5 lg:flex-none"
     >
       Buy ticket
     </a>
-    {tickets.headline && (
+    {ticketAction.headline && (
       <span class="flex h-14 items-center bg-white px-4.5 text-base text-esn-blue lg:h-14.5 lg:px-6 lg:text-[17px]">
-        {formatPrice(tickets.headline.amount)}
+        {formatPrice(ticketAction.headline.amount)}
       </span>
     )}
   </div>
 )}
-{tickets.kind === 'note' && (
+{ticketAction.kind === 'note' && (
   <p
     data-ticket-note
     class="flex min-h-14 items-center justify-center border-2 border-white px-4 py-3 text-center text-[15px] font-black lg:self-start lg:px-6 lg:text-base"
   >
-    {tickets.note}
+    {ticketAction.note}
   </p>
 )}

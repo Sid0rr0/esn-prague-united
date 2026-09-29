@@ -13,7 +13,7 @@ import { formatKicker, formatShortDate } from '../lib/format'
 import { readHomepage } from '../lib/homepage'
 import { instagramPostUrls } from '../lib/instagram-link'
 import { SITE_NAME } from '../lib/site'
-import { ticketDisplay } from '../lib/tickets'
+import { ticketArea } from '../lib/ticket-area'
 import { uiString } from '../lib/ui-strings'
 
 const home = await readHomepage()
@@ -51,7 +51,7 @@ const updatesUrls = instagramPostUrls(home.updates?.links)
           {featured.summary && (
             <p class="max-w-110 text-base leading-normal lg:text-lg">{featured.summary}</p>
           )}
-          <HeroTicket tickets={ticketDisplay(featured)} />
+          <HeroTicket ticketAction={ticketArea(featured).ticketAction} />
         </>
       ) : (
         <>

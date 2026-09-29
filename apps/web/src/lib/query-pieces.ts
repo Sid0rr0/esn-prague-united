@@ -10,7 +10,7 @@ export const visibleUntilFilter = (field: string) =>
 /** An Event has ended once its end time has passed, or its start time if it has no end time. */
 export const HAS_ENDED = `dateTime(coalesce(endsAt, startsAt)) < dateTime(now())`
 
-/** What ticketDisplay in tickets.ts needs to decide what shows where tickets would be. */
+/** What ticket-area.ts needs to decide an Event's Ticket area, apart from ticket info and the Album. */
 export const TICKET_FIELDS = `ticketUrl, ticketNote, priceTiers[]{_key, label, amount}, "hasEnded": ${HAS_ENDED}`
 
 /** An Album without photos has no photos field, so its count is null without coalesce. */
