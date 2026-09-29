@@ -18,6 +18,10 @@ const section = await fetchContent<SectionDetail | null>(SECTION_QUERY, {
 })
 if (!section) return new Response(null, { status: 404 })
 
+/** The largest box the Section logo is fitted into on desktop, in CSS pixels. */
+const LOGO_WIDTH = 256
+const LOGO_HEIGHT = 64
+
 const { colour, textClass } = sectionColours(section.slug)
 const hasAbout = Boolean(section.about || section.buddyProgramUrl)
 const hasOffice = Boolean(section.office || section.email || section.mapUrl)
@@ -37,20 +41,24 @@ const hasSocials = Object.values(section.socials ?? {}).some(Boolean)
     style={`background: ${colour}`}
     class:list={['flex flex-col gap-2.5 px-5 py-6 lg:gap-4 lg:px-14 lg:py-10', textClass]}
   >
-    <div class="flex items-center gap-3.5 lg:gap-5">
+    {/*
+      The Section logo is full colour, so it sits on a white plate, never on the brand colour.
+      The plate's padding (half the logo's height) is its safe zone (docs/agents/brand-rules.md).
+      The logo keeps its own shape: its height is fixed and its width follows.
+    */}
+    <div data-logo-plate class="self-start bg-white p-6 lg:p-8">
       <Picture
         image={section.logo}
-        width={64}
-        height={64}
-        class="size-16 shrink-0 lg:size-20"
-        fallbackClass="bg-white"
+        width={LOGO_WIDTH}
+        height={LOGO_HEIGHT}
+        fit="contain"
+        class="h-12 max-w-48 lg:h-16 lg:max-w-64"
+        fallbackClass="w-28 bg-white lg:w-36"
       />
-      <div class="flex flex-col">
-        <h1 class="font-heading text-[34px] leading-none font-bold lg:text-[56px]">
-          {section.name}
-        </h1>
-        {section.university && <p class="text-sm font-bold lg:text-base">{section.university}</p>}
-      </div>
+    </div>
+    <div class="flex flex-col">
+      <h1 class="font-heading text-[34px] leading-none font-bold lg:text-[56px]">{section.name}</h1>
+      {section.university && <p class="text-sm font-bold lg:text-base">{section.university}</p>}
     </div>
     {section.tagline && (
       <p class="max-w-150 text-[17px] leading-normal font-bold lg:text-xl">{section.tagline}</p>

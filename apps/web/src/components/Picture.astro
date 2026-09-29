@@ -1,20 +1,34 @@
 ---
-import { imageUrl } from '../lib/image'
+import { imageUrl, type ImageFit } from '../lib/image'
 import type { SanityImage } from '../lib/types'
 
 interface Props {
   image?: SanityImage
   width: number
   height?: number
+  /** crop (default) for photos; contain for logos, which must never be cropped. */
+  fit?: ImageFit
   class?: string
   /** Shown when there's no image, e.g. a tinted block. */
   fallbackClass?: string
   eager?: boolean
 }
 
-const { image, width, height, class: className, fallbackClass, eager = false } = Astro.props
-const src = imageUrl(image, { width, height })
-const srcDouble = imageUrl(image, { width: width * 2, height: height ? height * 2 : undefined })
+const {
+  image,
+  width,
+  height,
+  fit = 'crop',
+  class: className,
+  fallbackClass,
+  eager = false,
+} = Astro.props
+const src = imageUrl(image, { width, height, fit })
+const srcDouble = imageUrl(image, {
+  width: width * 2,
+  height: height ? height * 2 : undefined,
+  fit,
+})
 ---
 
 {src ? (
@@ -24,7 +38,7 @@ const srcDouble = imageUrl(image, { width: width * 2, height: height ? height * 
     alt={image?.alt ?? ''}
     loading={eager ? 'eager' : 'lazy'}
     decoding="async"
-    class:list={['block object-cover', className]}
+    class:list={['block', fit === 'contain' ? 'object-contain' : 'object-cover', className]}
   />
 ) : (
   <div class:list={[className, fallbackClass ?? 'bg-surface']} aria-hidden="true" />

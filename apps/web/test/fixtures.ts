@@ -116,7 +116,7 @@ export const section = (
 /** A Section logo: a wide logotype, as ESN provides it. */
 export const sectionLogo = (slug: string) => ({
   _type: 'image',
-  asset: { _type: 'reference', _ref: `image-logo${slug}-800x200-png` },
+  asset: { _type: 'reference', _ref: `image-logo${slug}-144x80-svg` },
 })
 
 /** The five Sections in website order, as seeded, each with its Section logo. */
