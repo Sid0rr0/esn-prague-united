@@ -62,15 +62,3 @@ export interface LinksPage {
   /** In editor order, without links past their "Hide after" date. */
   links?: LinksPageLink[] | null
 }
-
-export interface AlbumDetail {
-  title: string
-  slug: string
-  date: string
-  photographer?: string
-  fullAlbumUrl?: string
-  photos?: (SanityImage & { _key: string })[] | null
-  photoCount: number
-  /** The Event that links to this Album, if any. */
-  event?: { slug: string } | null
-}

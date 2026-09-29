@@ -2,11 +2,9 @@
 import Layout from '../../layouts/Layout.astro'
 import AlbumCard from '../../components/AlbumCard.astro'
 import PageHeader from '../../components/PageHeader.astro'
-import { fetchContent } from '../../lib/content'
-import { ALBUMS_QUERY } from '../../lib/queries'
-import type { AlbumSummary } from '../../lib/shapes'
+import { readAlbums } from '../../lib/albums'
 
-const albums = await fetchContent<AlbumSummary[]>(ALBUMS_QUERY)
+const albums = await readAlbums()
 ---
 
 <Layout title="Gallery">

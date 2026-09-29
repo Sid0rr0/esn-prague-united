@@ -4,21 +4,19 @@ import Layout from '../../layouts/Layout.astro'
 import Picture from '../../components/Picture.astro'
 import PageHeader from '../../components/PageHeader.astro'
 import PhotoViewer from '../../components/PhotoViewer.astro'
-import { fetchContent } from '../../lib/content'
 import { formatDayMonthYear, formatPhotoCount } from '../../lib/format'
 import { imageUrl } from '../../lib/image'
-import { ALBUM_QUERY, ALBUM_SLUGS_QUERY } from '../../lib/queries'
-import type { AlbumDetail } from '../../lib/types'
+import { readAlbum, readAlbumSlugs } from '../../lib/albums'
 
 /** Width of a photo as the viewer shows it full-screen. */
 const VIEWER_WIDTH = 1600
 
 export async function getStaticPaths() {
-  const slugs = await fetchContent<string[]>(ALBUM_SLUGS_QUERY)
+  const slugs = await readAlbumSlugs()
   return slugs.map((slug) => ({ params: { slug } }))
 }
 
-const album = await fetchContent<AlbumDetail | null>(ALBUM_QUERY, { slug: Astro.params.slug })
+const album = await readAlbum(Astro.params.slug)
 if (!album) return new Response(null, { status: 404 })
 
 const photos = album.photos ?? []

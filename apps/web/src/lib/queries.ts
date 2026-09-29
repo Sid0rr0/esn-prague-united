@@ -1,7 +1,7 @@
 // Usage: import { fetchContent } from './content'
 //   const faq = await fetchContent(FAQ_QUERY)
 import groq from 'groq'
-import { ALBUM_CARD, IMAGE, PHOTO_COUNT, visibleUntilFilter } from './query-pieces'
+import { visibleUntilFilter } from './query-pieces'
 
 // The dropped-data test still reads these queries here; pages read through events.ts and sections.ts.
 export { EVENT_QUERY } from './events'
@@ -15,17 +15,6 @@ export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]{
   "announcement": select(
     announcement.enabled == true && ${visibleUntilFilter('announcement.visibleUntil')} => announcement{text, url}
   )
-}`
-
-export const ALBUM_SLUGS_QUERY = groq`*[_type == "album" && defined(slug.current)].slug.current`
-
-// Albums don't belong to Sections: neither query reads an old Album's sections field.
-export const ALBUMS_QUERY = groq`*[_type == "album"] | order(date desc)${ALBUM_CARD}`
-
-export const ALBUM_QUERY = groq`*[_type == "album" && slug.current == $slug][0]{
-  title, "slug": slug.current, date, photographer, fullAlbumUrl,
-  photos[]${IMAGE}, ${PHOTO_COUNT},
-  "event": *[_type == "event" && album._ref == ^._id && defined(slug.current)][0]{"slug": slug.current}
 }`
 
 // A topic without questions has nothing to open, so it gets no chip and no heading.

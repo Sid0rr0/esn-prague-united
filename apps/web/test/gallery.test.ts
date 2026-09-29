@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import GalleryPage from '../src/pages/gallery/index.astro'
 import AlbumPage from '../src/pages/gallery/[slug].astro'
-import { renderPage } from './seam'
+import { renderPage, renderPageResponse } from './seam'
 import { album, event, localised, photo, section, siteSettings } from './fixtures'
 
 const NOW = '2026-10-01T10:00:00Z'
@@ -167,5 +167,17 @@ describe('Album page', () => {
     const html = await renderAlbum(album('krumlov'))
 
     expect(html).not.toContain('data-viewer')
+  })
+})
+
+describe('Album page for an unknown slug', () => {
+  it('answers 404', async () => {
+    const response = await renderPageResponse(AlbumPage, {
+      now: NOW,
+      params: { slug: 'no-such-album' },
+      documents: [siteSettings(), album('krumlov')],
+    })
+
+    expect(response.status).toBe(404)
   })
 })
