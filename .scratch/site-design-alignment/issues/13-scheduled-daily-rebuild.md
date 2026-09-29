@@ -4,7 +4,7 @@
 
 **Blocked by:** None (can start immediately).
 
-**Status:** waiting-on-user
+**Status:** done
 
 Manual setup is needed first; the repo has no CI or deploy configuration:
 
@@ -15,3 +15,7 @@ Manual setup is needed first; the repo has no CI or deploy configuration:
 - [ ] A deploy hook exists and is stored as a secret.
 - [ ] A daily trigger calls the hook, early in the morning Prague time.
 - [ ] An Event that ended yesterday shows as past the next day without anyone publishing.
+
+## Comments
+
+Superseded by the Vercel deploy work: see `.scratch/vercel-deploy/spec.md` and `.scratch/vercel-deploy/issues/03-daily-rebuild.md`. The site is hosted on Vercel, not Cloudflare Pages, so the Cloudflare setup above no longer applies.
