@@ -16,15 +16,15 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Seam test: an Event with no Related events renders no "Related events" block.
-- [ ] Seam test: Related events render as Event cards linking to their Event pages, in the editor's order, whatever their dates.
-- [ ] Seam test: a Related event that has ended is shown next to an upcoming one.
-- [ ] Seam test: a Past event page still shows its Related events.
-- [ ] Seam test: an entry pointing to a missing Event, or to an Event with no slug, is skipped and the rest still render.
-- [ ] Seam test: when every entry is broken, no block is rendered.
-- [ ] Seam test: the block contains a "See all events" link to the Events list.
-- [ ] The block renders below the main grid, full width, and the sticky ticket bar doesn't cover it on mobile.
-- [ ] The Czech site shows "Související akce" and "Všechny akce".
-- [ ] The seeded Czech Ball shows at least one Related event in local development. The seed content test still passes.
+- [x] Seam test: an Event with no Related events renders no "Related events" block.
+- [x] Seam test: Related events render as Event cards linking to their Event pages, in the editor's order, whatever their dates.
+- [x] Seam test: a Related event that has ended is shown next to an upcoming one.
+- [x] Seam test: a Past event page still shows its Related events.
+- [x] Seam test: an entry pointing to a missing Event, or to an Event with no slug, is skipped and the rest still render.
+- [x] Seam test: when every entry is broken, no block is rendered.
+- [x] Seam test: the block contains a "See all events" link to the Events list.
+- [x] The block renders below the main grid, full width, and the sticky ticket bar doesn't cover it on mobile.
+- [x] The Czech site shows "Související akce" and "Všechny akce".
+- [x] The seeded Czech Ball shows at least one Related event in local development. The seed content test still passes.
