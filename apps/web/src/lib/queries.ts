@@ -1,16 +1,11 @@
 // Usage: import { fetchContent } from './content'
-//   const sections = await fetchContent(SECTIONS_QUERY)
+//   const faq = await fetchContent(FAQ_QUERY)
 import groq from 'groq'
-import {
-  ALBUM_CARD,
-  IMAGE,
-  PHOTO_COUNT,
-  SECTIONS_IN_ORDER,
-  visibleUntilFilter,
-} from './query-pieces'
+import { ALBUM_CARD, IMAGE, PHOTO_COUNT, visibleUntilFilter } from './query-pieces'
 
-// The dropped-data test still reads the Event query here; pages read through events.ts.
+// The dropped-data test still reads these queries here; pages read through events.ts and sections.ts.
 export { EVENT_QUERY } from './events'
+export { SECTION_QUERY } from './sections'
 
 // The top banner shows only while it's enabled and before its "Hide after" date. The footer's
 // Privacy policy and Cookie settings links follow the Homepage's "Show the Updates block".
@@ -20,16 +15,6 @@ export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]{
   "announcement": select(
     announcement.enabled == true && ${visibleUntilFilter('announcement.visibleUntil')} => announcement{text, url}
   )
-}`
-
-/** The Sections list page; the Homepage reads the same list through homepage.ts. */
-export const SECTIONS_QUERY = groq`${SECTIONS_IN_ORDER}`
-
-export const SECTION_SLUGS_QUERY = groq`*[_type == "section" && defined(slug.current)].slug.current`
-
-export const SECTION_QUERY = groq`*[_type == "section" && slug.current == $slug][0]{
-  name, shortName, "slug": slug.current, university, coverImage${IMAGE}, tagline, about,
-  buddyProgramUrl, email, office, mapUrl, socials
 }`
 
 export const ALBUM_SLUGS_QUERY = groq`*[_type == "album" && defined(slug.current)].slug.current`

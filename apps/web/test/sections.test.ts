@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import SectionsPage from '../src/pages/sections/index.astro'
 import SectionPage from '../src/pages/sections/[slug].astro'
-import { renderPage } from './seam'
+import { renderPage, renderPageResponse } from './seam'
 import {
   allSections,
   event,
@@ -229,5 +229,17 @@ describe('Section page', () => {
     expect(html).not.toContain('Krumlov trip')
     expect(html).not.toContain('/events/')
     expect(html).not.toContain('/gallery/')
+  })
+})
+
+describe('Section page for an unknown slug', () => {
+  it('answers 404', async () => {
+    const response = await renderPageResponse(SectionPage, {
+      now: NOW,
+      params: { slug: 'no-such-section' },
+      documents: [siteSettings(), section('cu', 1)],
+    })
+
+    expect(response.status).toBe(404)
   })
 })

@@ -63,21 +63,6 @@ export interface LinksPage {
   links?: LinksPageLink[] | null
 }
 
-export interface SectionDetail {
-  name: string
-  slug: string
-  university?: string
-  coverImage?: SanityImage
-  tagline?: string
-  about?: RichText
-  buddyProgramUrl?: string
-  email?: string
-  /** Office hours and place as the editor wrote them, shown as prose. */
-  office?: string
-  mapUrl?: string
-  socials?: Socials | null
-}
-
 export interface AlbumDetail {
   title: string
   slug: string

@@ -3,19 +3,15 @@ import Layout from '../../layouts/Layout.astro'
 import Picture from '../../components/Picture.astro'
 import RichText from '../../components/RichText.astro'
 import SectionContactCard from '../../components/SectionContactCard.astro'
-import { fetchContent } from '../../lib/content'
-import { SECTION_QUERY, SECTION_SLUGS_QUERY } from '../../lib/queries'
 import { sectionColours } from '../../lib/section-colours'
-import type { SectionDetail } from '../../lib/types'
+import { readSection, readSectionSlugs } from '../../lib/sections'
 
 export async function getStaticPaths() {
-  const slugs = await fetchContent<string[]>(SECTION_SLUGS_QUERY)
+  const slugs = await readSectionSlugs()
   return slugs.map((slug) => ({ params: { slug } }))
 }
 
-const section = await fetchContent<SectionDetail | null>(SECTION_QUERY, {
-  slug: Astro.params.slug,
-})
+const section = await readSection(Astro.params.slug)
 if (!section) return new Response(null, { status: 404 })
 
 const { colour, textClass, universityClass } = sectionColours(section.slug)

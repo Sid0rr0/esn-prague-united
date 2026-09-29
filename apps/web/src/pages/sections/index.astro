@@ -2,11 +2,9 @@
 import Layout from '../../layouts/Layout.astro'
 import PageHeader from '../../components/PageHeader.astro'
 import SectionTile from '../../components/SectionTile.astro'
-import { fetchContent } from '../../lib/content'
-import { SECTIONS_QUERY } from '../../lib/queries'
-import type { SectionSummary } from '../../lib/shapes'
+import { readSections } from '../../lib/sections'
 
-const sections = await fetchContent<SectionSummary[]>(SECTIONS_QUERY)
+const sections = await readSections()
 ---
 
 <Layout title="Sections">
