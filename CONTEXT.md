@@ -58,3 +58,7 @@ _Avoid_: Page (ambiguous — Event and Album also render as pages, but aren't si
 
 **Highlight** (Links page):
 Marks a link to render as a large coloured button instead of a plain list row.
+
+**Site update**:
+The moment published content goes live on the website. An editor starts one with the "Update website" button in the Studio; it also happens by itself every morning so that ended Events show as past. Publishing a document does not start a Site update, so published content waits until the next one.
+_Avoid_: Deploy, rebuild, release (Sanity uses Release for something else), "publish all"
