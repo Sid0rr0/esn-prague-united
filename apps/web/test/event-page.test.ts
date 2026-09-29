@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import EventPage from '../src/pages/events/[slug].astro'
-import { renderPage } from './seam'
+import { renderPage, renderPageResponse } from './seam'
 import { event, localised, richText, siteSettings } from './fixtures'
 
 const NOW = '2026-10-01T10:00:00Z'
@@ -204,5 +204,17 @@ describe('Event page', () => {
 
     expect(html).not.toMatch(/organi[sz]ed by/i)
     expect(html).not.toContain('ESN CU Prague')
+  })
+})
+
+describe('Event page for an unknown slug', () => {
+  it('answers 404', async () => {
+    const response = await renderPageResponse(EventPage, {
+      now: NOW,
+      params: { slug: 'no-such-event' },
+      documents: [siteSettings(), event('czech-ball')],
+    })
+
+    expect(response.status).toBe(404)
   })
 })

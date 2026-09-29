@@ -3,11 +3,9 @@ import Layout from '../../layouts/Layout.astro'
 import EventGrid from '../../components/EventGrid.astro'
 import PageHeader from '../../components/PageHeader.astro'
 import SectionHeading from '../../components/SectionHeading.astro'
-import { fetchContent } from '../../lib/content'
-import { EVENTS_LIST_QUERY } from '../../lib/queries'
-import type { EventsList } from '../../lib/types'
+import { readEventsList } from '../../lib/events'
 
-const { upcoming, past } = await fetchContent<EventsList>(EVENTS_LIST_QUERY)
+const { upcoming, past } = await readEventsList()
 ---
 
 <Layout title="Events">

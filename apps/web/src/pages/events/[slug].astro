@@ -7,18 +7,16 @@ import RichText from '../../components/RichText.astro'
 import SectionHeading from '../../components/SectionHeading.astro'
 import StickyTicketBar from '../../components/StickyTicketBar.astro'
 import TicketSidebar from '../../components/TicketSidebar.astro'
-import { fetchContent } from '../../lib/content'
+import { readEvent, readEventSlugs } from '../../lib/events'
 import { formatLongDate, formatTimeRange } from '../../lib/format'
-import { EVENT_QUERY, EVENT_SLUGS_QUERY } from '../../lib/queries'
 import { ticketDisplay } from '../../lib/tickets'
-import type { EventDetail } from '../../lib/types'
 
 export async function getStaticPaths() {
-  const slugs = await fetchContent<string[]>(EVENT_SLUGS_QUERY)
+  const slugs = await readEventSlugs()
   return slugs.map((slug) => ({ params: { slug } }))
 }
 
-const event = await fetchContent<EventDetail | null>(EVENT_QUERY, { slug: Astro.params.slug })
+const event = await readEvent(Astro.params.slug)
 if (!event) return new Response(null, { status: 404 })
 
 const tickets = ticketDisplay(event)

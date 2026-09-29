@@ -32,9 +32,20 @@ interface RenderOptions {
   params?: Record<string, string>
 }
 
+/** Points fetchRaw at this render's documents and time, then makes a fresh container. */
+async function containerFor(options: RenderOptions): Promise<AstroContainer> {
+  content = { documents: options.documents, now: new Date(options.now) }
+  return AstroContainer.create()
+}
+
 /** Renders a page over in-memory Sanity documents, as a visitor at `now` would see it. */
 export async function renderPage(page: Page, options: RenderOptions): Promise<string> {
-  content = { documents: options.documents, now: new Date(options.now) }
-  const container = await AstroContainer.create()
+  const container = await containerFor(options)
   return container.renderToString(page as Component, { params: options.params })
+}
+
+/** Like renderPage, but the whole response, for pages that can answer 404. */
+export async function renderPageResponse(page: Page, options: RenderOptions): Promise<Response> {
+  const container = await containerFor(options)
+  return container.renderToResponse(page as Component, { params: options.params })
 }

@@ -1,14 +1,5 @@
 /** Page-only shapes returned by the GROQ queries in queries.ts, after i18n.ts resolved translated fields. */
-import type {
-  EventCardData,
-  FaqEntry,
-  LinkItem,
-  RichText,
-  SanityImage,
-  Seo,
-  Socials,
-  TicketFields,
-} from './shapes'
+import type { FaqEntry, LinkItem, RichText, SanityImage, Seo, Socials } from './shapes'
 
 export interface Settings {
   logo?: SanityImage
@@ -19,19 +10,6 @@ export interface Settings {
   announcement?: { text?: string; url?: string } | null
   /** False while the Homepage hides its Updates block (see SETTINGS_QUERY). */
   showsInstagram?: boolean
-}
-
-/** The Events list page: Upcoming soonest first, Past newest first. */
-export interface EventsList {
-  upcoming: EventCardData[]
-  past: EventCardData[]
-}
-
-export interface ProgrammeItem {
-  _key: string
-  time: string
-  title: string
-  description?: string
 }
 
 export interface FaqTopic {
@@ -83,30 +61,6 @@ export interface LinksPage {
   seo?: Seo
   /** In editor order, without links past their "Hide after" date. */
   links?: LinksPageLink[] | null
-}
-
-export interface Venue {
-  name?: string
-  address?: string
-  mapUrl?: string
-  transport?: string
-}
-
-export interface EventDetail extends TicketFields {
-  title: string
-  slug: string
-  startsAt: string
-  endsAt?: string
-  venue?: Venue | null
-  heroImage?: SanityImage
-  summary?: string
-  description?: RichText
-  programme?: ProgrammeItem[] | null
-  dressCode?: RichText
-  faq?: FaqEntry[] | null
-  ticketInfo?: RichText
-  seo?: Seo
-  album?: { title: string; slug: string } | null
 }
 
 export interface SectionDetail {

@@ -3,13 +3,14 @@
 import groq from 'groq'
 import {
   ALBUM_CARD,
-  HAS_ENDED,
   IMAGE,
   PHOTO_COUNT,
   SECTIONS_IN_ORDER,
-  TICKET_FIELDS,
   visibleUntilFilter,
 } from './query-pieces'
+
+// The dropped-data test still reads the Event query here; pages read through events.ts.
+export { EVENT_QUERY } from './events'
 
 // The top banner shows only while it's enabled and before its "Hide after" date. The footer's
 // Privacy policy and Cookie settings links follow the Homepage's "Show the Updates block".
@@ -23,29 +24,6 @@ export const SETTINGS_QUERY = groq`*[_id == "siteSettings"][0]{
 
 /** The Sections list page; the Homepage reads the same list through homepage.ts. */
 export const SECTIONS_QUERY = groq`${SECTIONS_IN_ORDER}`
-
-/** An Event as the Events list page's cards show it: no price or Ticket note. */
-const EVENT_CARD = `{
-  _id, title, "slug": slug.current, startsAt, "venueName": venue.name, heroImage${IMAGE}
-}`
-
-// The Featured event is listed like any other here. Past events keep their Albums reachable,
-// newest first by the same end time that makes them past.
-export const EVENTS_LIST_QUERY = groq`{
-  "upcoming": *[_type == "event" && !(${HAS_ENDED})] | order(startsAt asc)${EVENT_CARD},
-  "past": *[_type == "event" && ${HAS_ENDED}] | order(coalesce(endsAt, startsAt) desc)${EVENT_CARD}
-}`
-
-// Detail queries list their fields rather than spreading the document, so data the design
-// dropped (e.g. Event organisers) never reaches a page even if an old document still holds it.
-export const EVENT_QUERY = groq`*[_type == "event" && slug.current == $slug][0]{
-  title, "slug": slug.current, startsAt, endsAt, venue, heroImage${IMAGE}, summary, description,
-  programme[]{_key, time, title, description}, dressCode, faq[]{_key, question, answer},
-  ticketInfo, seo, ${TICKET_FIELDS},
-  album->{title, "slug": slug.current}
-}`
-
-export const EVENT_SLUGS_QUERY = groq`*[_type == "event" && defined(slug.current)].slug.current`
 
 export const SECTION_SLUGS_QUERY = groq`*[_type == "section" && defined(slug.current)].slug.current`
 
