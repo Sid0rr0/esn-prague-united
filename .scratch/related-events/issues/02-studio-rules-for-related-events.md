@@ -15,4 +15,4 @@ These rules are checked by hand in the Studio. The Studio has no test seam, and 
 - [ ] Manual check: adding a 4th Related event shows a validation error.
 - [ ] Manual check: the Related events picker doesn't list the Event being edited, as a draft or as the published version.
 - [ ] Manual check: picking the same Event twice shows a validation error.
-- [ ] The Studio builds and its existing tests still pass.
+- [x] The Studio builds and its existing tests still pass.
