@@ -43,7 +43,7 @@ export const homepage = defineType({
       group: 'content',
       initialValue: true,
       description:
-        'Turn off to hide the Instagram posts, and the Instagram consent banner with them.',
+        'Turn off to hide the Instagram posts, along with the consent banner and the Privacy policy and Cookie settings links in the footer.',
     }),
     defineField({
       name: 'updates',
