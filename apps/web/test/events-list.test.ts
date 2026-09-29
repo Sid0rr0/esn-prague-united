@@ -20,7 +20,7 @@ describe('Events list page', () => {
     expect(html).toMatch(/<header[^>]*>[\s\S]*href="\/gallery"[\s\S]*<\/header>/)
     expect(html).toContain('<footer')
     expect(html).toMatch(/<h1[^>]*>Events<\/h1>/)
-    expect(html).toContain('Balls, trips and parties run by ESN Prague United.')
+    expect(html).toContain('Trips, parties and special events created by ESN Prague United.')
     expect(html).toContain('bg-cyan-50')
   })
 
