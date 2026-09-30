@@ -1,6 +1,7 @@
 ---
 import { externalLinkProps } from '../lib/external-link'
 import { formatPrice } from '../lib/format'
+import { uiString } from '../lib/ui-strings'
 import type { TicketAction } from '../lib/ticket-area'
 
 interface Props {
@@ -9,17 +10,17 @@ interface Props {
 const { ticketAction } = Astro.props
 ---
 
-{ticketAction.kind === 'buy' && (
+{(ticketAction.kind === 'buy' || ticketAction.kind === 'choose-date') && (
   <div
     data-sticky-bar
     class="fixed inset-x-0 bottom-0 z-20 flex border-t border-line bg-white p-3 font-black lg:hidden"
   >
     <a
-      href={ticketAction.url}
-      {...externalLinkProps(ticketAction.url)}
+      href={ticketAction.kind === 'buy' ? ticketAction.url : ticketAction.href}
+      {...(ticketAction.kind === 'buy' ? externalLinkProps(ticketAction.url) : {})}
       class="flex h-13 flex-1 items-center justify-center bg-esn-magenta px-6 text-[17px] text-white hover:brightness-92"
     >
-      Buy ticket
+      {ticketAction.kind === 'buy' ? 'Buy ticket' : uiString('chooseADate')}
     </a>
     {ticketAction.headline && (
       <span class="flex h-13 items-center bg-blue-50 px-4.5 text-base text-esn-blue">

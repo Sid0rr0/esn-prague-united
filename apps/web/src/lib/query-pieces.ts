@@ -11,7 +11,8 @@ export const visibleUntilFilter = (field: string) =>
 export const HAS_ENDED = `dateTime(coalesce(endsAt, startsAt)) < dateTime(now())`
 
 /** What ticket-area.ts needs to decide an Event's Ticket area, apart from ticket info and the Album. */
-export const TICKET_FIELDS = `ticketUrl, ticketNote, priceTiers[]{_key, label, amount}, "hasEnded": ${HAS_ENDED}`
+export const TICKET_FIELDS = `ticketUrl, ticketNote, priceTiers[]{_key, label, amount}, "hasEnded": ${HAS_ENDED},
+  "hasUpcomingSessions": count(sessions[!(${HAS_ENDED})]) > 0`
 
 /** An Album without photos has no photos field, so its count is null without coalesce. */
 export const PHOTO_COUNT = `"photoCount": coalesce(count(photos), 0)`

@@ -36,6 +36,8 @@ export interface TicketFields {
   priceTiers?: PriceTier[] | null
   /** Its end time has passed, or its start time if it has no end time. */
   hasEnded: boolean
+  /** At least one Session hasn't ended, so visitors choose a date instead of buying here. */
+  hasUpcomingSessions: boolean
 }
 
 export interface EventSummary {

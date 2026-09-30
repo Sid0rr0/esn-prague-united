@@ -2,6 +2,7 @@
 import { externalLinkProps } from '../lib/external-link'
 import RichText from './RichText.astro'
 import { formatPrice } from '../lib/format'
+import { uiString } from '../lib/ui-strings'
 import type { TicketsAside } from '../lib/ticket-area'
 
 interface Props {
@@ -29,13 +30,13 @@ const {
     </ul>
   )}
   {/* On mobile the sticky bar carries the Buy button or Ticket note instead. */}
-  {ticketAction.kind === 'buy' && (
+  {(ticketAction.kind === 'buy' || ticketAction.kind === 'choose-date') && (
     <a
-      href={ticketAction.url}
-      {...externalLinkProps(ticketAction.url)}
+      href={ticketAction.kind === 'buy' ? ticketAction.url : ticketAction.href}
+      {...(ticketAction.kind === 'buy' ? externalLinkProps(ticketAction.url) : {})}
       class="flex h-14 items-center justify-center bg-esn-magenta px-6 text-[17px] font-black text-white hover:brightness-92 max-lg:hidden"
     >
-      Buy ticket
+      {ticketAction.kind === 'buy' ? 'Buy ticket' : uiString('chooseADate')}
     </a>
   )}
   {ticketAction.kind === 'note' && (

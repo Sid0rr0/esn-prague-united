@@ -57,6 +57,21 @@ describe('homepage hero', () => {
     expect(hero).not.toContain('690 CZK')
   })
 
+  it('shows Choose a date linking to the Event page Sessions anchor when the Featured event has upcoming Sessions', async () => {
+    const salsa = event('salsa', {
+      ticketUrl: 'https://tickets.example/salsa',
+      priceTiers: tiers,
+      sessions: [{ _key: 'a', _type: 'session', startsAt: FUTURE }],
+    })
+
+    const hero = heroOf(await featuring(salsa))
+
+    expect(hero).toMatch(/href="\/events\/salsa#sessions"[^>]*>\s*Choose a date/)
+    expect(hero).toContain('590 CZK')
+    expect(hero).not.toContain('Buy ticket')
+    expect(hero).not.toContain('tickets.example')
+  })
+
   it('shows Buy ticket without a price pill when the Featured event has no tiers', async () => {
     const ball = event('ball', { ticketUrl: 'https://tickets.example/ball' })
 

@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 const event = await readEvent(Astro.params.slug)
 if (!event) return new Response(null, { status: 404 })
 
-const { ticketAction, aside, hasStickyBar } = ticketArea(event)
+const { ticketAction, aside, hasStickyBar } = ticketArea(event, '#sessions')
 const programme = event.programme ?? []
 const faq = event.faq ?? []
 const venue = event.venue

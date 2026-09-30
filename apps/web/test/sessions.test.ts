@@ -151,17 +151,95 @@ describe('Sessions on the Event page', () => {
     expect(sectionOf(await render(salsa))).toBe('')
   })
 
-  it('leaves the Ticket area as it was', async () => {
+  it('keeps Buy ticket with its own Ticket link for an Event without Sessions', async () => {
+    const ball = event('ball', { ...UPCOMING, ticketUrl: 'https://tickets.example/ball' })
+
+    const html = await render(ball)
+
+    expect(html).toContain('href="https://tickets.example/ball"')
+    expect(html).not.toContain('Choose a date')
+  })
+})
+
+const stickyOf = (html: string) => html.match(/<div[^>]*data-sticky-bar[\s\S]*?<\/div>/)?.[0] ?? ''
+const sidebarOf = (html: string) =>
+  html.match(/<aside[^>]*data-ticket-sidebar[\s\S]*?<\/aside>/)?.[0] ?? ''
+const tiers = [{ _key: 't1', label: localised('Per session'), amount: 250 }]
+
+describe('Choose a date in the Ticket area', () => {
+  it('replaces Buy ticket in the sidebar and sticky bar, with the headline price and the anchor', async () => {
     const salsa = event('salsa', {
       ...UPCOMING,
       ticketUrl: 'https://tickets.example/salsa',
+      ticketNote: localised('Own note'),
+      priceTiers: tiers,
+      sessions: [session('a', '2026-11-05T18:00:00Z', { ticketUrl: 'https://tickets.example/a' })],
+    })
+
+    const html = await render(salsa)
+
+    for (const part of [sidebarOf(html), stickyOf(html)]) {
+      expect(part).toMatch(/<a[^>]*href="#sessions"[^>]*>\s*Choose a date\s*<\/a>/)
+      expect(part).not.toContain('Buy ticket')
+      expect(part).not.toContain('Own note')
+    }
+    expect(stickyOf(html)).toContain('250 CZK')
+    expect(html).not.toContain('href="https://tickets.example/salsa"')
+  })
+
+  it('still shows when every upcoming Session has a Note and no link', async () => {
+    const salsa = event('salsa', {
+      ...UPCOMING,
+      sessions: [session('a', '2026-11-05T18:00:00Z', { note: localised('Sold out') })],
+    })
+
+    const html = await render(salsa)
+
+    expect(stickyOf(html)).toContain('Choose a date')
+    expect(sidebarOf(html)).toContain('Choose a date')
+  })
+
+  it("falls back to the Event's own Ticket link when every Session has ended", async () => {
+    const salsa = event('salsa', {
+      ...UPCOMING,
+      ticketUrl: 'https://tickets.example/salsa',
+      sessions: [session('a', '2026-09-20T18:00:00Z')],
+    })
+
+    const html = await render(salsa)
+
+    expect(html).toContain('href="https://tickets.example/salsa"')
+    expect(html).not.toContain('Choose a date')
+  })
+
+  it("falls back to the Event's own Ticket note when every Session has ended", async () => {
+    const salsa = event('salsa', {
+      ...UPCOMING,
+      ticketNote: localised('Ask at the bar'),
+      sessions: [session('a', '2026-09-20T18:00:00Z')],
+    })
+
+    const html = await render(salsa)
+
+    expect(stickyOf(html)).toContain('Ask at the bar')
+    expect(html).not.toContain('Choose a date')
+  })
+
+  it('shows no ticket action on a Past event page', async () => {
+    const salsa = event('salsa', {
+      ...ENDED,
       sessions: [session('a', '2026-11-05T18:00:00Z')],
     })
 
     const html = await render(salsa)
 
-    expect(html).toContain('data-ticket-sidebar')
-    expect(html).toContain('href="https://tickets.example/salsa"')
+    expect(html).not.toContain('Choose a date')
+    expect(html).not.toContain('data-sticky-bar')
+  })
+
+  it('has a Czech label', () => {
+    expect(uiString('chooseADate')).toBe('Choose a date')
+    expect(uiString('chooseADate', 'cs')).toBe('Vybrat termín')
   })
 })
 

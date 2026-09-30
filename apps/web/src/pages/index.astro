@@ -51,7 +51,9 @@ const updatesUrls = instagramPostUrls(home.updates?.links)
           {featured.summary && (
             <p class="max-w-110 text-base leading-normal lg:text-lg">{featured.summary}</p>
           )}
-          <HeroTicket ticketAction={ticketArea(featured).ticketAction} />
+          <HeroTicket
+            ticketAction={ticketArea(featured, `/events/${featured.slug}#sessions`).ticketAction}
+          />
         </>
       ) : (
         <>

@@ -1,10 +1,11 @@
 import type { PriceTier, RichText, TicketFields } from './shapes'
 
 /**
- * Buy ticket with the headline price (the first Price tier), the Ticket note, or nothing.
- * Availability is inferred from the ticket link; there is no status field.
+ * Choose a date or Buy ticket with the headline price (the first Price tier), the Ticket note,
+ * or nothing. Availability is inferred from the ticket link; there is no status field.
  */
 export type TicketAction =
+  | { kind: 'choose-date'; href: string; headline?: PriceTier }
   | { kind: 'buy'; url: string; headline?: PriceTier }
   | { kind: 'note'; note: string }
   | { kind: 'none' }
@@ -38,9 +39,15 @@ export interface TicketAreaFields extends TicketFields {
   album?: { slug: string } | null
 }
 
-/** An Event that has ended offers no tickets, whatever its ticket fields hold. */
-function ticketActionOf(event: TicketAreaFields): TicketAction {
+/**
+ * An Event that has ended offers no tickets, whatever its ticket fields hold. Upcoming
+ * Sessions send visitors to the Sessions table, ignoring the Event's own link and note.
+ */
+function ticketActionOf(event: TicketAreaFields, sessionsHref: string): TicketAction {
   if (event.hasEnded) return { kind: 'none' }
+  if (event.hasUpcomingSessions) {
+    return { kind: 'choose-date', href: sessionsHref, headline: event.priceTiers?.[0] }
+  }
   if (event.ticketUrl) return { kind: 'buy', url: event.ticketUrl, headline: event.priceTiers?.[0] }
   if (event.ticketNote) return { kind: 'note', note: event.ticketNote }
   return { kind: 'none' }
@@ -62,8 +69,9 @@ function asideOf(event: TicketAreaFields, ticketAction: TicketAction): Aside {
     : { kind: 'none' }
 }
 
-export function ticketArea(event: TicketAreaFields): TicketArea {
-  const ticketAction = ticketActionOf(event)
+/** `sessionsHref` is where the "Dates & tickets" section is, relative to the page showing this. */
+export function ticketArea(event: TicketAreaFields, sessionsHref: string): TicketArea {
+  const ticketAction = ticketActionOf(event, sessionsHref)
   return {
     ticketAction,
     aside: asideOf(event, ticketAction),

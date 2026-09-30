@@ -13,12 +13,12 @@
 
 **Blocked by:** 01 (Sessions table on the Event page)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Seam test: an Event without Sessions keeps its Buy ticket with its own Ticket link.
-- [ ] Seam test: with an upcoming Session, the ticket sidebar and sticky bar show "Choose a date" with the headline price, linking to the section's anchor, and the Event's own Ticket link isn't rendered.
-- [ ] Seam test: "Choose a date" still shows when every upcoming Session has a Note and no link.
-- [ ] Seam test: when every Session has ended but the Event hasn't, the Event's own Ticket link or Ticket note shows.
-- [ ] Seam test: a Past event page shows no ticket action.
-- [ ] Seam test (homepage): the Featured event with upcoming Sessions shows "Choose a date" in the hero, linking to the Event page's Sessions anchor.
-- [ ] Seam test: the Czech page shows "Vybrat termín".
+- [x] Seam test: an Event without Sessions keeps its Buy ticket with its own Ticket link.
+- [x] Seam test: with an upcoming Session, the ticket sidebar and sticky bar show "Choose a date" with the headline price, linking to the section's anchor, and the Event's own Ticket link isn't rendered.
+- [x] Seam test: "Choose a date" still shows when every upcoming Session has a Note and no link.
+- [x] Seam test: when every Session has ended but the Event hasn't, the Event's own Ticket link or Ticket note shows.
+- [x] Seam test: a Past event page shows no ticket action.
+- [x] Seam test (homepage): the Featured event with upcoming Sessions shows "Choose a date" in the hero, linking to the Event page's Sessions anchor.
+- [x] Seam test: the Czech page shows "Vybrat termín".
