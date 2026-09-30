@@ -16,7 +16,7 @@ const { ticketAction } = Astro.props
       {...(ticketAction.kind === 'buy' ? externalLinkProps(ticketAction.url) : {})}
       class="flex h-14 flex-1 items-center justify-center bg-esn-magenta px-7.5 text-[17px] text-white hover:brightness-92 lg:h-14.5 lg:flex-none"
     >
-      {ticketAction.kind === 'buy' ? 'Buy ticket' : uiString('chooseADate')}
+      {ticketAction.kind === 'buy' ? 'Get tickets' : uiString('chooseADate')}
     </a>
   </div>
 )}

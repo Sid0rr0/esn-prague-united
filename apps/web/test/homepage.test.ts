@@ -39,7 +39,7 @@ const upcomingOf = (html: string) =>
   html.match(/<section[^>]*data-upcoming[\s\S]*?<\/section>/)?.[0] ?? ''
 
 describe('homepage hero', () => {
-  it('shows a Featured event with a ticket link as Buy ticket without the price', async () => {
+  it('shows a Featured event with a ticket link as Get tickets without the price', async () => {
     const ball = event('ball', {
       title: localised('Czech Ball'),
       summary: localised('A formal night of waltz.'),
@@ -52,7 +52,7 @@ describe('homepage hero', () => {
     expect(hero).toContain('Czech Ball')
     expect(hero).toContain('A formal night of waltz.')
     expect(hero).toContain('Thursday 26 November · 18:00')
-    expect(hero).toMatch(/href="https:\/\/tickets\.example\/ball"[^>]*>[\s\S]*Buy ticket/)
+    expect(hero).toMatch(/href="https:\/\/tickets\.example\/ball"[^>]*>[\s\S]*Get tickets/)
     expect(hero).not.toContain('CZK')
   })
 
@@ -67,20 +67,20 @@ describe('homepage hero', () => {
 
     expect(hero).toMatch(/href="\/events\/salsa#sessions"[^>]*>\s*Choose a date/)
     expect(hero).not.toContain('CZK')
-    expect(hero).not.toContain('Buy ticket')
+    expect(hero).not.toContain('Get tickets')
     expect(hero).not.toContain('tickets.example')
   })
 
-  it('shows Buy ticket without a price pill when the Featured event has no tiers', async () => {
+  it('shows Get tickets without a price pill when the Featured event has no tiers', async () => {
     const ball = event('ball', { ticketUrl: 'https://tickets.example/ball' })
 
     const hero = heroOf(await featuring(ball))
 
-    expect(hero).toContain('Buy ticket')
+    expect(hero).toContain('Get tickets')
     expect(hero).not.toContain('CZK')
   })
 
-  it('shows the Ticket note instead of Buy ticket when there is no ticket link', async () => {
+  it('shows the Ticket note instead of Get tickets when there is no ticket link', async () => {
     const ball = event('ball', {
       ticketNote: localised('Sold out. Watch Instagram'),
       priceTiers: tiers,
@@ -89,19 +89,19 @@ describe('homepage hero', () => {
     const hero = heroOf(await featuring(ball))
 
     expect(hero).toContain('Sold out. Watch Instagram')
-    expect(hero).not.toContain('Buy ticket')
+    expect(hero).not.toContain('Get tickets')
     expect(hero).not.toContain('CZK')
   })
 
-  it('shows neither Buy ticket nor a note when there is no ticket link and no note', async () => {
+  it('shows neither Get tickets nor a note when there is no ticket link and no note', async () => {
     const hero = heroOf(await featuring(event('ball', { title: localised('Czech Ball') })))
 
     expect(hero).toContain('Czech Ball')
-    expect(hero).not.toContain('Buy ticket')
+    expect(hero).not.toContain('Get tickets')
     expect(hero).not.toContain('data-ticket-note')
   })
 
-  it('shows no Buy ticket, price or Ticket note once the Featured event has ended', async () => {
+  it('shows no Get tickets, price or Ticket note once the Featured event has ended', async () => {
     const ball = event('ball', {
       title: localised('Czech Ball'),
       startsAt: '2026-09-30T18:00:00Z',
@@ -113,7 +113,7 @@ describe('homepage hero', () => {
     const hero = heroOf(await featuring(ball))
 
     expect(hero).toContain('Czech Ball')
-    expect(hero).not.toContain('Buy ticket')
+    expect(hero).not.toContain('Get tickets')
     expect(hero).not.toContain('Sold out')
     expect(hero).not.toContain('CZK')
   })
@@ -125,7 +125,7 @@ describe('homepage hero', () => {
     expect(hero).toContain('Trips, parties and a local buddy.')
     expect(hero).toContain('href="https://example.com/sections"')
     expect(hero).toContain('Get an ESN card')
-    expect(hero).not.toContain('Buy ticket')
+    expect(hero).not.toContain('Get tickets')
   })
 })
 
