@@ -37,7 +37,7 @@ Everything an Event shows where tickets would be: the ticket action (Buy ticket 
 _Avoid_: Ticket display, ticket block
 
 **Featured event**:
-The Event an editor picks to promote on the homepage. Only a picked Event takes over the homepage hero; when none is picked, the hero stays about ESN Prague United. The homepage's upcoming-events list never repeats the Featured event; if that leaves it empty, the list is hidden.
+The Event an editor picks to promote on the homepage. Only a picked Event takes over the homepage hero; when none is picked, the hero stays about ESN Prague United. The homepage's upcoming-events list never repeats the Featured event; if that leaves it empty, the list is hidden. Editors can also turn the whole list off from the Homepage, which hides it even when nothing is upcoming (no "New events coming soon").
 _Avoid_: Highlighted event, main event
 
 **Upcoming event** vs **Past event**:

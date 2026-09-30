@@ -40,9 +40,11 @@ const HOMEPAGE_QUERY = groq`{
       title, "slug": slug.current, startsAt, summary, heroImage, ${TICKET_FIELDS}
     }
   },
-  "upcoming": *[
-    _type == "event" && !(${HAS_ENDED}) && _id != *[_id == "homepage"][0].featuredEvent._ref
-  ] | order(startsAt asc)[0...${HOMEPAGE_LIST_MAX}]{_id, title, "slug": slug.current, ${EVENT_DATES}}
+  "upcoming": select(
+    *[_id == "homepage"][0].showUpcoming != false => *[
+      _type == "event" && !(${HAS_ENDED}) && _id != *[_id == "homepage"][0].featuredEvent._ref
+    ] | order(startsAt asc)[0...${HOMEPAGE_LIST_MAX}]{_id, title, "slug": slug.current, ${EVENT_DATES}}
+  )
 }`
 
 interface Cta {
@@ -68,7 +70,7 @@ interface FeaturedEvent extends TicketFields {
 export type UpcomingList =
   /** Upcoming Events other than the Featured event, soonest first, at most HOMEPAGE_LIST_MAX. */
   | { state: 'list'; events: EventSummary[] }
-  /** A Featured event is set and no other Event is upcoming. */
+  /** The Homepage turns the block off, or a Featured event is set and no other Event is upcoming. */
   | { state: 'hidden' }
   /** No Featured event and no Upcoming event: "New events coming soon". */
   | { state: 'coming-soon' }
@@ -96,14 +98,16 @@ interface HomepageFields {
 interface HomepageResult {
   /** Null until an editor creates the Homepage Singleton. */
   page: HomepageFields | null
-  upcoming: EventSummary[]
+  /** Null when the Homepage turns the Upcoming block off. */
+  upcoming: EventSummary[] | null
 }
 
 export interface Homepage extends HomepageFields {
   upcoming: UpcomingList
 }
 
-function upcomingList(events: EventSummary[], hasFeaturedEvent: boolean): UpcomingList {
+function upcomingList(events: EventSummary[] | null, hasFeaturedEvent: boolean): UpcomingList {
+  if (events === null) return { state: 'hidden' }
   if (events.length > 0) return { state: 'list', events }
   return hasFeaturedEvent ? { state: 'hidden' } : { state: 'coming-soon' }
 }

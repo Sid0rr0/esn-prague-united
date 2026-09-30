@@ -293,6 +293,24 @@ describe('homepage Sections block', () => {
     })
   })
 
+  it('hides the Upcoming block, even with nothing to show, when the Homepage turns it off', async () => {
+    const upcoming = event('salsa', { title: localised('Salsa night'), startsAt: FUTURE })
+    const render = (documents: Doc[]) =>
+      renderPage(Home, {
+        now: NOW,
+        documents: [siteSettings(), homepage({ showUpcoming: false }), ...documents],
+      })
+
+    const withEvents = await render([upcoming])
+    const withNone = await render([])
+
+    for (const html of [withEvents, withNone]) {
+      expect(html).not.toContain('data-upcoming')
+      expect(html).not.toContain('New events coming soon')
+    }
+    expect(withEvents).not.toContain('Salsa night')
+  })
+
   it('is hidden when the Homepage turns the Sections block off', async () => {
     const html = await renderPage(Home, {
       now: NOW,

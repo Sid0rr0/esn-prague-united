@@ -88,6 +88,7 @@ export const singletons = (): Singleton[] => [
       heading: en('Updates'),
       posts: instagramPosts().map((post) => reference(post._id)),
     },
+    showUpcoming: true,
     showUpdates: true,
     showSections: true,
     showGallery: true,

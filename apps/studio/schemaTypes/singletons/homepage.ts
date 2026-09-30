@@ -37,6 +37,15 @@ export const homepage = defineType({
         'Takes over the top of the homepage (e.g. the Czech Ball during its ticket sales). Clear it to return the top section to ESN Prague United content.',
     }),
     defineField({
+      name: 'showUpcoming',
+      title: 'Show the upcoming events list',
+      type: 'boolean',
+      group: 'hero',
+      initialValue: true,
+      description:
+        'Turn off to hide the list of upcoming events below the top of the homepage, including the "New events coming soon" message. The Featured event above is not affected.',
+    }),
+    defineField({
       name: 'showUpdates',
       title: 'Show the Updates block',
       type: 'boolean',
