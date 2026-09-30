@@ -39,7 +39,7 @@ const upcomingOf = (html: string) =>
   html.match(/<section[^>]*data-upcoming[\s\S]*?<\/section>/)?.[0] ?? ''
 
 describe('homepage hero', () => {
-  it('shows a Featured event with a ticket link as Buy ticket plus the first tier price', async () => {
+  it('shows a Featured event with a ticket link as Buy ticket without the price', async () => {
     const ball = event('ball', {
       title: localised('Czech Ball'),
       summary: localised('A formal night of waltz.'),
@@ -53,8 +53,7 @@ describe('homepage hero', () => {
     expect(hero).toContain('A formal night of waltz.')
     expect(hero).toContain('Thursday 26 November · 18:00')
     expect(hero).toMatch(/href="https:\/\/tickets\.example\/ball"[^>]*>[\s\S]*Buy ticket/)
-    expect(hero).toContain('590 CZK')
-    expect(hero).not.toContain('690 CZK')
+    expect(hero).not.toContain('CZK')
   })
 
   it('shows Choose a date linking to the Event page Sessions anchor when the Featured event has upcoming Sessions', async () => {
@@ -67,7 +66,7 @@ describe('homepage hero', () => {
     const hero = heroOf(await featuring(salsa))
 
     expect(hero).toMatch(/href="\/events\/salsa#sessions"[^>]*>\s*Choose a date/)
-    expect(hero).toContain('590 CZK')
+    expect(hero).not.toContain('CZK')
     expect(hero).not.toContain('Buy ticket')
     expect(hero).not.toContain('tickets.example')
   })
