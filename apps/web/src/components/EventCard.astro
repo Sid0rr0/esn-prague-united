@@ -1,5 +1,6 @@
 ---
 import Picture from './Picture.astro'
+import { eventDateRange } from '../lib/event-dates'
 import { formatLongDate } from '../lib/format'
 import type { EventCardData } from '../lib/shapes'
 
@@ -17,7 +18,7 @@ const { event } = Astro.props
       datetime={event.startsAt}
       class="font-heading text-base font-bold text-esn-blue lg:text-lg"
     >
-      {formatLongDate(event.startsAt)}
+      {eventDateRange(event) ?? formatLongDate(event.startsAt)}
     </time>
     <span class="text-base font-black group-hover:text-esn-blue lg:text-[17px]">{event.title}</span>
     {event.venueName && <span class="text-[15px] text-muted">{event.venueName}</span>}

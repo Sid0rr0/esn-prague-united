@@ -3,6 +3,7 @@ import groq from 'groq'
 import { DEFAULT_LANGUAGE, localise, type Language } from './i18n'
 import {
   ALBUM_CARD,
+  EVENT_DATES,
   HAS_ENDED,
   HOMEPAGE_LIST_MAX,
   SECTIONS_IN_ORDER,
@@ -41,7 +42,7 @@ const HOMEPAGE_QUERY = groq`{
   },
   "upcoming": *[
     _type == "event" && !(${HAS_ENDED}) && _id != *[_id == "homepage"][0].featuredEvent._ref
-  ] | order(startsAt asc)[0...${HOMEPAGE_LIST_MAX}]{_id, title, "slug": slug.current, startsAt}
+  ] | order(startsAt asc)[0...${HOMEPAGE_LIST_MAX}]{_id, title, "slug": slug.current, ${EVENT_DATES}}
 }`
 
 interface Cta {

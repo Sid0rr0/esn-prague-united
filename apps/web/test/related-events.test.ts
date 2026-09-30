@@ -106,4 +106,17 @@ describe('Related events copy', () => {
     expect(uiString('relatedEventsHeading', 'cs')).toBe('Související akce')
     expect(uiString('seeAllEvents', 'cs')).toBe('Všechny akce')
   })
+
+  it('shows the date range on a Related event with Sessions', async () => {
+    const ball = event('ball', { ...UPCOMING, relatedEvents: relate('salsa') })
+    const salsa = event('salsa', {
+      startsAt: '2026-10-05T17:00:00Z',
+      endsAt: '2026-12-15T21:00:00Z',
+      sessions: [{ _key: 's1', _type: 'session', startsAt: '2026-10-05T17:00:00Z' }],
+    })
+
+    const html = await render(ball, salsa)
+
+    expect(blockOf(html)).toContain('5 Oct – 15 Dec')
+  })
 })

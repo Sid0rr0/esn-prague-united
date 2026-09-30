@@ -14,6 +14,9 @@ export const HAS_ENDED = `dateTime(coalesce(endsAt, startsAt)) < dateTime(now())
 export const TICKET_FIELDS = `ticketUrl, ticketNote, priceTiers[]{_key, label, amount}, "hasEnded": ${HAS_ENDED},
   "hasUpcomingSessions": count(sessions[!(${HAS_ENDED})]) > 0`
 
+/** What an Event card needs to show a running course's date range. */
+export const EVENT_DATES = `startsAt, endsAt, "hasSessions": count(sessions) > 0`
+
 /** An Album without photos has no photos field, so its count is null without coalesce. */
 export const PHOTO_COUNT = `"photoCount": coalesce(count(photos), 0)`
 

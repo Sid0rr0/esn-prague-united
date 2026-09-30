@@ -157,6 +157,19 @@ describe('homepage upcoming events', () => {
     expect(block).not.toContain('A day among the bones.')
   })
 
+  it('shows the date range for an Event with Sessions', async () => {
+    const salsa = event('salsa', {
+      title: localised('Salsa classes'),
+      startsAt: '2026-10-05T17:00:00Z',
+      endsAt: '2026-12-15T21:00:00Z',
+      sessions: [{ _key: 's1', _type: 'session', startsAt: '2026-10-05T17:00:00Z' }],
+    })
+
+    const block = upcomingOf(await featuring(null, salsa))
+
+    expect(block).toContain('5 Oct – 15 Dec')
+  })
+
   it('leaves out Events that have ended', async () => {
     const past = event('past', {
       title: localised('Welcome party'),

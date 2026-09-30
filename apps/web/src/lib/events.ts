@@ -1,13 +1,13 @@
 /** The Events list, each Event page and their static paths, read ready to render. */
 import groq from 'groq'
 import { DEFAULT_LANGUAGE, localise, type Language } from './i18n'
-import { HAS_ENDED, IMAGE, TICKET_FIELDS } from './query-pieces'
+import { EVENT_DATES, HAS_ENDED, IMAGE, TICKET_FIELDS } from './query-pieces'
 import { fetchRaw } from './sanity-client'
 import type { EventCardData, FaqEntry, RichText, SanityImage, Seo, TicketFields } from './shapes'
 
 /** An Event as the Events list page's cards show it: no price or Ticket note. */
 const EVENT_CARD = `{
-  _id, title, "slug": slug.current, startsAt, "venueName": venue.name, heroImage${IMAGE}
+  _id, title, "slug": slug.current, ${EVENT_DATES}, "venueName": venue.name, heroImage${IMAGE}
 }`
 
 // The Featured event is listed like any other here. Past events keep their Albums reachable,

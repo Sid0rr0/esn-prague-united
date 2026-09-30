@@ -45,6 +45,9 @@ export interface EventSummary {
   title: string
   slug: string
   startsAt: string
+  endsAt?: string
+  /** It has Sessions, ended or not, so it's a course that runs from Starts to Ends. */
+  hasSessions: boolean
 }
 
 /** An Event as a card on the Events list page shows it. */

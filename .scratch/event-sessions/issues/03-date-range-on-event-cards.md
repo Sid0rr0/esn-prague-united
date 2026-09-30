@@ -9,8 +9,8 @@
 
 **Blocked by:** 01 (Sessions table on the Event page)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Seam test (Events list): a card for an Event with Sessions shows the date range.
-- [ ] Seam test (Events list): a card for an Event without Sessions shows only its start date.
-- [ ] The homepage upcoming list and Related events show the same range for an Event with Sessions.
+- [x] Seam test (Events list): a card for an Event with Sessions shows the date range.
+- [x] Seam test (Events list): a card for an Event without Sessions shows only its start date.
+- [x] The homepage upcoming list and Related events show the same range for an Event with Sessions.
