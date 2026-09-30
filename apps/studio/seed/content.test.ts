@@ -40,12 +40,30 @@ describe('seed content', () => {
     }
   })
 
-  it('has one upcoming and one past event', () => {
-    const startTimes = events(NOW).map((event) => new Date(event.startsAt as string))
+  it('has two upcoming events and one past event', () => {
+    const hasEnded = (event: Record<string, unknown>) =>
+      new Date(String(event.endsAt ?? event.startsAt)) < NOW
 
+    assert.deepEqual(events(NOW).map(hasEnded), [false, false, true])
+  })
+
+  it('gives the salsa classes upcoming Sessions with ticket links, one ended and one sold out', () => {
+    const salsa = events(NOW).find((event) => event.slug.current === 'salsa-classes')
+    const sessions = (salsa?.sessions ?? []) as {
+      startsAt: string
+      endsAt?: string
+      ticketUrl?: string
+      note?: { en: string }
+    }[]
+    const upcoming = sessions.filter(
+      (session) => new Date(session.endsAt ?? session.startsAt) > NOW,
+    )
+
+    assert.equal(sessions.length - upcoming.length, 1)
+    assert.ok(upcoming.filter((session) => session.ticketUrl).length >= 2)
     assert.deepEqual(
-      startTimes.map((startsAt) => startsAt > NOW),
-      [true, false],
+      upcoming.filter((session) => !session.ticketUrl).map((session) => session.note?.en),
+      ['Sold out'],
     )
   })
 

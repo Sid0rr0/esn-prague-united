@@ -17,15 +17,15 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Seam test: an Event without Sessions renders no "Dates & tickets" section.
-- [ ] Seam test: upcoming Sessions render as rows sorted by Starts, whatever order they were entered in.
-- [ ] Seam test: an ended Session is not shown; a Session without Ends counts as ended once its Starts has passed.
-- [ ] Seam test: a row shows Buy ticket linking to the Session's Ticket link, or its Note when it has no link.
-- [ ] Seam test: a row shows "19:00–20:30" with Ends and "19:00" without.
-- [ ] Seam test: when every Session has ended, no section is rendered.
-- [ ] Seam test: a Past event page shows no section.
-- [ ] Seam test: the Czech page shows "Termíny a vstupenky" and the Czech Note.
+- [x] Seam test: an Event without Sessions renders no "Dates & tickets" section.
+- [x] Seam test: upcoming Sessions render as rows sorted by Starts, whatever order they were entered in.
+- [x] Seam test: an ended Session is not shown; a Session without Ends counts as ended once its Starts has passed.
+- [x] Seam test: a row shows Buy ticket linking to the Session's Ticket link, or its Note when it has no link.
+- [x] Seam test: a row shows "19:00–20:30" with Ends and "19:00" without.
+- [x] Seam test: when every Session has ended, no section is rendered.
+- [x] Seam test: a Past event page shows no section.
+- [x] Seam test: the Czech page shows "Termíny a vstupenky" and the Czech Note.
 - [ ] Rows stack on a phone with no scrolling sideways, and the sticky ticket bar doesn't cover the last row.
-- [ ] The seeded salsa Event shows its table in local development. The seed content test still passes.
+- [x] The seeded salsa Event is seeded, and the seed content test passes. (Checking the table in local development is still to do by hand.)

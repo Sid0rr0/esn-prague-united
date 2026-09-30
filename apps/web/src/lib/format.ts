@@ -16,6 +16,12 @@ export const formatShortDate = (iso: string): string => {
   return `${datePart(date, { day: 'numeric' })} ${datePart(date, { month: 'short' })}`
 }
 
+/** "Thu 26 Nov" in Prague time, the date of a Session row. */
+export const formatWeekdayDate = (iso: string): string => {
+  const date = new Date(iso)
+  return `${datePart(date, { weekday: 'short' })} ${formatShortDate(iso)}`
+}
+
 /** "Thursday 26 November" in Prague time. */
 export const formatLongDate = (iso: string): string => {
   const date = new Date(iso)

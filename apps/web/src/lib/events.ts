@@ -23,6 +23,7 @@ const EVENT_QUERY = groq`*[_type == "event" && slug.current == $slug][0]{
   title, "slug": slug.current, startsAt, endsAt, venue, heroImage${IMAGE}, summary, description,
   programme[]{_key, time, title, description}, dressCode, faq[]{_key, question, answer},
   ticketInfo, seo, ${TICKET_FIELDS},
+  "sessions": sessions[!(${HAS_ENDED})] | order(startsAt asc){_key, startsAt, endsAt, ticketUrl, note},
   album->{title, "slug": slug.current},
   "relatedEvents": (relatedEvents[]->${EVENT_CARD})[defined(slug)]
 }`
@@ -40,6 +41,15 @@ interface ProgrammeItem {
   time: string
   title: string
   description?: string
+}
+
+/** An upcoming Session of an Event, as a row of its "Dates & tickets" table. */
+export interface SessionRow {
+  _key: string
+  startsAt: string
+  endsAt?: string
+  ticketUrl?: string
+  note?: string
 }
 
 interface Venue {
@@ -64,6 +74,8 @@ export interface EventDetail extends TicketFields {
   ticketInfo?: RichText
   seo?: Seo
   album?: { title: string; slug: string } | null
+  /** Only the upcoming Sessions, soonest first; null when the Event has none. */
+  sessions?: SessionRow[] | null
   /** In the editor's order, without entries that no longer resolve to an Event with a web address. */
   relatedEvents?: EventCardData[] | null
 }

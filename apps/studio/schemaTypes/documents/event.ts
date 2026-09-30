@@ -8,6 +8,18 @@ const RELATED_EVENTS_MAX = 3
 /** Keeps the Ticket note to one line in the homepage hero. */
 const TICKET_NOTE_MAX_LENGTH = 60
 
+/** "5 Nov 2026, 19:00" in Prague time, for a Session's preview. */
+const formatSessionDate = (iso: string): string =>
+  new Date(iso).toLocaleString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+    timeZone: 'Europe/Prague',
+  })
+
 export const event = defineType({
   name: 'event',
   title: 'Event',
@@ -88,6 +100,50 @@ export const event = defineType({
                 params: { ownIds: [publishedId, `drafts.${publishedId}`] },
               }
             },
+          },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'sessions',
+      title: 'Sessions',
+      type: 'array',
+      group: 'tickets',
+      description:
+        "Each date this Event takes place, e.g. every dance class. Each Session can have its own ticket link, or a note like 'Sold out'.",
+      of: [
+        defineArrayMember({
+          name: 'session',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'startsAt',
+              title: 'Starts',
+              type: 'datetime',
+              validation: (r) => r.required(),
+            }),
+            defineField({ name: 'endsAt', title: 'Ends', type: 'datetime' }),
+            defineField({ name: 'ticketUrl', title: 'Ticket link', type: 'url' }),
+            localisedString({
+              name: 'note',
+              title: 'Note',
+              description: 'One line shown instead of the Buy ticket link, e.g. "Sold out".',
+              max: TICKET_NOTE_MAX_LENGTH,
+            }),
+          ],
+          preview: {
+            select: {
+              startsAt: 'startsAt',
+              endsAt: 'endsAt',
+              note: 'note.en',
+              ticketUrl: 'ticketUrl',
+            },
+            prepare: ({ startsAt, endsAt, note, ticketUrl }) => ({
+              title: startsAt
+                ? `${formatSessionDate(startsAt)}${endsAt ? ` – ${formatSessionDate(endsAt)}` : ''}`
+                : 'No date',
+              subtitle: note ?? (ticketUrl ? 'Ticket link set' : undefined),
+            }),
           },
         }),
       ],

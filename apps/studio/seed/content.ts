@@ -211,6 +211,30 @@ export const sections = (): SluggedDoc[] =>
 
 const ORIENTATION_TRIP_ID = 'event-orientation-week-trip'
 
+const SALSA_FIRST_SESSION_IN_DAYS = -3
+const SALSA_SESSION_COUNT = 5
+const DAYS_BETWEEN_SALSA_SESSIONS = 7
+const SALSA_SOLD_OUT_INDEX = 3
+const SALSA_CLASS_LENGTH_MS = 90 * 60 * 1000
+
+/** Weekly classes from three days ago: the first has ended, the fourth is sold out, the rest sell tickets. */
+const salsaSessions = (now: Date) =>
+  Array.from({ length: SALSA_SESSION_COUNT }, (_, i) => {
+    const startsAt = eveningInDays(
+      now,
+      SALSA_FIRST_SESSION_IN_DAYS + i * DAYS_BETWEEN_SALSA_SESSIONS,
+    )
+    return {
+      _key: `class-${i + 1}`,
+      _type: 'session',
+      startsAt,
+      endsAt: new Date(new Date(startsAt).getTime() + SALSA_CLASS_LENGTH_MS).toISOString(),
+      ...(i === SALSA_SOLD_OUT_INDEX
+        ? { note: en('Sold out') }
+        : { ticketUrl: `https://example.com/tickets/salsa-class-${i + 1}` }),
+    }
+  })
+
 export const events = (now: Date): SluggedDoc[] => [
   {
     _type: 'event',
@@ -238,6 +262,22 @@ export const events = (now: Date): SluggedDoc[] => [
       { _key: 'card', _type: 'priceTier', label: en('With ESN card'), amount: 150 },
       { _key: 'no-card', _type: 'priceTier', label: en('Without ESN card'), amount: 250 },
     ],
+  },
+  {
+    _type: 'event',
+    title: en('Salsa Classes'),
+    slug: slug('salsa-classes'),
+    startsAt: eveningInDays(now, SALSA_FIRST_SESSION_IN_DAYS),
+    endsAt: eveningInDays(
+      now,
+      // The day after the last class, so the Event's span covers every Session.
+      SALSA_FIRST_SESSION_IN_DAYS + (SALSA_SESSION_COUNT - 1) * DAYS_BETWEEN_SALSA_SESSIONS + 1,
+    ),
+    venue: { name: 'Sample dance studio' },
+    summary: enText('Weekly salsa classes for beginners, one ticket per class.'),
+    description: enRichText('Learn salsa with other exchange students. No partner needed.'),
+    sessions: salsaSessions(now),
+    priceTiers: [{ _key: 'class', _type: 'priceTier', label: en('Per class'), amount: 120 }],
   },
   {
     _id: ORIENTATION_TRIP_ID,

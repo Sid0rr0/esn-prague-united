@@ -9,7 +9,7 @@ import SectionHeading from '../../components/SectionHeading.astro'
 import StickyTicketBar from '../../components/StickyTicketBar.astro'
 import TicketSidebar from '../../components/TicketSidebar.astro'
 import { readEvent, readEventSlugs } from '../../lib/events'
-import { formatLongDate, formatTimeRange } from '../../lib/format'
+import { formatLongDate, formatTimeRange, formatWeekdayDate } from '../../lib/format'
 import { ticketArea } from '../../lib/ticket-area'
 import { uiString } from '../../lib/ui-strings'
 
@@ -26,6 +26,8 @@ const programme = event.programme ?? []
 const faq = event.faq ?? []
 const venue = event.venue
 const relatedEvents = event.relatedEvents ?? []
+// A Past event offers no tickets, so no table either, whatever its Sessions hold.
+const sessions = event.hasEnded ? [] : (event.sessions ?? [])
 ---
 
 <Layout title={event.title} seo={event.seo}>
@@ -74,6 +76,44 @@ const relatedEvents = event.relatedEvents ?? []
   >
     <div class="flex flex-col gap-10 lg:gap-14">
       <RichText value={event.description} class="text-base leading-relaxed lg:text-[19px]" />
+
+      {sessions.length > 0 && (
+        <section id="sessions" data-sessions class="flex flex-col gap-4 scroll-mt-24">
+          <SectionHeading colour="var(--color-esn-magenta)">
+            {uiString('sessionsHeading')}
+          </SectionHeading>
+          <ul class="flex flex-col divide-y divide-line">
+            {sessions.map((session) => (
+              <li
+                data-session-row
+                class="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1 py-3 lg:grid-cols-[180px_140px_1fr]"
+              >
+                <time datetime={session.startsAt} class="font-black">
+                  {formatWeekdayDate(session.startsAt)}
+                </time>
+                <span class="text-right lg:text-left">
+                  {formatTimeRange(session.startsAt, session.endsAt)}
+                </span>
+                {session.ticketUrl ? (
+                  <a
+                    href={session.ticketUrl}
+                    {...externalLinkProps(session.ticketUrl)}
+                    class="col-span-2 flex h-11 items-center justify-center bg-esn-magenta px-5 font-black text-white hover:brightness-92 lg:col-span-1 lg:justify-self-end"
+                  >
+                    Buy ticket
+                  </a>
+                ) : (
+                  session.note && (
+                    <span class="col-span-2 text-[15px] text-muted lg:col-span-1 lg:text-right">
+                      {session.note}
+                    </span>
+                  )
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {programme.length > 0 && (
         <section class="flex flex-col gap-4">
