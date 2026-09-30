@@ -17,8 +17,12 @@ A Section's official ESN logotype (the ESN star, "ESN" and the descriptor with t
 _Avoid_: Section icon, badge, avatar
 
 **Event**:
-A single ESN Prague United event with a date, venue, optional programme, and ticket info (e.g. the Czech Ball). Events belong to ESN Prague United as a whole, not to individual Sections. Ticket availability is inferred from whether a ticket link is set — there's no separate status field; without a link, the Event shows its Ticket note instead (e.g. "Sold out", "Free entry"). Once an Event has ended it no longer offers tickets and points to its Album instead, if it has one.
+An ESN Prague United event with a date, venue, optional programme, and ticket info (e.g. the Czech Ball). A repeating Event (e.g. weekly dance classes) is still one Event, running as several Sessions, and its date is the span from when it starts to when it ends. Events belong to ESN Prague United as a whole, not to individual Sections. Ticket availability is inferred from whether a ticket link is set — there's no separate status field; without a link, the Event shows its Ticket note instead (e.g. "Sold out", "Free entry"). Once an Event has ended it no longer offers tickets and points to its Album instead, if it has one.
 _Avoid_: Party, activity
+
+**Session**:
+One dated time an Event with several dates takes place (e.g. Thursday's salsa class), with its own optional ticket link, or a one-line note in its place (e.g. "Sold out", "Cancelled"). Sessions share their Event's venue and Price tiers. A Session has ended once its end time has passed, or its start time when it has no end time; ended Sessions are no longer shown. Editors enter each Session by hand; nothing is generated from a repeat rule.
+_Avoid_: Occurrence, date, class, lesson, instance
 
 **Price tier**:
 One named ticket price for an Event, in CZK (e.g. "With ESN card" 590, "Without ESN card" 690). The first tier is the Event's headline price. An Event with no tiers shows no price.
@@ -29,7 +33,7 @@ A one-line message shown in place of the Buy button when an Event has no ticket 
 _Avoid_: Ticket status
 
 **Ticket area**:
-Everything an Event shows where tickets would be: the ticket action (Buy ticket with the headline price, the Ticket note, or nothing), the aside (the ticket sidebar, or the Album link once the Event has ended) and the sticky bar on mobile. The Homepage hero shows the Featured event's ticket action by the same rules as its Event page.
+Everything an Event shows where tickets would be: the ticket action (Buy ticket with the headline price, "Choose a date" pointing to its Sessions when it has upcoming ones, the Ticket note, or nothing), the aside (the ticket sidebar, or the Album link once the Event has ended) and the sticky bar on mobile. The Homepage hero shows the Featured event's ticket action by the same rules as its Event page.
 _Avoid_: Ticket display, ticket block
 
 **Featured event**:
