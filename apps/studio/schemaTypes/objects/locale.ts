@@ -1,4 +1,4 @@
-import { defineField, defineType, type FieldDefinition } from 'sanity'
+import { defineField, defineType, type FieldDefinition, type Rule } from 'sanity'
 
 /**
  * Field-level translation (ADR 0002): each translatable field stores one value per
@@ -44,6 +44,8 @@ interface LocalisedFieldOptions {
   warnOnly?: boolean
   max?: number
   hidden?: boolean
+  /** A further rule for this field, next to the required and max checks. */
+  extraRule?: (rule: Rule) => Rule
 }
 
 const isBlank = (value: unknown) =>
@@ -66,14 +68,22 @@ const validateLocalised =
 
 const localised =
   (type: LocaleType) =>
-  ({ required, warnOnly, max, initialValue, ...field }: LocalisedFieldOptions): FieldDefinition =>
+  ({
+    required,
+    warnOnly,
+    max,
+    initialValue,
+    extraRule,
+    ...field
+  }: LocalisedFieldOptions): FieldDefinition =>
     defineField({
       ...field,
       type,
       ...(initialValue === undefined ? {} : { initialValue: { en: initialValue } }),
       validation: (rule) => {
         const custom = rule.custom(validateLocalised({ required, max }))
-        return warnOnly ? custom.warning() : custom
+        const own = warnOnly ? custom.warning() : custom
+        return extraRule ? [own, extraRule(rule)] : own
       },
     })
 

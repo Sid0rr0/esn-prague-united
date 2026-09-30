@@ -6,7 +6,7 @@
     "dev": "sanity dev",
     "deploy": "sanity deploy",
     "typecheck": "tsc --noEmit",
-    "test": "node --test 'migrations/*.test.ts' 'seed/*.test.ts' 'siteUpdate/*.test.ts'",
+    "test": "node --test 'migrations/*.test.ts' 'schemaTypes/**/*.test.ts' 'seed/*.test.ts' 'siteUpdate/*.test.ts'",
     "seed": "sanity exec seed/seed.ts --with-user-token"
   },
   "dependencies": {

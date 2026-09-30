@@ -1,12 +1,32 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
+import type { RuleDef } from 'sanity'
 import { CalendarIcon } from '@sanity/icons/Calendar'
 import { localisedRichText, localisedString, localisedText } from '../objects/locale'
+import {
+  checkSessionCount,
+  checkSessionEnd,
+  checkSessionSpan,
+  checkTicketFieldIgnored,
+} from './sessionRules'
 
 /** What the site shows under an Event, so the Studio refuses more. */
 const RELATED_EVENTS_MAX = 3
 
 /** Keeps the Ticket note to one line in the homepage hero. */
 const TICKET_NOTE_MAX_LENGTH = 60
+
+interface EventDates {
+  startsAt?: string
+  endsAt?: string
+}
+
+/** Warns on an Event ticket field that the Sessions override. */
+const ignoredWhileSessions = <R extends RuleDef<R, unknown>>(rule: R): R =>
+  rule
+    .custom((value, context) =>
+      checkTicketFieldIgnored(value, (context.document as { sessions?: unknown[] })?.sessions),
+    )
+    .warning()
 
 /** "5 Nov 2026, 19:00" in Prague time, for a Session's preview. */
 const formatSessionDate = (iso: string): string =>
@@ -111,10 +131,17 @@ export const event = defineType({
       group: 'tickets',
       description:
         "Each date this Event takes place, e.g. every dance class. Each Session can have its own ticket link, or a note like 'Sold out'.",
+      validation: (r) => r.custom((sessions) => checkSessionCount(sessions?.length)).warning(),
       of: [
         defineArrayMember({
           name: 'session',
           type: 'object',
+          validation: (r) =>
+            r
+              .custom((session, context) =>
+                checkSessionSpan(session ?? {}, (context.document as EventDates) ?? {}),
+              )
+              .warning(),
           fields: [
             defineField({
               name: 'startsAt',
@@ -122,7 +149,15 @@ export const event = defineType({
               type: 'datetime',
               validation: (r) => r.required(),
             }),
-            defineField({ name: 'endsAt', title: 'Ends', type: 'datetime' }),
+            defineField({
+              name: 'endsAt',
+              title: 'Ends',
+              type: 'datetime',
+              validation: (r) =>
+                r.custom((endsAt, context) =>
+                  checkSessionEnd((context.parent as { startsAt?: string })?.startsAt, endsAt),
+                ),
+            }),
             defineField({ name: 'ticketUrl', title: 'Ticket link', type: 'url' }),
             localisedString({
               name: 'note',
@@ -154,6 +189,7 @@ export const event = defineType({
       type: 'url',
       group: 'tickets',
       description: 'Shows the Buy ticket button. Leave empty when tickets are not on sale.',
+      validation: ignoredWhileSessions,
     }),
     defineField({
       name: 'priceTiers',
@@ -194,6 +230,7 @@ export const event = defineType({
       description:
         'One line shown instead of the Buy button when there is no ticket link, e.g. "Sold out. Watch Instagram for returned tickets" or "Free entry, no ticket needed".',
       max: TICKET_NOTE_MAX_LENGTH,
+      extraRule: ignoredWhileSessions,
     }),
     localisedRichText({ name: 'ticketInfo', title: 'Prices & ticket info', group: 'tickets' }),
     defineField({

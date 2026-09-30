@@ -16,4 +16,4 @@
 - [ ] Checked by hand: a Session outside the Event's span shows a warning but can be published.
 - [ ] Checked by hand: 41 Sessions show a warning but can be published.
 - [ ] Checked by hand: the Event's Ticket link and Ticket note show the "ignored" warning while Sessions exist, and not otherwise.
-- [ ] The Studio typechecks.
+- [x] The Studio typechecks.
