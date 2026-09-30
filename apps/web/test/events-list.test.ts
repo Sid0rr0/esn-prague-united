@@ -179,17 +179,17 @@ describe('Events list page', () => {
   })
 })
 
-describe('date range on Event cards', () => {
+describe('start date on Event cards for Events with Sessions', () => {
   const COURSE = { startsAt: '2026-10-05T17:00:00Z', endsAt: '2026-12-15T21:00:00Z' }
   const sessions = [{ _key: 's1', _type: 'session', startsAt: '2026-10-05T17:00:00Z' }]
 
-  it('shows the range from Starts to Ends on a card for an Event with Sessions', async () => {
+  it('shows "From" and the start date on a card for an Event with Sessions', async () => {
     const salsa = event('salsa', { ...COURSE, sessions })
 
     const cards = cardsOf(upcomingOf(await render(salsa)))
 
     expect(cards).toHaveLength(1)
-    expect(cards[0]).toContain('5 Oct – 15 Dec')
+    expect(cards[0]).toContain('From 5 Oct')
   })
 
   it('shows only the start date on a card for an Event without Sessions', async () => {
@@ -198,14 +198,14 @@ describe('date range on Event cards', () => {
     const cards = cardsOf(upcomingOf(await render(ball)))
 
     expect(cards[0]).toContain('Monday 5 October')
-    expect(cards[0]).not.toContain('15 Dec')
+    expect(cards[0]).not.toContain('From')
   })
 
-  it('shows the start date when an Event with Sessions has no Ends', async () => {
+  it('shows "From" and the start date when an Event with Sessions has no Ends', async () => {
     const salsa = event('salsa', { startsAt: COURSE.startsAt, sessions })
 
     const cards = cardsOf(upcomingOf(await render(salsa)))
 
-    expect(cards[0]).toContain('Monday 5 October')
+    expect(cards[0]).toContain('From 5 Oct')
   })
 })

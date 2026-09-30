@@ -20,6 +20,7 @@ const EN = {
   seeAllEvents: 'See all events',
   sessionsHeading: 'Dates & tickets',
   chooseADate: 'Choose a date',
+  from: 'From',
 } as const
 
 export type UiString = keyof typeof EN
@@ -43,6 +44,7 @@ const CS: Partial<Record<UiString, string>> = {
   seeAllEvents: 'Všechny akce',
   sessionsHeading: 'Termíny a vstupenky',
   chooseADate: 'Vybrat termín',
+  from: 'Od',
 }
 
 const STRINGS: Record<Language, Partial<Record<UiString, string>>> = { en: EN, cs: CS }

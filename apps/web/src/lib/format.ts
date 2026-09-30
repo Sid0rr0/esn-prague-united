@@ -16,10 +16,6 @@ export const formatShortDate = (iso: string): string => {
   return `${datePart(date, { day: 'numeric' })} ${datePart(date, { month: 'short' })}`
 }
 
-/** "1 Oct – 15 Dec", the span of an Event with Sessions. */
-export const formatDateRange = (startIso: string, endIso: string): string =>
-  `${formatShortDate(startIso)} – ${formatShortDate(endIso)}`
-
 /** "Thu 26 Nov" in Prague time, the date of a Session row. */
 export const formatWeekdayDate = (iso: string): string => {
   const date = new Date(iso)

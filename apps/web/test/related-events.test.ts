@@ -117,6 +117,6 @@ describe('Related events copy', () => {
 
     const html = await render(ball, salsa)
 
-    expect(blockOf(html)).toContain('5 Oct – 15 Dec')
+    expect(blockOf(html)).toContain('From 5 Oct')
   })
 })

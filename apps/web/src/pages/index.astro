@@ -9,7 +9,7 @@ import RichText from '../components/RichText.astro'
 import SectionHeading from '../components/SectionHeading.astro'
 import SectionTile from '../components/SectionTile.astro'
 import StatGrid from '../components/StatGrid.astro'
-import { eventDateRange } from '../lib/event-dates'
+import { eventFromDate } from '../lib/event-dates'
 import { formatKicker, formatShortDate } from '../lib/format'
 import { readHomepage } from '../lib/homepage'
 import { instagramPostUrls } from '../lib/instagram-link'
@@ -109,10 +109,10 @@ const updatesUrls = instagramPostUrls(home.updates?.links)
                   datetime={item.startsAt}
                   class:list={[
                     'shrink-0 font-heading text-base font-bold text-esn-blue lg:text-lg',
-                    eventDateRange(item) ? 'max-w-32 lg:max-w-40' : 'w-15 lg:w-17.5',
+                    eventFromDate(item) ? 'max-w-32 lg:max-w-40' : 'w-15 lg:w-17.5',
                   ]}
                 >
-                  {eventDateRange(item) ?? formatShortDate(item.startsAt)}
+                  {eventFromDate(item) ?? formatShortDate(item.startsAt)}
                 </time>
                 <span class="text-base font-black lg:text-[17px]">{item.title}</span>
               </a>

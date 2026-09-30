@@ -1,10 +1,7 @@
-import { formatDateRange, formatShortDate } from './format'
+import { formatShortDate } from './format'
 import type { EventSummary } from './shapes'
+import { uiString } from './ui-strings'
 
-/** "1 Oct – 15 Dec" for an Event with Sessions that ends on a later day, otherwise null: cards show the start date. */
-export const eventDateRange = ({ startsAt, endsAt, hasSessions }: EventSummary): string | null => {
-  if (!hasSessions || !endsAt) return null
-  return formatShortDate(startsAt) === formatShortDate(endsAt)
-    ? null
-    : formatDateRange(startsAt, endsAt)
-}
+/** "From 1 Oct" for an Event with Sessions, otherwise null: cards show the start date. */
+export const eventFromDate = ({ startsAt, hasSessions }: EventSummary): string | null =>
+  hasSessions ? `${uiString('from')} ${formatShortDate(startsAt)}` : null

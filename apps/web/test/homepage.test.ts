@@ -167,7 +167,7 @@ describe('homepage upcoming events', () => {
 
     const block = upcomingOf(await featuring(null, salsa))
 
-    expect(block).toContain('5 Oct – 15 Dec')
+    expect(block).toContain('From 5 Oct')
   })
 
   it('leaves out Events that have ended', async () => {
