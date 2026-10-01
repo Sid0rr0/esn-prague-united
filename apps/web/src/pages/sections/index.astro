@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import PageHeader from '../../components/PageHeader.astro'
+import SectionHeading from '../../components/SectionHeading.astro'
 import SectionTile from '../../components/SectionTile.astro'
 import { readSections } from '../../lib/sections'
 
@@ -14,11 +15,41 @@ const sections = await readSections()
     </p>
   </PageHeader>
 
-  <ul class="grid gap-0.5 pt-0.5 pb-5 lg:grid-cols-3 lg:px-14 lg:pt-14 lg:pb-14">
+  <ul class="grid gap-0.5 pt-0.5 pb-5 md:grid-cols-2 lg:grid-cols-3 lg:px-14 lg:pt-14 lg:pb-14">
     {sections.map((section) => (
       <li>
         <SectionTile section={section} variant="list" />
       </li>
     ))}
   </ul>
+
+  <div class="flex flex-col gap-10 px-5 pb-8 lg:gap-14 lg:px-14 lg:pb-14">
+    <aside class="flex max-w-200 flex-col gap-2 bg-surface p-5 lg:p-7">
+      <h2 class="font-heading text-[26px] leading-none font-bold lg:text-[32px]">
+        Not a student of any of these?
+      </h2>
+      <p class="text-base leading-normal">No worries, most of the events are for everybody.</p>
+    </aside>
+
+    <section class="flex max-w-200 flex-col gap-4">
+      <SectionHeading colour="var(--color-esn-green)">ESN Czech Republic</SectionHeading>
+      <p class="text-base leading-normal">
+        All of these sections belong to ESN CZ, which brings together 19 sections across the Czech
+        Republic.
+      </p>
+      <p class="text-base leading-normal">
+        Erasmus Student Network (ESN) is a non-profit international student organisation. Our
+        mission is to represent international students, thus provide opportunities for cultural
+        understanding and self-development under the principle of Students Helping Students.
+      </p>
+      <a
+        href="https://esncz.org/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="self-start bg-esn-magenta px-6 py-3 text-base font-black text-white hover:brightness-92"
+      >
+        Visit esncz.org
+      </a>
+    </section>
+  </div>
 </Layout>
