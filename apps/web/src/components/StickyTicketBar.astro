@@ -1,6 +1,5 @@
 ---
 import { externalLinkProps } from '../lib/external-link'
-import { formatPrice } from '../lib/format'
 import { uiString } from '../lib/ui-strings'
 import type { TicketAction } from '../lib/ticket-area'
 
@@ -20,13 +19,8 @@ const { ticketAction } = Astro.props
       {...(ticketAction.kind === 'buy' ? externalLinkProps(ticketAction.url) : {})}
       class="flex h-13 flex-1 items-center justify-center bg-esn-magenta px-6 text-[17px] text-white hover:brightness-92"
     >
-      {ticketAction.kind === 'buy' ? 'Buy ticket' : uiString('chooseADate')}
+      {ticketAction.kind === 'buy' ? 'Get tickets' : uiString('chooseADate')}
     </a>
-    {ticketAction.headline && (
-      <span class="flex h-13 items-center bg-blue-50 px-4.5 text-base text-esn-blue">
-        {formatPrice(ticketAction.headline.amount)}
-      </span>
-    )}
   </div>
 )}
 {ticketAction.kind === 'note' && (

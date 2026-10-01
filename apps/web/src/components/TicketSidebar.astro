@@ -11,12 +11,16 @@ interface Props {
 const {
   aside: { ticketAction, tiers, info },
 } = Astro.props
+const hasMobileContent = tiers.length > 0 || Boolean(info) || ticketAction.kind === 'note'
 ---
 
 <aside
   data-ticket-sidebar
   aria-label="Tickets"
-  class="flex flex-col gap-4 bg-surface p-5 lg:sticky lg:top-24 lg:gap-5 lg:p-7"
+  class:list={[
+    'flex-col gap-4 bg-surface p-5 lg:sticky lg:top-24 lg:flex lg:self-start lg:gap-5 lg:p-7',
+    hasMobileContent ? 'flex' : 'hidden',
+  ]}
 >
   <h2 class="font-heading text-2xl font-bold lg:text-[28px]">Tickets</h2>
   {tiers.length > 0 && (
@@ -29,14 +33,14 @@ const {
       ))}
     </ul>
   )}
-  {/* On mobile the sticky bar carries the Buy button or Ticket note instead. */}
+  {/* On mobile the sticky bar carries the Get tickets button or Ticket note instead. */}
   {(ticketAction.kind === 'buy' || ticketAction.kind === 'choose-date') && (
     <a
       href={ticketAction.kind === 'buy' ? ticketAction.url : ticketAction.href}
       {...(ticketAction.kind === 'buy' ? externalLinkProps(ticketAction.url) : {})}
       class="flex h-14 items-center justify-center bg-esn-magenta px-6 text-[17px] font-black text-white hover:brightness-92 max-lg:hidden"
     >
-      {ticketAction.kind === 'buy' ? 'Buy ticket' : uiString('chooseADate')}
+      {ticketAction.kind === 'buy' ? 'Get tickets' : uiString('chooseADate')}
     </a>
   )}
   {ticketAction.kind === 'note' && (

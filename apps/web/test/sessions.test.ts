@@ -183,7 +183,7 @@ describe('Choose a date in the Ticket area', () => {
       expect(part).not.toContain('Buy ticket')
       expect(part).not.toContain('Own note')
     }
-    expect(stickyOf(html)).toContain('250 CZK')
+    expect(stickyOf(html)).not.toContain('CZK')
     expect(html).not.toContain('href="https://tickets.example/salsa"')
   })
 

@@ -182,11 +182,7 @@ const sessions = event.hasEnded ? [] : (event.sessions ?? [])
         </a>
       </aside>
     )}
-    {aside.kind === 'tickets' && (
-      <div class="lg:self-start">
-        <TicketSidebar aside={aside} />
-      </div>
-    )}
+    {aside.kind === 'tickets' && <TicketSidebar aside={aside} />}
   </div>
 
   {relatedEvents.length > 0 && (

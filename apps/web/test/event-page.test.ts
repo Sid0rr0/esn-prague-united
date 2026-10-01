@@ -42,7 +42,7 @@ const hasRoomForStickyBar = (html: string) => /\bpb-28 lg:pb-14\b/.test(html)
 
 /** The ticket UI a visitor could act on: Buy button, any price, Ticket note, sticky bar. */
 const expectNoTicketUi = (html: string) => {
-  expect(html).not.toContain('Buy ticket')
+  expect(html).not.toContain('Get tickets')
   expect(html).not.toContain('CZK')
   expect(html).not.toContain('Sold out')
   expect(html).not.toContain('data-sticky-bar')
@@ -103,10 +103,9 @@ describe('Event page', () => {
     expect(sidebar).toMatch(
       /With ESN card[\s\S]*590 CZK[\s\S]*Without ESN card[\s\S]*690 CZK[\s\S]*Door sale[\s\S]*790 CZK/,
     )
-    expect(sidebar).toMatch(/Buy ticket[\s\S]*Sales end on 20 November\./)
-    expect(sticky).toMatch(/href="https:\/\/tickets\.example\/ball"[^>]*>[\s\S]*Buy ticket/)
-    expect(sticky).toContain('590 CZK')
-    expect(sticky).not.toContain('690 CZK')
+    expect(sidebar).toMatch(/Get tickets[\s\S]*Sales end on 20 November\./)
+    expect(sticky).toMatch(/href="https:\/\/tickets\.example\/ball"[^>]*>[\s\S]*Get tickets/)
+    expect(sticky).not.toContain('CZK')
   })
 
   it('shows the Ticket note instead of Buy ticket in the sidebar and the sticky bar', async () => {
@@ -116,13 +115,13 @@ describe('Event page', () => {
 
     expect(sidebarOf(html)).toContain('Sold out. Watch Instagram')
     expect(stickyBarOf(html)).toContain('Sold out. Watch Instagram')
-    expect(html).not.toContain('Buy ticket')
+    expect(html).not.toContain('Get tickets')
   })
 
   it('shows neither Buy ticket nor a note when there is no ticket link and no note', async () => {
     const html = await renderEvent(event('ball'))
 
-    expect(html).not.toContain('Buy ticket')
+    expect(html).not.toContain('Get tickets')
     expect(html).not.toContain('data-ticket-note')
     expect(html).not.toContain('data-sticky-bar')
   })
@@ -130,8 +129,8 @@ describe('Event page', () => {
   it('shows Buy ticket with no price when there is a ticket link but no tiers', async () => {
     const html = await renderEvent(event('ball', { ticketUrl: 'https://tickets.example/ball' }))
 
-    expect(sidebarOf(html)).toContain('Buy ticket')
-    expect(stickyBarOf(html)).toContain('Buy ticket')
+    expect(sidebarOf(html)).toContain('Get tickets')
+    expect(stickyBarOf(html)).toContain('Get tickets')
     expect(html).not.toContain('CZK')
   })
 
@@ -146,7 +145,7 @@ describe('Event page', () => {
   })
 
   it.each([
-    { with: 'Buy ticket', fields: { ticketUrl: 'https://tickets.example/ball' }, showsBar: true },
+    { with: 'Get tickets', fields: { ticketUrl: 'https://tickets.example/ball' }, showsBar: true },
     { with: 'a Ticket note', fields: { ticketNote: localised('Sold out') }, showsBar: true },
     {
       with: 'Price tiers and ticket info but no ticket action',
@@ -208,7 +207,7 @@ describe('Event page', () => {
 
     const html = await renderEvent(ball, album)
 
-    expect(html).toContain('Buy ticket')
+    expect(html).toContain('Get tickets')
     expect(html).not.toContain('/gallery/czech-ball-2026')
   })
 
