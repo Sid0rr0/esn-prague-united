@@ -22,3 +22,9 @@ pnpm-debug.log*
 # editor / OS
 .DS_Store
 .idea/
+
+# installed agent skills (keep the hand-written implement-ticket)
+.agents/
+skills-lock.json
+.claude/skills/*
+!.claude/skills/implement-ticket/
