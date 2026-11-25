@@ -27,6 +27,7 @@ const { ticketAction, aside, hasStickyBar } = ticketArea(event, '#sessions')
 const programme = event.programme ?? []
 const faq = event.faq ?? []
 const venue = event.venue
+// `height` (px) and the `h-*` class must stay equal: 112 = h-28, 64 = h-16.
 const LOGO_SIZES = {
   large: { height: 112, cls: 'h-28 max-w-64' },
   regular: { height: 64, cls: 'h-16 max-w-40' },
