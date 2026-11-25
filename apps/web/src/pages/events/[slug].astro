@@ -27,6 +27,10 @@ const { ticketAction, aside, hasStickyBar } = ticketArea(event, '#sessions')
 const programme = event.programme ?? []
 const faq = event.faq ?? []
 const venue = event.venue
+const LOGO_SIZES = {
+  large: { height: 112, cls: 'h-28 max-w-64' },
+  regular: { height: 64, cls: 'h-16 max-w-40' },
+}
 const partnerGroups = groupPartners(event.partners ?? [])
 const relatedEvents = event.relatedEvents ?? []
 // A Past event offers no tickets, so no table either, whatever its Sessions hold.
@@ -182,7 +186,7 @@ const sessions = event.hasEnded ? [] : (event.sessions ?? [])
             {partnerGroups.map((group) => (
               <div
                 data-partner-group={group.key}
-                data-size={group.key === 'general' ? 'large' : 'regular'}
+                data-size={group.size}
                 class="flex flex-col gap-3"
               >
                 {partnerGroups.length > 1 && (
@@ -190,7 +194,7 @@ const sessions = event.hasEnded ? [] : (event.sessions ?? [])
                 )}
                 <ul class="flex flex-wrap items-center gap-x-8 gap-y-6">
                   {group.credits.map(({ partner }) => {
-                    const height = group.key === 'general' ? 112 : 64
+                    const { height, cls } = LOGO_SIZES[group.size]
                     const src = imageUrl(partner.logo, { height })
                     const logo = (
                       <img
@@ -198,7 +202,7 @@ const sessions = event.hasEnded ? [] : (event.sessions ?? [])
                         srcset={`${src} 1x, ${imageUrl(partner.logo, { height: height * 2 })} 2x`}
                         alt={partner.name}
                         loading="lazy"
-                        class={`block w-auto object-contain ${group.key === 'general' ? 'h-28 max-w-64' : 'h-16 max-w-40'}`}
+                        class={`block w-auto object-contain ${cls}`}
                       />
                     )
                     return (

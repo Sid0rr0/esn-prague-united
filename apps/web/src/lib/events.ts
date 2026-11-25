@@ -2,6 +2,7 @@
 import groq from 'groq'
 import { DEFAULT_LANGUAGE, localise, type Language } from './i18n'
 import { EVENT_DATES, HAS_ENDED, IMAGE, TICKET_FIELDS } from './query-pieces'
+import type { PartnerGroupKey } from './partners'
 import { fetchRaw } from './sanity-client'
 import type { EventCardData, FaqEntry, RichText, SanityImage, Seo, TicketFields } from './shapes'
 
@@ -63,7 +64,7 @@ interface Venue {
 /** A Partner credited on an Event, with its Partner group (a stored key, not a label). */
 export interface PartnerCredit {
   _key: string
-  partnerGroup: string
+  partnerGroup: PartnerGroupKey
   partner: { name: string; logo: SanityImage; website?: string }
 }
 

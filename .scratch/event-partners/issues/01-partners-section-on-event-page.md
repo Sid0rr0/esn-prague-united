@@ -23,4 +23,4 @@
 
 ## Answer
 
-Implemented in f5b8e13: Partner document and Studio sidebar entry, Event `partners` field (with `partnerGroup` and a duplicate check), the Partners section on the Event page, and sample Partners on the seeded Welcome Party (the seed has no Czech Ball). Tests are in `apps/web/test/partners.test.ts`. The Studio checks are not run by hand yet.
+Implemented in the commit "show Partners on the Event page and add them to the Studio": Partner document and Studio sidebar entry, Event `partners` field (with `partnerGroup` and a duplicate check), the Partners section on the Event page, and sample Partners on the seeded Welcome Party (the seed has no Czech Ball). Tests are in `apps/web/test/partners.test.ts`. The Studio checks are not run by hand yet.
