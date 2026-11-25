@@ -23,6 +23,7 @@ const EVENT_QUERY = groq`*[_type == "event" && slug.current == $slug][0]{
   title, "slug": slug.current, startsAt, endsAt, venue, heroImage${IMAGE}, summary, description,
   programme[]{_key, time, title, description}, dressCode, faq[]{_key, question, answer},
   ticketInfo, seo, ${TICKET_FIELDS},
+  "partners": partners[]{_key, partnerGroup, "partner": partner->{name, logo${IMAGE}, website}}[defined(partner.logo.asset)],
   "sessions": sessions[!(${HAS_ENDED})] | order(startsAt asc){_key, startsAt, endsAt, ticketUrl, note},
   album->{title, "slug": slug.current},
   "relatedEvents": (relatedEvents[]->${EVENT_CARD})[defined(slug)]
@@ -59,6 +60,13 @@ interface Venue {
   transport?: string
 }
 
+/** A Partner credited on an Event, with its Partner group (a stored key, not a label). */
+export interface PartnerCredit {
+  _key: string
+  partnerGroup: string
+  partner: { name: string; logo: SanityImage; website?: string }
+}
+
 export interface EventDetail extends TicketFields {
   title: string
   slug: string
@@ -73,6 +81,8 @@ export interface EventDetail extends TicketFields {
   faq?: FaqEntry[] | null
   ticketInfo?: RichText
   seo?: Seo
+  /** In the editor's order, without credits whose Partner or logo no longer resolves. */
+  partners?: PartnerCredit[] | null
   album?: { title: string; slug: string } | null
   /** Only the upcoming Sessions, soonest first; null when the Event has none. */
   sessions?: SessionRow[] | null

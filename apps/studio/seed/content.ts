@@ -210,6 +210,12 @@ export const sections = (): SluggedDoc[] =>
     order: i + 1,
   }))
 
+/** Sample Partners; seed.ts uploads a placeholder logo for each. */
+export const PARTNERS: { _id: string; name: string; website?: string }[] = [
+  { _id: 'partner-sample-bank', name: 'Sample Bank', website: 'https://example.com/bank' },
+  { _id: 'partner-sample-radio', name: 'Sample Radio' },
+]
+
 const ORIENTATION_TRIP_ID = 'event-orientation-week-trip'
 
 const SALSA_FIRST_SESSION_IN_DAYS = -3
@@ -258,6 +264,20 @@ export const events = (now: Date): SluggedDoc[] => [
       },
     ],
     relatedEvents: [{ ...reference(ORIENTATION_TRIP_ID), _weak: true }],
+    partners: [
+      {
+        _key: 'bank',
+        _type: 'partnerCredit',
+        partner: { _type: 'reference', _ref: PARTNERS[0]._id },
+        partnerGroup: 'general',
+      },
+      {
+        _key: 'radio',
+        _type: 'partnerCredit',
+        partner: { _type: 'reference', _ref: PARTNERS[1]._id },
+        partnerGroup: 'media',
+      },
+    ],
     ticketUrl: 'https://example.com/tickets/welcome-party',
     priceTiers: [
       { _key: 'card', _type: 'priceTier', label: en('With ESN card'), amount: 150 },

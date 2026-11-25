@@ -10,7 +10,7 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** resolved
 
 - [ ] Seam test: an Event with no Partners renders no Partners section.
 - [ ] Seam test: an Event's Partners are rendered after the Event FAQ and before Related events, in the editor's order.
@@ -20,3 +20,7 @@
 - [ ] Seam test: a Partner credit whose reference is broken is skipped and the rest still render.
 - [ ] Manual check in the Studio: a Partner can be created from the sidebar and inline from an Event, and adding the same Partner twice to one Event is flagged.
 - [ ] Seed data includes sample Partners on the Czech Ball.
+
+## Answer
+
+Implemented in f5b8e13: Partner document and Studio sidebar entry, Event `partners` field (with `partnerGroup` and a duplicate check), the Partners section on the Event page, and sample Partners on the seeded Welcome Party (the seed has no Czech Ball). Tests are in `apps/web/test/partners.test.ts`. The Studio checks are not run by hand yet.
