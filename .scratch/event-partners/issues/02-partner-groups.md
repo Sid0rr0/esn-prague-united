@@ -10,7 +10,7 @@
 
 **Blocked by:** 01
 
-**Status:** ready-for-agent
+**Status:** resolved
 
 - [ ] Seam test: groups render in the order General partner → Partner → Media partner, regardless of the editor's order across groups.
 - [ ] Seam test: within a group, Partners keep the editor's order.
@@ -18,3 +18,7 @@
 - [ ] Seam test: with Partners in two or more groups, each used group has a sub-heading and unused groups have none.
 - [ ] Seam test: General partner logos are marked as the larger size.
 - [ ] Manual check in the Studio: a Partner credit's preview shows logo, name and group.
+
+## Answer
+
+Implemented in the commit "sort Partners into Partner groups on the Event page": groups sorted General partner, Partner, Media partner via `apps/web/src/lib/partners.ts`, sub-headings only with two or more groups, larger General partner logos, translated labels. The Studio preview (logo, name, group) already shipped with ticket 01. Manual Studio check not run here.

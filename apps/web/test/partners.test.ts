@@ -60,7 +60,7 @@ describe('Partners on the Event page', () => {
       {
         faq: [faqEntry('q1', 'Can I bring a friend?', 'Yes.')],
         relatedEvents: [{ _key: 'o', _type: 'reference', _ref: 'other', _weak: true }],
-        partners: [credit('b', 'media'), credit('a', 'general')],
+        partners: [credit('b'), credit('a')],
       },
       partner('a'),
       partner('b'),
@@ -109,5 +109,63 @@ describe('Partners on the Event page', () => {
     const html = await renderBall({ partners: [credit('gone')] })
 
     expect(html).not.toContain('data-partners')
+  })
+
+  describe('Partner groups', () => {
+    const groupsOf = (html: string) =>
+      [...sectionOf(html).matchAll(/data-partner-group="(\w+)"/g)].map((m) => m[1])
+    const subHeadings = (html: string) =>
+      [...sectionOf(html).matchAll(/<h3[^>]*>\s*([^<]*?)\s*<\/h3>/g)].map((m) => m[1])
+
+    it('orders groups General partner, Partner, Media partner and keeps editor order within a group', async () => {
+      const html = await renderBall(
+        {
+          partners: [
+            credit('m1', 'media'),
+            credit('p1', 'partner'),
+            credit('g1', 'general'),
+            credit('p2', 'partner'),
+            credit('g2', 'general'),
+          ],
+        },
+        ...['m1', 'p1', 'g1', 'p2', 'g2'].map((id) => partner(id)),
+      )
+
+      expect(groupsOf(html)).toEqual(['general', 'partner', 'media'])
+      expect(itemsOf(html).map((item) => item.match(/alt="([^"]*)"/)?.[1])).toEqual([
+        'Partner g1',
+        'Partner g2',
+        'Partner p1',
+        'Partner p2',
+        'Partner m1',
+      ])
+    })
+
+    it('shows no group sub-heading when only one group has Partners', async () => {
+      const html = await renderBall({ partners: [credit('a', 'media')] }, partner('a'))
+
+      expect(subHeadings(html)).toEqual([])
+    })
+
+    it('shows a sub-heading for each used group only, when two or more are used', async () => {
+      const html = await renderBall(
+        { partners: [credit('m', 'media'), credit('g', 'general')] },
+        partner('m'),
+        partner('g'),
+      )
+
+      expect(subHeadings(html)).toEqual(['General partner', 'Media partner'])
+    })
+
+    it('marks General partner logos as the larger size', async () => {
+      const html = await renderBall(
+        { partners: [credit('g', 'general'), credit('p')] },
+        partner('g'),
+        partner('p'),
+      )
+
+      expect(html).toMatch(/data-partner-group="general"[^>]*data-size="large"/)
+      expect(html).toMatch(/data-partner-group="partner"[^>]*data-size="regular"/)
+    })
   })
 })
