@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@portabletext/to-html": "^6.0.0",
-    "@sanity/astro": "^3.6.2",
     "@sanity/client": "^8.17.0",
     "@sanity/image-url": "^2.2.0",
     "@tailwindcss/vite": "^4.3.5",
@@ -31,7 +30,7 @@
     "@astrojs/check": "^0.9.12",
     "@types/jsdom": "^30.0.0",
     "groq-js": "^2.0.3",
-    "jsdom": "^29.1.1",
+    "jsdom": "^31.0.1",
     "typescript": "^6.0.3",
     "vitest": "^5.1.1"
   }
