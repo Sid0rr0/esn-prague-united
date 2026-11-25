@@ -27,8 +27,8 @@ const { ticketAction, aside, hasStickyBar } = ticketArea(event, '#sessions')
 const programme = event.programme ?? []
 const faq = event.faq ?? []
 const venue = event.venue
-// Fetched at the md height (px); keep equal to `md:h-24` below (96 = h-24).
-const LOGO_HEIGHT = 96
+// Fetched at the md height (px); keep equal to `md:h-20` below (80 = h-20).
+const LOGO_HEIGHT = 80
 const partnerGroups = groupPartners(event.partners ?? [])
 const relatedEvents = event.relatedEvents ?? []
 // A Past event offers no tickets, so no table either, whatever its Sessions hold.
@@ -186,7 +186,7 @@ const sessions = event.hasEnded ? [] : (event.sessions ?? [])
                 {partnerGroups.length > 1 && (
                   <h3 class="font-heading text-xl font-bold">{uiString(group.label)}</h3>
                 )}
-                <ul class="flex flex-wrap items-center gap-x-8 gap-y-6">
+                <ul class="flex flex-wrap items-center gap-x-12 gap-y-8 md:gap-x-16 md:gap-y-12">
                   {group.credits.map(({ partner }) => {
                     const src = imageUrl(partner.logo, { height: LOGO_HEIGHT })
                     const logo = (
@@ -195,7 +195,7 @@ const sessions = event.hasEnded ? [] : (event.sessions ?? [])
                         srcset={`${src} 1x, ${imageUrl(partner.logo, { height: LOGO_HEIGHT * 2 })} 2x`}
                         alt={partner.name}
                         loading="lazy"
-                        class="block h-16 w-auto max-w-40 object-contain md:h-24 md:max-w-56"
+                        class="block h-16 w-auto max-w-40 object-contain md:h-20 md:max-w-48"
                       />
                     )
                     return (
