@@ -10,9 +10,8 @@ import {
 } from './sessionRules'
 
 const PARTNER_GROUPS = [
-  { title: 'General partner', value: 'general' },
-  { title: 'Partner', value: 'partner' },
-  { title: 'Media partner', value: 'media' },
+  { title: 'Commercial partner', value: 'commercial' },
+  { title: 'University partner', value: 'university' },
 ]
 
 /** What the site shows under an Event, so the Studio refuses more. */
@@ -131,7 +130,7 @@ export const event = defineType({
               name: 'partnerGroup',
               title: 'Partner group',
               type: 'string',
-              initialValue: 'partner',
+              initialValue: 'commercial',
               options: { layout: 'radio', list: PARTNER_GROUPS },
               validation: (r) => r.required(),
             }),
