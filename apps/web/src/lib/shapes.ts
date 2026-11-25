@@ -4,6 +4,8 @@ import type { toHTML } from '@portabletext/to-html'
 export interface SanityImage {
   asset?: { _ref: string }
   alt?: string
+  /** Only set on images inside rich text. */
+  size?: 'small' | 'medium' | 'large'
 }
 
 export interface Socials {

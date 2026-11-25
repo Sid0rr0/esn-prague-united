@@ -2,23 +2,26 @@ import { defineArrayMember, defineField, defineType } from 'sanity'
 import { localisedString, localisedText, localisedRichText } from './locale'
 
 /** Image with required alt text and hotspot/crop. Used everywhere. */
+const imageFields = [
+  localisedString({
+    name: 'alt',
+    title: 'Short description (for screen readers)',
+    description: 'Please describe the photo in a few words.',
+    required: true,
+    warnOnly: true,
+  }),
+  localisedString({ name: 'caption', title: 'Caption' }),
+]
+const imageDescription =
+  'The ESN Visual Identity Manual forbids photos showing drunkenness, and photos with alcohol as the main subject (pp.27, 29).'
+
 export const imageWithAlt = defineType({
   name: 'imageWithAlt',
   title: 'Image',
   type: 'image',
-  description:
-    'The ESN Visual Identity Manual forbids photos showing drunkenness, and photos with alcohol as the main subject (pp.27, 29).',
+  description: imageDescription,
   options: { hotspot: true },
-  fields: [
-    localisedString({
-      name: 'alt',
-      title: 'Short description (for screen readers)',
-      description: 'Please describe the photo in a few words.',
-      required: true,
-      warnOnly: true,
-    }),
-    localisedString({ name: 'caption', title: 'Caption' }),
-  ],
+  fields: imageFields,
 })
 
 /** Rich text, kept deliberately small so editors can't break the layout. */
@@ -58,7 +61,30 @@ export const richText = defineType({
         ],
       },
     }),
-    defineArrayMember({ type: 'imageWithAlt' }),
+    defineArrayMember({
+      // Same as imageWithAlt plus a size; array members can't extend a named type with fields.
+      type: 'image',
+      name: 'richTextImage',
+      title: 'Image',
+      description: imageDescription,
+      options: { hotspot: true },
+      fields: [
+        ...imageFields,
+        defineField({
+          name: 'size',
+          type: 'string',
+          initialValue: 'large',
+          options: {
+            list: [
+              { title: 'Small', value: 'small' },
+              { title: 'Medium', value: 'medium' },
+              { title: 'Large (full width)', value: 'large' },
+            ],
+            layout: 'radio',
+          },
+        }),
+      ],
+    }),
   ],
 })
 
