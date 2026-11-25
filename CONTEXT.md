@@ -53,7 +53,7 @@ An outside organisation credited on an Event's page for supporting it, whether w
 _Avoid_: Sponsor, supporter
 
 **Partner group**:
-How prominently an Event credits one of its Partners: General partner, Partner, or Media partner. The group belongs to the Partner's role in that one Event, not to the Partner itself. A Partner is in exactly one group per Event. The set of groups is fixed; editors pick from it and cannot invent new ones.
+How prominently an Event credits one of its Partners: Commercial partner or University partner. The group belongs to the Partner's role in that one Event, not to the Partner itself. A Partner is in exactly one group per Event. The set of groups is fixed; editors pick from it and cannot invent new ones.
 _Avoid_: Partner tier (confused with Price tier), sponsor level, partner type, category
 
 **Album**:

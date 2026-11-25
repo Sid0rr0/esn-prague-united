@@ -9,6 +9,11 @@ import {
   checkTicketFieldIgnored,
 } from './sessionRules'
 
+const PARTNER_GROUPS = [
+  { title: 'Commercial partner', value: 'commercial' },
+  { title: 'University partner', value: 'university' },
+]
+
 /** What the site shows under an Event, so the Studio refuses more. */
 const RELATED_EVENTS_MAX = 3
 
@@ -96,6 +101,50 @@ export const event = defineType({
       type: 'array',
       group: 'details',
       of: [defineArrayMember({ type: 'faqEntry' })],
+    }),
+    defineField({
+      name: 'partners',
+      type: 'array',
+      group: 'details',
+      description:
+        'Organisations that supported this Event, shown as logos at the end of the page. Drag to reorder.',
+      validation: (r) =>
+        r.custom((credits) => {
+          const refs = ((credits as { partner?: { _ref?: string } }[] | undefined) ?? [])
+            .map((c) => c.partner?._ref)
+            .filter(Boolean)
+          return new Set(refs).size === refs.length || 'The same Partner is added twice.'
+        }),
+      of: [
+        defineArrayMember({
+          name: 'partnerCredit',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'partner',
+              type: 'reference',
+              to: [{ type: 'partner' }],
+              validation: (r) => r.required(),
+            }),
+            defineField({
+              name: 'partnerGroup',
+              title: 'Partner group',
+              type: 'string',
+              initialValue: 'commercial',
+              options: { layout: 'radio', list: PARTNER_GROUPS },
+              validation: (r) => r.required(),
+            }),
+          ],
+          preview: {
+            select: { title: 'partner.name', group: 'partnerGroup', media: 'partner.logo' },
+            prepare: ({ title, group, media }) => ({
+              title,
+              subtitle: PARTNER_GROUPS.find((g) => g.value === group)?.title,
+              media,
+            }),
+          },
+        }),
+      ],
     }),
     defineField({
       name: 'relatedEvents',
